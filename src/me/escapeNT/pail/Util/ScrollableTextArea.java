@@ -21,10 +21,10 @@ public class ScrollableTextArea extends JTextArea {
                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
        scroller.setHorizontalScrollBarPolicy(
                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-       this.setLineWrap(true);
-       this.setWrapStyleWord(true);
-       this.setFont(new Font("SansSerif", Font.PLAIN, 12));
-       this.setEditable(false);
+       setLineWrap(true);
+       setWrapStyleWord(true);
+       setFont(new Font("SansSerif", Font.PLAIN, 12));
+       setEditable(false);
     }
 
     /**

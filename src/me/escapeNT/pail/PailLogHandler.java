@@ -5,11 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import me.escapeNT.pail.GUIComponents.SettingsPanel;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.util.ScrollableTextArea;
 
 /**
  * Log Handler to print the console output to the GUI.
@@ -17,24 +15,18 @@ import me.escapeNT.pail.util.Util;
  */
 public class PailLogHandler extends Handler {
     
-    JTextArea output;
+    ScrollableTextArea output;
 
     /**
      * Constructs a new log handler using the specified text area for output.
      * @param output The JTextArea to write the log data to.
      */
-    public PailLogHandler(JTextArea output) {
+    public PailLogHandler(ScrollableTextArea output) {
         this.output = output;
     }
 
     @Override
     public synchronized void publish(LogRecord record) {
-        if(record.getMessage().equals("Reload complete.")
-                || (record.getMessage().contains("Done") && record.getMessage().contains("help"))) {
-            SettingsPanel settings = new SettingsPanel();
-            Util.getPlugin().loadInterfaceComponent("Settings", settings);
-            Util.getPlugin().getMainWindow().loadPanels();
-        }
 
         Date date = new Date(record.getMillis());
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");

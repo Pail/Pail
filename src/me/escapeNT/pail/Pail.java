@@ -12,6 +12,7 @@ import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
+import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.command.Command;
@@ -38,11 +39,18 @@ public class Pail extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        log.addHandler(new ServerReadyListener());
         Util.setPlugin(this);
 
         new Thread(new Runnable() {
             public void run() {
                 main = new MainWindow();
+
+                PailLogHandler handler = new PailLogHandler(
+                    Util.getServerControls().getServerConsolePanel().getConsoleOutput());
+                handler.setLevel(Level.ALL);
+                log.addHandler(handler);
+
                 getMainWindow().setTitle("Pail Server Manager");
                 getMainWindow().setResizable(false);
                 getMainWindow().addWindowListener(new WindowCloseListener());
@@ -54,12 +62,7 @@ public class Pail extends JavaPlugin {
                 getMainWindow().setVisible(true);
                 getMainWindow().requestFocus();
 
-                Util.setServerControls(getMainWindow().getServerControls());
-
-                PailLogHandler handler = new PailLogHandler(
-                        Util.getServerControls().getServerConsolePanel().getConsoleOutput());
-                handler.setLevel(Level.ALL);
-                log.addHandler(handler);
+                Util.setServerControls(getMainWindow().getServerControls());   
 
                 for(Player p : getServer().getOnlinePlayers()) {
                     Util.getServerControls().getListModel().addElement(p.getName());
@@ -153,10 +156,14 @@ public class Pail extends JavaPlugin {
      * @param panel The JPanel to load.
      * @param title The title of this panel.
      * @throws NullPointerException if the specified JPanel is null.
+     * @throws IllegalArgumentException if the title is already taken.
      */
     public void loadInterfaceComponent(String title, JPanel panel) {
         if(panel == null) {
             throw new NullPointerException("Attempt to pass null panel to be loaded.");
+        }
+        else if(Util.getInterfaceComponents().containsKey(title)) {
+            throw new IllegalArgumentException("That title is taken!");
         }
         else {
             if(title == null) {

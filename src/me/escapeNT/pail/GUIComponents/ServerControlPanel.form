@@ -128,7 +128,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/me/escapeNT/pail/GUIComponents/images/reload.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="       Reload Server"/>
+        <Property name="text" type="java.lang.String" value="Reload Server"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -145,7 +145,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/me/escapeNT/pail/GUIComponents/images/stop.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="           Stop Server"/>
+        <Property name="text" type="java.lang.String" value="   Stop Server"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>

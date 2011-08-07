@@ -140,7 +140,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         jSeparator1.setBounds(660, 380, 170, 12);
 
         reload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/reload.png"))); // NOI18N
-        reload.setText("       Reload Server");
+        reload.setText("Reload Server");
         reload.setFocusable(false);
         reload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +151,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         reload.setBounds(660, 390, 170, 37);
 
         stop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png"))); // NOI18N
-        stop.setText("           Stop Server");
+        stop.setText("   Stop Server");
         stop.setFocusable(false);
         stop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
