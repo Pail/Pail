@@ -32,7 +32,7 @@ public class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     
     public static final String PLUGIN_NAME = "Pail";
-    public static final double PLUGIN_VERSION = 0.1;
+    public static final String PLUGIN_VERSION = "0.1";
 
     private MainWindow main;
 
@@ -163,6 +163,20 @@ public class Pail extends JavaPlugin {
                 title = "";
             }
             Util.getInterfaceComponents().put(title, panel);
+        }
+    }
+
+    /**
+     * Gets the interface component by the specified title, or null if it isn't loaded.
+     * @param title The title of the component.
+     * @return The component loaded with the specified title, or null if it doesn't exist.
+     */
+    public JPanel getInterfaceComponent(String title) {
+        if(Util.getInterfaceComponents().containsKey(title)) {
+            return Util.getInterfaceComponents().get(title);
+        }
+        else {
+            return null;
         }
     }
 }

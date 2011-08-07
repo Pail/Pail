@@ -36,7 +36,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
         // Load images
         ImageIcon plus = new ImageIcon(getClass().getResource("images/plus.png"));
-        ImageIcon arrow = new ImageIcon(getClass().getResource("images/arrow.png"));
+        ImageIcon arrow = new ImageIcon(getClass().getResource("images/right.png"));
         ImageIcon kill = new ImageIcon(getClass().getResource("images/kill.png"));
         ImageIcon up = new ImageIcon(getClass().getResource("images/up.png"));
         ImageIcon down = new ImageIcon(getClass().getResource("images/down.png"));

@@ -1,8 +1,18 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.plaf.metal.MetalComboBoxUI;
+
 import me.escapeNT.pail.util.Util;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 
@@ -24,7 +34,39 @@ public class GiveItemView extends javax.swing.JDialog {
         initComponents();
         getRootPane().setDefaultButton(give);
         setResizable(false);
-        setSize(335, 130);
+        setSize(425, 175);
+
+        item.setRenderer(new IconListRenderer(getMaterials()));
+    }
+
+    /**
+     * Constructs a new HashMap for materials and their icons.
+     * @return The Map of material names and their icons.
+     */
+    private HashMap<Object, ImageIcon> getMaterials() {
+        HashMap<Object, ImageIcon> mats = new HashMap<Object, ImageIcon>();
+        List<String> names = sortMatNames();
+
+        for(String m : names) {
+            if(m.equals("AIR")) {
+                mats.put(m, new ImageIcon());
+            }
+            else {
+                mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
+            }
+        }
+
+        return mats;
+    }
+
+    private List<String> sortMatNames() {
+        List<String> names = new ArrayList<String>();
+
+        for(Material mat : Material.values()) {
+            names.add(mat.toString());
+        }
+        Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+        return names;
     }
 
     /** This method is called from within the constructor to
@@ -35,29 +77,27 @@ public class GiveItemView extends javax.swing.JDialog {
     private void initComponents() {
 
         idLabel = new javax.swing.JLabel();
-        itemID = new javax.swing.JTextField();
         amountLabel = new javax.swing.JLabel();
         amount = new javax.swing.JSpinner();
         give = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        item = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Give Item");
         getContentPane().setLayout(null);
 
-        idLabel.setText("Item ID");
+        idLabel.setText("Item");
         getContentPane().add(idLabel);
-        idLabel.setBounds(20, 26, 46, 16);
-        getContentPane().add(itemID);
-        itemID.setBounds(76, 20, 89, 28);
+        idLabel.setBounds(10, 40, 28, 30);
 
         amountLabel.setText("Amount");
         getContentPane().add(amountLabel);
-        amountLabel.setBounds(183, 26, 50, 16);
+        amountLabel.setBounds(290, 40, 50, 30);
 
         amount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 64, 1));
         getContentPane().add(amount);
-        amount.setBounds(243, 20, 58, 28);
+        amount.setBounds(340, 40, 58, 28);
 
         give.setText("Give");
         give.setFocusable(false);
@@ -67,7 +107,7 @@ public class GiveItemView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(give);
-        give.setBounds(226, 66, 75, 29);
+        give.setBounds(330, 110, 75, 29);
 
         cancel.setText("Cancel");
         cancel.setFocusable(false);
@@ -77,7 +117,11 @@ public class GiveItemView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancel);
-        cancel.setBounds(140, 66, 86, 29);
+        cancel.setBounds(250, 110, 86, 30);
+
+        item.setModel(new DefaultComboBoxModel(sortMatNames().toArray()));
+        getContentPane().add(item);
+        item.setBounds(40, 20, 230, 70);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,12 +131,10 @@ public class GiveItemView extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void giveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_giveActionPerformed
-        if(!itemID.getText().equals("")) {
-            Server serv = Util.getPlugin().getServer();
-            serv.dispatchCommand(new ConsoleCommandSender(serv), "give "
-                    + player + " " + itemID.getText() + " " + amount.getValue());
-            this.dispose();
-        }
+        Server s = Bukkit.getServer();
+        s.dispatchCommand(new ConsoleCommandSender(s), "give " + player + " "
+                + Material.getMaterial(item.getSelectedItem().toString()).getId() + " " + amount.getValue().toString());
+        dispose();
     }//GEN-LAST:event_giveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -101,6 +143,6 @@ public class GiveItemView extends javax.swing.JDialog {
     private javax.swing.JButton cancel;
     private javax.swing.JButton give;
     private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField itemID;
+    private javax.swing.JComboBox item;
     // End of variables declaration//GEN-END:variables
 }

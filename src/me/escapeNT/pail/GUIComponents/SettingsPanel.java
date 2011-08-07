@@ -158,7 +158,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(revert);
-        revert.setBounds(180, 390, 83, 29);
+        revert.setBounds(160, 400, 83, 29);
 
         save.setText("Save");
         save.setFocusable(false);
@@ -168,7 +168,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(save);
-        save.setBounds(260, 390, 75, 29);
+        save.setBounds(240, 400, 75, 29);
 
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
@@ -180,15 +180,15 @@ public class SettingsPanel extends javax.swing.JPanel {
         maxPlayers.setBounds(130, 350, 60, 28);
 
         add(jPanel1);
-        jPanel1.setBounds(20, 10, 350, 436);
+        jPanel1.setBounds(20, 10, 340, 440);
 
         craftVersion.setText("Craftbukkit version:");
         add(craftVersion);
-        craftVersion.setBounds(380, 20, 450, 20);
+        craftVersion.setBounds(370, 20, 490, 20);
 
         pailVersion.setText("Pail version:");
         add(pailVersion);
-        pailVersion.setBounds(380, 50, 410, 16);
+        pailVersion.setBounds(370, 50, 410, 16);
     }// </editor-fold>//GEN-END:initComponents
 
     private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
