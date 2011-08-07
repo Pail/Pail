@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.ServerConfigHandler;
@@ -26,7 +27,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         initComponents();
 
         craftVersion.setText("Craftbukkit version: " + parseCraftVersion());
-        parseCraftUpdate();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                parseCraftUpdate();
+            }
+        });
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
 
         loadConfig();
@@ -58,7 +63,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                 update.setForeground(Color.red);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            update.setText("Latest recommended build: Unknown");
+                update.setForeground(new Color(255, 200, 33));
         }
     }
 
