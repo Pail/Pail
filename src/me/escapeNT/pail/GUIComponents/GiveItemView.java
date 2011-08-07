@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.plaf.metal.MetalComboBoxUI;
 
 import me.escapeNT.pail.util.Util;
 

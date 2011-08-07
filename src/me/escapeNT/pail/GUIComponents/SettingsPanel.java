@@ -1,11 +1,19 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.ServerConfigHandler;
 import me.escapeNT.pail.util.Util;
+
+import org.bukkit.Bukkit;
 
 /**
  * Panel for editing server settings.
@@ -17,10 +25,42 @@ public class SettingsPanel extends javax.swing.JPanel {
     public SettingsPanel() {
         initComponents();
 
-        String craftv = Util.getPlugin().getServer().getVersion();
+        String craftv = parseCraftVersion();
         craftVersion.setText("Craftbukkit version:\n" + craftv);
+        parseCraftUpdate();
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
+
         loadConfig();
+    }
+
+    private String parseCraftVersion() {
+        String v = Bukkit.getServer().getVersion();
+        return v.substring(v.indexOf("jnks") - 4, v.indexOf("jnks"));
+    }
+
+    private void parseCraftUpdate() {
+        try {
+            URL url = new URL("http://ci.bukkit.org/job/dev-CraftBukkit/Recommended/buildNumber");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String v = in.readLine();
+            in.close();
+
+            boolean upToDate = false;;
+            if(Integer.parseInt(parseCraftVersion()) >= Integer.parseInt(v)) {
+                upToDate = true;
+            }
+
+            if(upToDate) {
+                update.setText("Latest recommended build: " + v);
+                update.setForeground(new Color(13, 190, 17));
+            }
+            else {
+                update.setText("Latest recommended build: " + v + " Update required!");
+                update.setForeground(Color.red);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -75,6 +115,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         maxPlayers = new javax.swing.JSpinner();
         craftVersion = new javax.swing.JLabel();
         pailVersion = new javax.swing.JLabel();
+        update = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -188,7 +229,11 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         pailVersion.setText("Pail version:");
         add(pailVersion);
-        pailVersion.setBounds(370, 50, 410, 16);
+        pailVersion.setBounds(370, 80, 410, 16);
+
+        update.setText("Latest recommended build:");
+        add(update);
+        update.setBounds(370, 50, 480, 16);
     }// </editor-fold>//GEN-END:initComponents
 
     private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
@@ -241,6 +286,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField seed;
     private javax.swing.JCheckBox spawnAnimals;
     private javax.swing.JCheckBox spawnMonsters;
+    private javax.swing.JLabel update;
     private javax.swing.JSpinner viewDistance;
     private javax.swing.JCheckBox whitelist;
     private javax.swing.JTextField worldName;
