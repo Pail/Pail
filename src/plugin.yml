@@ -1,0 +1,10 @@
+name: Pail
+main: me.escapeNT.pail.Pail
+version: 0.1
+author: escape
+load: startup
+commands:
+  Pail:
+    description: Opens the main Pail window.
+    usage: |
+      /<command>
