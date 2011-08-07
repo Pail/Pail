@@ -25,8 +25,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     public SettingsPanel() {
         initComponents();
 
-        String craftv = parseCraftVersion();
-        craftVersion.setText("Craftbukkit version:\n" + craftv);
+        craftVersion.setText("Craftbukkit version: " + parseCraftVersion());
         parseCraftUpdate();
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
 
@@ -45,7 +44,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             String v = in.readLine();
             in.close();
 
-            boolean upToDate = false;;
+            boolean upToDate = false;
             if(Integer.parseInt(parseCraftVersion()) >= Integer.parseInt(v)) {
                 upToDate = true;
             }
