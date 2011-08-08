@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail;
 
 import java.awt.event.WindowEvent;
@@ -71,9 +70,10 @@ public class Pail extends JavaPlugin {
         }, "Pail").start();
 
         PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvent(Type.PLAYER_JOIN, new PailPlayerListener(), Priority.Monitor, this);
-        pm.registerEvent(Type.PLAYER_KICK, new PailPlayerListener(), Priority.Monitor, this);
-        pm.registerEvent(Type.PLAYER_QUIT, new PailPlayerListener(), Priority.Monitor, this);
+        PailPlayerListener playerListener = new PailPlayerListener();
+        pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Monitor, this);
+        pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Monitor, this);
+        pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
 
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Enabled");
     }
