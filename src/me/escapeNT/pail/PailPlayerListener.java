@@ -2,6 +2,7 @@
 
 package me.escapeNT.pail;
 
+import javax.swing.SwingUtilities;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,17 +17,29 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PailPlayerListener extends PlayerListener {
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Util.getServerControls().getListModel().addElement(event.getPlayer().getName());
+    public void onPlayerJoin(final PlayerJoinEvent event) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Util.getServerControls().getListModel().addElement(event.getPlayer().getName());
+            }
+        });
     }
 
     @Override
     public void onPlayerKick(final PlayerKickEvent event) {
-        Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+            }
+        });
     }
 
     @Override
     public void onPlayerQuit(final PlayerQuitEvent event) {
-        Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+            }
+        });
     }
 }
