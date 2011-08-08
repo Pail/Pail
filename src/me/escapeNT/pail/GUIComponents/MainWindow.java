@@ -40,12 +40,15 @@ public class MainWindow extends JFrame {
         tabPane.removeAll();
         List<String> t = new ArrayList<String>();
         List<JPanel> p = new ArrayList<JPanel>();
+        tabPane.add(Util.getInterfaceComponents().get("Server Control"), "Server Control");
         for (String title : Util.getInterfaceComponents().keySet()) {
             t.add(title);
             p.add(Util.getInterfaceComponents().get(title));
         }
         for(int i = t.size() - 1; i >= 0; i--) {
-            tabPane.add(p.get(i),t.get(i));
+            if(!t.get(i).equals("Server Control")) {
+                tabPane.add(p.get(i),t.get(i));
+            }
         }
         validate();
     }

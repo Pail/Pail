@@ -121,6 +121,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         craftVersion = new javax.swing.JLabel();
         pailVersion = new javax.swing.JLabel();
         update = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -239,6 +240,10 @@ public class SettingsPanel extends javax.swing.JPanel {
         update.setText("Latest recommended build:");
         add(update);
         update.setBounds(370, 50, 480, 16);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/pail.png"))); // NOI18N
+        add(jLabel6);
+        jLabel6.setBounds(510, 160, 200, 190);
     }// </editor-fold>//GEN-END:initComponents
 
     private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
@@ -279,6 +284,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner maxPlayers;
     private javax.swing.JCheckBox nether;

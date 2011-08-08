@@ -33,7 +33,7 @@ public class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     
     public static final String PLUGIN_NAME = "Pail";
-    public static final String PLUGIN_VERSION = "0.1";
+    public static final String PLUGIN_VERSION = "0.2";
 
     private MainWindow main;
 
@@ -81,7 +81,7 @@ public class Pail extends JavaPlugin {
     @Override
     public void onDisable() {
         getMainWindow().dispose();
-        Util.log(PLUGIN_NAME + " Disabled");
+        Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     
     @Override

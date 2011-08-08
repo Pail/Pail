@@ -1,6 +1,6 @@
 name: Pail
 main: me.escapeNT.pail.Pail
-version: 0.1
+version: 0.2
 author: escape
 load: startup
 commands:
