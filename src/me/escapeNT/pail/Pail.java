@@ -4,6 +4,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.Util;
+import org.bukkit.Material;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -201,5 +203,18 @@ public class Pail extends JavaPlugin {
         PanelConfig.getPanelsActivated().put(title, activated);
         PanelConfig.save();
         getMainWindow().loadPanels();
+    }
+
+    /**
+     * Gets the 25x25 pixel image icon for the provided Material.
+     * @param material The material to get the icon for.
+     * @return The 25x25px ImageIcon of the provided material.
+     * @throws IllegalArgumentException if the Material is AIR.
+     */
+    public ImageIcon getIcon(Material material) {
+        if(material == Material.AIR) {
+            throw new IllegalArgumentException("There is no image for air silly.");
+        }
+        return new ImageIcon(getClass().getResource("GUIComponents/images/" + material.toString() + ".png"));
     }
 }

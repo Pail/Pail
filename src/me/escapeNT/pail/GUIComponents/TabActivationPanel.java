@@ -44,6 +44,9 @@ public class TabActivationPanel extends JPanel {
             if(s.equals("Settings") || s.equals("Server Control")) {
                 break;
             }
+            if(!PanelConfig.getPanelsActivated().containsKey(s)) {
+                PanelConfig.getPanelsActivated().put(s, Boolean.TRUE);
+            }
             if(PanelConfig.getPanelsActivated().get(s)) {
                 getBoxes().put(s, new JCheckBox(s));
                 getBoxes().get(s).setSelected(true);
