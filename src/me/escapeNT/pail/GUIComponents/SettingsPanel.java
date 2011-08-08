@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.ServerConfigHandler;
+import me.escapeNT.pail.util.PanelConfig;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.Bukkit;
@@ -121,7 +124,10 @@ public class SettingsPanel extends javax.swing.JPanel {
         craftVersion = new javax.swing.JLabel();
         pailVersion = new javax.swing.JLabel();
         update = new javax.swing.JLabel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel6 = new javax.swing.JLabel();
+        tabActivationPanel = new me.escapeNT.pail.GUIComponents.TabActivationPanel();
+        reload = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -241,9 +247,25 @@ public class SettingsPanel extends javax.swing.JPanel {
         add(update);
         update.setBounds(370, 50, 480, 16);
 
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/pail.png"))); // NOI18N
-        add(jLabel6);
-        jLabel6.setBounds(510, 160, 200, 190);
+        jLabel6.setBounds(140, 80, 200, 190);
+        jLayeredPane1.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        tabActivationPanel.setBounds(10, 20, 440, 280);
+        jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        reload.setText("Save");
+        reload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadActionPerformed(evt);
+            }
+        });
+        reload.setBounds(370, 300, 80, 30);
+        jLayeredPane1.add(reload, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        add(jLayeredPane1);
+        jLayeredPane1.setBounds(370, 110, 460, 340);
     }// </editor-fold>//GEN-END:initComponents
 
     private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
@@ -275,6 +297,14 @@ public class SettingsPanel extends javax.swing.JPanel {
                 "Server config saved.", "Saved", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveActionPerformed
 
+    private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
+        for(JCheckBox b : tabActivationPanel.getBoxes().values()) {
+            PanelConfig.getPanelsActivated().put(b.getText(), b.isSelected());
+        }
+        PanelConfig.save();
+        Util.getPlugin().getMainWindow().loadPanels();
+    }//GEN-LAST:event_reloadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel craftVersion;
@@ -285,6 +315,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner maxPlayers;
     private javax.swing.JCheckBox nether;
@@ -292,11 +323,13 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel pailVersion;
     private javax.swing.JSpinner port;
     private javax.swing.JCheckBox pvp;
+    private javax.swing.JButton reload;
     private javax.swing.JButton revert;
     private javax.swing.JButton save;
     private javax.swing.JTextField seed;
     private javax.swing.JCheckBox spawnAnimals;
     private javax.swing.JCheckBox spawnMonsters;
+    private me.escapeNT.pail.GUIComponents.TabActivationPanel tabActivationPanel;
     private javax.swing.JLabel update;
     private javax.swing.JSpinner viewDistance;
     private javax.swing.JCheckBox whitelist;

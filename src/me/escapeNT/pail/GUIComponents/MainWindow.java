@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import me.escapeNT.pail.util.PanelConfig;
 
 import me.escapeNT.pail.util.Util;
 
@@ -37,6 +38,7 @@ public class MainWindow extends JFrame {
      * Loads all queued panels into the interface.
      */
     public void loadPanels() {
+        PanelConfig.load();
         tabPane.removeAll();
         List<String> t = new ArrayList<String>();
         List<JPanel> p = new ArrayList<JPanel>();
@@ -46,7 +48,10 @@ public class MainWindow extends JFrame {
             p.add(Util.getInterfaceComponents().get(title));
         }
         for(int i = t.size() - 1; i >= 0; i--) {
-            if(!t.get(i).equals("Server Control")) {
+            if(!PanelConfig.getPanelsActivated().containsKey(t.get(i))) {
+                PanelConfig.getPanelsActivated().put(t.get(i), true);
+            }
+            if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(t.get(i))) {
                 tabPane.add(p.get(i),t.get(i));
             }
         }

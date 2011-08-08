@@ -11,6 +11,7 @@ import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
+import me.escapeNT.pail.util.PanelConfig;
 import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.Util;
 
@@ -185,5 +186,20 @@ public class Pail extends JavaPlugin {
         else {
             return null;
         }
+    }
+
+    /**
+     * Sets the activated (visible) status of the specified tab. Note: this will
+     * refresh the tab layout to reflect changes immediately.
+     * @param title The title of the panel.
+     * @param activated True if the tab will be visible.
+     */
+    public void setActivated(String title, boolean activated) {
+        if(!PanelConfig.getPanelsActivated().containsKey(title)) {
+            throw new IllegalArgumentException("Panel doen't exist.");
+        }
+        PanelConfig.getPanelsActivated().put(title, activated);
+        PanelConfig.save();
+        getMainWindow().loadPanels();
     }
 }
