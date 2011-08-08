@@ -1,5 +1,5 @@
 
-package me.escapeNT.pail.util;
+package me.escapeNT.pail.config;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import me.escapeNT.pail.util.Util;
 
 /**
  * Class to store the activation status of third party panels.

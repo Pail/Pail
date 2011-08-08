@@ -11,7 +11,7 @@ import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
-import me.escapeNT.pail.util.PanelConfig;
+import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.Util;
 

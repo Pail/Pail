@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.ServerConfigHandler;
-import me.escapeNT.pail.util.PanelConfig;
+import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.Bukkit;

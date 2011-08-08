@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import me.escapeNT.pail.util.PanelConfig;
+import me.escapeNT.pail.config.PanelConfig;
 
 import me.escapeNT.pail.util.Util;
 

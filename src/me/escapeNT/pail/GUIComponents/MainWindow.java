@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import me.escapeNT.pail.util.PanelConfig;
+import me.escapeNT.pail.config.PanelConfig;
 
 import me.escapeNT.pail.util.Util;
 
