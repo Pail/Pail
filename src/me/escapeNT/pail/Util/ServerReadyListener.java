@@ -15,7 +15,7 @@ public class ServerReadyListener extends Handler {
 
     @Override
     public void publish(LogRecord record) {
-        if(record.getMessage().equals("Reload complete.")
+        if(record.getMessage().contains("Reload complete.")
                 || (record.getMessage().contains("Done") && record.getMessage().contains("help"))) {
             SettingsPanel settings = new SettingsPanel();
             Util.getPlugin().loadInterfaceComponent("Settings", settings);
