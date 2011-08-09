@@ -78,6 +78,7 @@ public class Pail extends JavaPlugin {
         pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
+        pm.registerEvent(Type.SERVER_COMMAND, new PailServerListener(), Priority.Monitor, this);
 
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Enabled");
     }
