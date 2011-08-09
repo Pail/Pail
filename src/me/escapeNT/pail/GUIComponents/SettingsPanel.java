@@ -144,7 +144,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel2.setText("World seed");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(30, 80, 69, 30);
+        jLabel2.setBounds(26, 84, 69, 16);
 
         seed.setToolTipText("The seed used in generating new terrain.");
         jPanel1.add(seed);
@@ -192,11 +192,11 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel3.setText("View distance");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 286, 86, 30);
+        jLabel3.setBounds(30, 300, 86, 16);
 
         jLabel4.setText("Server port");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 316, 68, 30);
+        jLabel4.setBounds(50, 330, 68, 16);
 
         port.setModel(new javax.swing.SpinnerNumberModel(25565, 1, 65535, 1));
         port.setToolTipText("Port on which the server is running.");
@@ -226,7 +226,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 346, 80, 30);
+        jLabel5.setBounds(40, 360, 80, 16);
 
         maxPlayers.setModel(new javax.swing.SpinnerNumberModel(0, 0, 255, 1));
         jPanel1.add(maxPlayers);
@@ -250,10 +250,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/pail.png"))); // NOI18N
-        jLabel6.setBounds(140, 80, -1, 190);
+        jLabel6.setBounds(140, 80, 200, 190);
         jLayeredPane1.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
         tabActivationPanel.setBounds(10, 20, 440, 280);
         jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
