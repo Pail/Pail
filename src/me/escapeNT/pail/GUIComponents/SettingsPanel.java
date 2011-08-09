@@ -125,7 +125,6 @@ public class SettingsPanel extends javax.swing.JPanel {
         pailVersion = new javax.swing.JLabel();
         update = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLabel6 = new javax.swing.JLabel();
         tabActivationPanel = new me.escapeNT.pail.GUIComponents.TabActivationPanel();
         reload = new javax.swing.JButton();
 
@@ -240,6 +239,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         craftVersion.setBounds(370, 20, 490, 20);
 
         pailVersion.setText("Pail version:");
+        pailVersion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pailVersionMouseClicked(evt);
+            }
+        });
         add(pailVersion);
         pailVersion.setBounds(370, 80, 410, 16);
 
@@ -249,9 +253,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/pail.png"))); // NOI18N
-        jLabel6.setBounds(140, 80, 200, 190);
-        jLayeredPane1.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
         tabActivationPanel.setBounds(10, 20, 440, 280);
         jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -305,6 +307,10 @@ public class SettingsPanel extends javax.swing.JPanel {
         Util.getPlugin().getMainWindow().loadPanels();
     }//GEN-LAST:event_reloadActionPerformed
 
+    private void pailVersionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pailVersionMouseClicked
+        new AboutView().setVisible(true);
+    }//GEN-LAST:event_pailVersionMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel craftVersion;
@@ -314,7 +320,6 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner maxPlayers;

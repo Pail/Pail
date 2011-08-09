@@ -151,7 +151,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         reload.setBounds(660, 390, 170, 37);
 
         stop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png"))); // NOI18N
-        stop.setText("   Stop Server");
+        stop.setText("Stop Server");
         stop.setFocusable(false);
         stop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
