@@ -15,8 +15,8 @@ import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.Util;
-import org.bukkit.Material;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -35,7 +35,7 @@ public class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     
     public static final String PLUGIN_NAME = "Pail";
-    public static final String PLUGIN_VERSION = "0.2";
+    public static final String PLUGIN_VERSION = "0.3";
 
     private MainWindow main;
 
