@@ -35,12 +35,13 @@ public class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     
     public static final String PLUGIN_NAME = "Pail";
-    public static final String PLUGIN_VERSION = "0.3";
+    public static String PLUGIN_VERSION;
 
     private MainWindow main;
 
     @Override
     public void onEnable() {
+        PLUGIN_VERSION = getDescription().getVersion();
         log.addHandler(new ServerReadyListener());
         Util.setPlugin(this);
 
