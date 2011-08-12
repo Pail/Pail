@@ -1,9 +1,10 @@
-
 package me.escapeNT.pail.util;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import me.escapeNT.pail.Pail;
+import org.bukkit.Bukkit;
 
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
 
@@ -20,7 +21,7 @@ public class ServerReadyListener extends Handler {
             SettingsPanel settings = new SettingsPanel();
             Util.getPlugin().loadInterfaceComponent("Settings", settings);
             Util.getPlugin().getMainWindow().loadPanels();
-            Logger.getLogger("Minecraft").removeHandler(this);
+            Logger.getLogger("Minecraft").removeHandler(((Pail)Bukkit.getServer().getPluginManager().getPlugin("Pail")).handler);
         }
     }
 
