@@ -36,13 +36,14 @@ public class Pail extends JavaPlugin {
     
     public static final String PLUGIN_NAME = "Pail";
     public static String PLUGIN_VERSION;
+    public static ServerReadyListener handler = new ServerReadyListener();
 
     private MainWindow main;
 
     @Override
     public void onEnable() {
         PLUGIN_VERSION = getDescription().getVersion();
-        log.addHandler(new ServerReadyListener());
+        log.addHandler(handler);
         Util.setPlugin(this);
 
         new Thread(new Runnable() {
