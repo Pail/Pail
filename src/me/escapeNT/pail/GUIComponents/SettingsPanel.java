@@ -3,7 +3,6 @@ package me.escapeNT.pail.GUIComponents;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
@@ -79,6 +78,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         worldName.setText(c.get("level-name"));
         seed.setText(c.get("level-seed"));
+        ip.setText(c.get("server-ip"));
 
         nether.setSelected(Boolean.parseBoolean(c.get("allow-nether")));
         spawnMonsters.setSelected(Boolean.parseBoolean(c.get("spawn-monsters")));
@@ -104,7 +104,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         worldName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        seed = new javax.swing.JTextField();
+        ip = new javax.swing.JTextField();
         nether = new javax.swing.JCheckBox();
         spawnMonsters = new javax.swing.JCheckBox();
         spawnAnimals = new javax.swing.JCheckBox();
@@ -120,6 +120,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         save = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         maxPlayers = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
+        seed = new javax.swing.JTextField();
         craftVersion = new javax.swing.JLabel();
         pailVersion = new javax.swing.JLabel();
         update = new javax.swing.JLabel();
@@ -144,62 +146,62 @@ public class SettingsPanel extends javax.swing.JPanel {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(26, 84, 69, 16);
 
-        seed.setToolTipText("The seed used in generating new terrain.");
-        jPanel1.add(seed);
-        seed.setBounds(109, 78, 225, 28);
+        ip.setToolTipText("Set this if you want the server to bind to a particular IP.");
+        jPanel1.add(ip);
+        ip.setBounds(110, 120, 225, 28);
 
         nether.setText("Allow nether");
         nether.setToolTipText("Allow portal transport to the nether.");
         jPanel1.add(nether);
-        nether.setBounds(26, 124, 111, 23);
+        nether.setBounds(30, 160, 111, 23);
 
         spawnMonsters.setText("Spawn monsters");
         spawnMonsters.setToolTipText("Spawn hostile monsters.");
         jPanel1.add(spawnMonsters);
-        spawnMonsters.setBounds(26, 165, 135, 23);
+        spawnMonsters.setBounds(30, 200, 135, 23);
 
         spawnAnimals.setText("Spawn animals");
         spawnAnimals.setToolTipText("Spawn non-hostile animals.");
         jPanel1.add(spawnAnimals);
-        spawnAnimals.setBounds(26, 206, 125, 23);
+        spawnAnimals.setBounds(30, 240, 125, 23);
 
         online.setText("Online mode");
         online.setToolTipText("Server checks connecting players against minecraft's account database.");
         jPanel1.add(online);
-        online.setBounds(194, 165, 112, 23);
+        online.setBounds(200, 200, 112, 23);
 
         pvp.setText("Enable PVP");
         pvp.setToolTipText("Enable player verses player damage.");
         jPanel1.add(pvp);
-        pvp.setBounds(194, 124, 99, 23);
+        pvp.setBounds(200, 160, 99, 23);
 
         whitelist.setText("Whitelist enabled");
         whitelist.setToolTipText("With a whitelist enabled, users not on the list will be unable to connect.");
         jPanel1.add(whitelist);
-        whitelist.setBounds(194, 206, 140, 23);
+        whitelist.setBounds(200, 240, 140, 23);
 
         flight.setText("Allow flight");
         flight.setToolTipText("Will allow users to use flight/no-clip on the server.");
         jPanel1.add(flight);
-        flight.setBounds(26, 247, 105, 23);
+        flight.setBounds(30, 280, 105, 23);
 
         viewDistance.setModel(new javax.swing.SpinnerNumberModel(3, 3, 15, 1));
         viewDistance.setToolTipText("The number of chunks sent to the client. (3-15)");
         jPanel1.add(viewDistance);
-        viewDistance.setBounds(130, 290, 55, 28);
+        viewDistance.setBounds(130, 310, 55, 28);
 
         jLabel3.setText("View distance");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 300, 86, 16);
+        jLabel3.setBounds(30, 320, 86, 16);
 
         jLabel4.setText("Server port");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 330, 68, 16);
+        jLabel4.setBounds(50, 350, 68, 16);
 
         port.setModel(new javax.swing.SpinnerNumberModel(25565, 1, 65535, 1));
         port.setToolTipText("Port on which the server is running.");
         jPanel1.add(port);
-        port.setBounds(130, 320, 96, 28);
+        port.setBounds(130, 340, 96, 28);
 
         revert.setText("Revert");
         revert.setFocusable(false);
@@ -209,7 +211,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(revert);
-        revert.setBounds(160, 400, 83, 29);
+        revert.setBounds(170, 400, 83, 29);
 
         save.setText("Save");
         save.setFocusable(false);
@@ -219,16 +221,24 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(save);
-        save.setBounds(240, 400, 75, 29);
+        save.setBounds(260, 400, 75, 29);
 
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 360, 80, 16);
+        jLabel5.setBounds(40, 380, 80, 16);
 
         maxPlayers.setModel(new javax.swing.SpinnerNumberModel(0, 0, 255, 1));
         jPanel1.add(maxPlayers);
-        maxPlayers.setBounds(130, 350, 60, 28);
+        maxPlayers.setBounds(130, 370, 60, 28);
+
+        jLabel6.setText("Server IP");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(40, 120, 70, 30);
+
+        seed.setToolTipText("The seed used in generating new terrain.");
+        jPanel1.add(seed);
+        seed.setBounds(109, 78, 225, 28);
 
         add(jPanel1);
         jPanel1.setBounds(20, 10, 340, 440);
@@ -276,7 +286,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         HashMap<String, String> saveData = new HashMap<String, String>();
 
-        saveData.put("server-ip", "");
+        saveData.put("server-ip", ip.getText());
         saveData.put("level-name", worldName.getText());
         saveData.put("level-seed", seed.getText());
 
@@ -314,11 +324,13 @@ public class SettingsPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel craftVersion;
     private javax.swing.JCheckBox flight;
+    private javax.swing.JTextField ip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner maxPlayers;
