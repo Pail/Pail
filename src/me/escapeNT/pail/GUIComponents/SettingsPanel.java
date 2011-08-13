@@ -88,9 +88,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         online.setSelected(Boolean.parseBoolean(c.get("online-mode")));
         whitelist.setSelected(Boolean.parseBoolean(c.get("white-list")));
 
-        viewDistance.setValue(Integer.parseInt(c.get("view-distance")));
-        port.setValue(Integer.parseInt(c.get("server-port")));
-        maxPlayers.setValue(Integer.parseInt(c.get("max-players")));
+        try {
+            viewDistance.setValue(Integer.parseInt(c.get("view-distance")));
+            port.setValue(Integer.parseInt(c.get("server-port")));
+            maxPlayers.setValue(Integer.parseInt(c.get("max-players")));
+        } catch(NumberFormatException ex) {}
     }
 
     /** This method is called from within the constructor to
@@ -168,17 +170,17 @@ public class SettingsPanel extends javax.swing.JPanel {
         online.setText("Online mode");
         online.setToolTipText("Server checks connecting players against minecraft's account database.");
         jPanel1.add(online);
-        online.setBounds(200, 200, 112, 23);
+        online.setBounds(190, 200, 112, 23);
 
         pvp.setText("Enable PVP");
         pvp.setToolTipText("Enable player verses player damage.");
         jPanel1.add(pvp);
-        pvp.setBounds(200, 160, 99, 23);
+        pvp.setBounds(190, 160, 99, 23);
 
         whitelist.setText("Whitelist enabled");
         whitelist.setToolTipText("With a whitelist enabled, users not on the list will be unable to connect.");
         jPanel1.add(whitelist);
-        whitelist.setBounds(200, 240, 140, 23);
+        whitelist.setBounds(190, 240, 140, 23);
 
         flight.setText("Allow flight");
         flight.setToolTipText("Will allow users to use flight/no-clip on the server.");
@@ -192,11 +194,11 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel3.setText("View distance");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 320, 86, 16);
+        jLabel3.setBounds(30, 306, 86, 30);
 
         jLabel4.setText("Server port");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 350, 68, 16);
+        jLabel4.setBounds(50, 336, 68, 30);
 
         port.setModel(new javax.swing.SpinnerNumberModel(25565, 1, 65535, 1));
         port.setToolTipText("Port on which the server is running.");
@@ -226,7 +228,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 380, 80, 16);
+        jLabel5.setBounds(40, 366, 80, 30);
 
         maxPlayers.setModel(new javax.swing.SpinnerNumberModel(0, 0, 255, 1));
         jPanel1.add(maxPlayers);
