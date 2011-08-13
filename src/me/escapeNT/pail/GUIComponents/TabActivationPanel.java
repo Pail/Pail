@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.GridLayout;
@@ -47,16 +46,10 @@ public class TabActivationPanel extends JPanel {
             if(!PanelConfig.getPanelsActivated().containsKey(s)) {
                 PanelConfig.getPanelsActivated().put(s, Boolean.TRUE);
             }
-            if(PanelConfig.getPanelsActivated().get(s)) {
-                getBoxes().put(s, new JCheckBox(s));
-                getBoxes().get(s).setSelected(true);
-                add(getBoxes().get(s));
-            }
-            else {
-                getBoxes().put(s, new JCheckBox(s));
-                getBoxes().get(s).setSelected(false);
-                add(getBoxes().get(s));
-            }
+            
+            getBoxes().put(s, new JCheckBox(s));
+            getBoxes().get(s).setSelected(PanelConfig.getPanelsActivated().get(s));
+            add(getBoxes().get(s));
         }
     }
 
