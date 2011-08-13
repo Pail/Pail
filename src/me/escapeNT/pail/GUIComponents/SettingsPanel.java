@@ -64,7 +64,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                 update.setText("Latest recommended build: " + v + " Update required!");
                 update.setForeground(Color.red);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             update.setText("Latest recommended build: Unknown");
                 update.setForeground(new Color(255, 200, 33));
         }
