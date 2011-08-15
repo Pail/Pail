@@ -33,10 +33,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Pail extends JavaPlugin {
     
     private static final Logger log = Logger.getLogger("Minecraft");
-    
+
     public static final String PLUGIN_NAME = "Pail";
+    public static final ServerReadyListener handler = new ServerReadyListener();
     public static String PLUGIN_VERSION;
-    public static ServerReadyListener handler = new ServerReadyListener();
 
     private MainWindow main;
 

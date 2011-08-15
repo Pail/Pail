@@ -62,7 +62,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                 update.setForeground(new Color(13, 190, 17));
             }
             else {
-                update.setText("Latest recommended build: " + v + " Update required!");
+                update.setText("Latest recommended build: " + v + " - Update required!");
                 update.setForeground(Color.red);
             }
         } catch (Exception ex) {
@@ -307,7 +307,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         ServerConfigHandler.save(saveData);
 
         JOptionPane.showMessageDialog(Util.getPlugin().getMainWindow(), 
-                "Server config saved.", "Saved", JOptionPane.INFORMATION_MESSAGE);
+                "Server config saved!\nRestart the server to apply.", "Config Saved", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveActionPerformed
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed

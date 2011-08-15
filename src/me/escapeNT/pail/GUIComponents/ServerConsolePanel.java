@@ -4,6 +4,9 @@ package me.escapeNT.pail.GUIComponents;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.LinkedList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -22,6 +25,8 @@ public class ServerConsolePanel extends JPanel {
 
     private ScrollableTextArea consoleOutput;
     private JTextField consoleInput;
+    private LinkedList<String> cmdHistory = new LinkedList<String>();
+    private CommandRecallListener crl = new CommandRecallListener();
     
     public ServerConsolePanel() {
         consoleOutput = new ScrollableTextArea();
@@ -31,6 +36,7 @@ public class ServerConsolePanel extends JPanel {
 
         consoleInput = new JTextField();
         consoleInput.addActionListener(new ConsoleCommandListener());
+        consoleInput.addKeyListener(crl);
         this.add(BorderLayout.SOUTH, consoleInput);
     }
 
@@ -52,7 +58,46 @@ public class ServerConsolePanel extends JPanel {
                 Util.getPlugin().saveState();
             }
             server.dispatchCommand(new ConsoleCommandSender(server), consoleInput.getText());
+
+            if(!consoleInput.getText().equals("")) {
+                cmdHistory.addFirst(consoleInput.getText());
+                if(cmdHistory.size() > 10) {
+                    cmdHistory.removeLast();
+                }
+            }
+
             consoleInput.setText("");
+            crl.setIndex(0);
+        }
+    }
+
+    /**
+     * Listener for up and down arrow events to recall command history.
+     */
+    private class CommandRecallListener implements KeyListener {
+
+        private int index = 0;
+
+        public void keyTyped(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {}
+
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_UP) {
+                if(index < cmdHistory.size() - 1) {
+                    index++;
+                    consoleInput.setText(cmdHistory.get(index));
+                }
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if(index > 0) {
+                    index--;
+                    consoleInput.setText(cmdHistory.get(index));
+                }
+            }
+        }   
+
+        public void setIndex(int index) {
+            this.index = index;
         }
     }
 }
