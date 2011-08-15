@@ -18,7 +18,7 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         this.player = player;
 
         for(Player p : Util.getPlugin().getServer().getOnlinePlayers()) {
-            if(!p.getName().equals(player)) {
+            if(p != null && !p.getName().equals(player)) {
                 locations.addItem(p.getName());
             }
         }

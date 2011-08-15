@@ -16,6 +16,8 @@ import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.World;
 
 /**
  * Panel for editing server settings.
@@ -73,26 +75,24 @@ public class SettingsPanel extends javax.swing.JPanel {
      * Loads the stored values from the server configuration.
      */
     private void loadConfig() {
-        ServerConfigHandler.load();
-        HashMap<String, String> c = ServerConfigHandler.getProperties();
+        Server s = Bukkit.getServer();
+        World main = s.getWorlds().get(0);
 
-        worldName.setText(c.get("level-name"));
-        seed.setText(c.get("level-seed"));
-        ip.setText(c.get("server-ip"));
+        worldName.setText(main.getName());
+        seed.setText(new Long(main.getSeed()).toString());
+        ip.setText(s.getIp());
 
-        nether.setSelected(Boolean.parseBoolean(c.get("allow-nether")));
-        spawnMonsters.setSelected(Boolean.parseBoolean(c.get("spawn-monsters")));
-        spawnAnimals.setSelected(Boolean.parseBoolean(c.get("spawn-animals")));
-        flight.setSelected(Boolean.parseBoolean(c.get("allow-flight")));
-        pvp.setSelected(Boolean.parseBoolean(c.get("pvp")));
-        online.setSelected(Boolean.parseBoolean(c.get("online-mode")));
-        whitelist.setSelected(Boolean.parseBoolean(c.get("white-list")));
+        nether.setSelected(s.getAllowNether());
+        spawnMonsters.setSelected(main.getAllowMonsters());
+        spawnAnimals.setSelected(main.getAllowAnimals());
+        flight.setSelected(s.getAllowFlight());
+        pvp.setSelected(main.getPVP());
+        online.setSelected(s.getOnlineMode());
+        whitelist.setSelected(s.hasWhitelist());
 
-        try {
-            viewDistance.setValue(Integer.parseInt(c.get("view-distance")));
-            port.setValue(Integer.parseInt(c.get("server-port")));
-            maxPlayers.setValue(Integer.parseInt(c.get("max-players")));
-        } catch(NumberFormatException ex) {}
+        viewDistance.setValue(s.getViewDistance());
+        port.setValue(s.getPort());
+        maxPlayers.setValue(s.getMaxPlayers());
     }
 
     /** This method is called from within the constructor to
