@@ -200,7 +200,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class DeOpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Util.log("Deop");
             Server s = Bukkit.getServer();
             s.dispatchCommand(new ConsoleCommandSender(s), "deop " + playerList.getSelectedValue().toString());
         }
@@ -233,7 +232,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class BanPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Util.log("Banning");
             Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
                     Bukkit.getServer()), "ban " + playerList.getSelectedValue().toString());
         }
