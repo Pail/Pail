@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
+import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
@@ -41,7 +42,15 @@ public class PailLogHandler extends Handler {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                output.append(sb.toString());
+                JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
+                boolean scroll = false;
+                if(vert.getValue() == vert.getMaximum()) {
+                    scroll = true;
+                }
+                output.append(sb.toString().replace("[0m", ""));
+                if(scroll) {
+                    vert.setValue(vert.getMaximum());
+                }
             }
         });
     }
