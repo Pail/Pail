@@ -41,6 +41,9 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         ImageIcon kill = new ImageIcon(getClass().getResource("images/kill.png"));
         ImageIcon up = new ImageIcon(getClass().getResource("images/up.png"));
         ImageIcon down = new ImageIcon(getClass().getResource("images/down.png"));
+        ImageIcon msg = new ImageIcon(getClass().getResource("images/msg.png"));
+        ImageIcon kickico = new ImageIcon(getClass().getResource("images/kick.png"));
+        ImageIcon banico = new ImageIcon(getClass().getResource("images/ban.png"));
         
         // Construct player popup menu
         playerMenu = new JPopupMenu();
@@ -64,6 +67,19 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         JMenuItem deop = new JMenuItem("Demote from OP", down);
         deop.addActionListener(new DeOpPlayerListener());
         playerMenu.add(deop);
+        
+        // TODO - new icons
+        JMenuItem message = new JMenuItem("Message", msg);
+        message.addActionListener(new MessagePlayerListener());
+        playerMenu.add(message);
+
+        JMenuItem kick = new JMenuItem("Kick", kickico);
+        kick.addActionListener(new KickPlayerListener());
+        playerMenu.add(kick);
+
+        JMenuItem ban = new JMenuItem("Ban", banico);
+        ban.addActionListener(new BanPlayerListener());
+        playerMenu.add(ban);
     }
 
     /** This method is called from within the constructor to
@@ -78,10 +94,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         serverConsolePanel = new me.escapeNT.pail.GUIComponents.ServerConsolePanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         playerList = new javax.swing.JList();
-        sendMessage = new javax.swing.JButton();
-        kick = new javax.swing.JButton();
-        ban = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         reload = new javax.swing.JButton();
         stop = new javax.swing.JButton();
 
@@ -106,39 +118,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(playerList);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(660, 10, 170, 270);
-
-        sendMessage.setText("Message Player");
-        sendMessage.setFocusable(false);
-        sendMessage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendMessageActionPerformed(evt);
-            }
-        });
-        add(sendMessage);
-        sendMessage.setBounds(660, 290, 170, 29);
-
-        kick.setText("Kick Player");
-        kick.setFocusable(false);
-        kick.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kickActionPerformed(evt);
-            }
-        });
-        add(kick);
-        kick.setBounds(660, 320, 170, 29);
-
-        ban.setText("Ban Player");
-        ban.setFocusable(false);
-        ban.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                banActionPerformed(evt);
-            }
-        });
-        add(ban);
-        ban.setBounds(660, 350, 170, 29);
-        add(jSeparator1);
-        jSeparator1.setBounds(660, 380, 170, 12);
+        jScrollPane1.setBounds(660, 10, 170, 360);
 
         reload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/reload.png"))); // NOI18N
         reload.setText("Reload Server");
@@ -149,7 +129,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
             }
         });
         add(reload);
-        reload.setBounds(660, 390, 170, 37);
+        reload.setBounds(660, 380, 170, 37);
 
         stop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png"))); // NOI18N
         stop.setText("Stop Server");
@@ -160,7 +140,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
             }
         });
         add(stop);
-        stop.setBounds(660, 430, 170, 37);
+        stop.setBounds(660, 420, 170, 37);
     }// </editor-fold>//GEN-END:initComponents
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
@@ -171,50 +151,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
         Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "stop");
     }//GEN-LAST:event_stopActionPerformed
-
-    private void kickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kickActionPerformed
-        if(playerList.getSelectedValues().length == 0) {
-            return;
-        }
-        String reason = JOptionPane.showInputDialog(this, "Enter kick reason:",
-                "Kick Player", JOptionPane.QUESTION_MESSAGE);
-        if(reason == null) {
-            return;
-        }
-        reason = reason.replaceAll(" ", "_");
-        Object[] players = playerList.getSelectedValues();
-        for(Object p : players) {
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
-                    Bukkit.getServer()), "kick " + p.toString() + " " + reason);
-        }
-    }//GEN-LAST:event_kickActionPerformed
-
-    private void banActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_banActionPerformed
-        if(playerList.getSelectedValues().length == 0) {
-            return;
-        }
-        Object[] players = playerList.getSelectedValues();
-        for(Object p : players) {
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
-                    Bukkit.getServer()), "ban " + p.toString());
-        }
-    }//GEN-LAST:event_banActionPerformed
-
-    private void sendMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageActionPerformed
-        if(playerList.getSelectedValues().length == 0) {
-            return;
-        }
-        String msg = JOptionPane.showInputDialog(this, "Enter your message:",
-                "Message Player", JOptionPane.QUESTION_MESSAGE);
-        if(msg == null) {
-            return;
-        }
-        Object[] players = playerList.getSelectedValues();
-        for(Object p : players) {
-            Bukkit.getServer().getPlayer(p.toString()).sendMessage(ChatColor.LIGHT_PURPLE
-                    + "[Server]" + ChatColor.GRAY + " whispers: " + ChatColor.WHITE + msg);
-        }
-    }//GEN-LAST:event_sendMessageActionPerformed
 
     private void playerListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerListMousePressed
         showPlayerMenu(evt);
@@ -265,21 +201,51 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class DeOpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            Util.log("Deop");
             Server s = Bukkit.getServer();
             s.dispatchCommand(new ConsoleCommandSender(s), "deop " + playerList.getSelectedValue().toString());
         }
     }
 
+    private class MessagePlayerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String msg = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), "Enter your message:",
+                    "Message Player", JOptionPane.QUESTION_MESSAGE);
+            if(msg == null) {
+                return;
+            }
+            Bukkit.getServer().getPlayer(playerList.getSelectedValue().toString()).sendMessage(ChatColor.LIGHT_PURPLE
+                    + "[Server]" + ChatColor.GRAY + " whispers: " + ChatColor.WHITE + msg);
+        }
+    }
+
+    private class KickPlayerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Server s = Bukkit.getServer();
+            String reason = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), "Enter kick reason:",
+                    "Kick Player", JOptionPane.QUESTION_MESSAGE);
+            if(reason == null) {
+                reason = "";
+            }
+            reason = reason.replaceAll(" ", "_");
+            s.dispatchCommand(new ConsoleCommandSender(s), "kick " + playerList.getSelectedValue().toString() + " " + reason);
+        }
+    }
+
+    private class BanPlayerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Util.log("Banning");
+            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
+                    Bukkit.getServer()), "ban " + playerList.getSelectedValue().toString());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ban;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JButton kick;
     private javax.swing.JList playerList;
     private javax.swing.JButton reload;
-    private javax.swing.JButton sendMessage;
     private me.escapeNT.pail.GUIComponents.ServerConsolePanel serverConsolePanel;
     private javax.swing.JButton stop;
     // End of variables declaration//GEN-END:variables
