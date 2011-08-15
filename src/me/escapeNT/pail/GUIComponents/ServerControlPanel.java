@@ -13,6 +13,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
 import me.escapeNT.pail.util.Util;
+import org.bukkit.Bukkit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -164,11 +165,11 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
         Util.getPlugin().saveState();
-        Util.getPlugin().getServer().dispatchCommand(new ConsoleCommandSender(Util.getPlugin().getServer()), "reload");
+        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
     }//GEN-LAST:event_reloadActionPerformed
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        Util.getPlugin().getServer().dispatchCommand(new ConsoleCommandSender(Util.getPlugin().getServer()), "stop");
+        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "stop");
     }//GEN-LAST:event_stopActionPerformed
 
     private void kickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kickActionPerformed
@@ -183,8 +184,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         reason = reason.replaceAll(" ", "_");
         Object[] players = playerList.getSelectedValues();
         for(Object p : players) {
-            Util.getPlugin().getServer().dispatchCommand(new ConsoleCommandSender(
-                    Util.getPlugin().getServer()), "kick " + p.toString() + " " + reason);
+            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
+                    Bukkit.getServer()), "kick " + p.toString() + " " + reason);
         }
     }//GEN-LAST:event_kickActionPerformed
 
@@ -194,8 +195,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         }
         Object[] players = playerList.getSelectedValues();
         for(Object p : players) {
-            Util.getPlugin().getServer().dispatchCommand(new ConsoleCommandSender(
-                    Util.getPlugin().getServer()), "ban " + p.toString());
+            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
+                    Bukkit.getServer()), "ban " + p.toString());
         }
     }//GEN-LAST:event_banActionPerformed
 
@@ -210,7 +211,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         }
         Object[] players = playerList.getSelectedValues();
         for(Object p : players) {
-            Util.getPlugin().getServer().getPlayer(p.toString()).sendMessage(ChatColor.LIGHT_PURPLE
+            Bukkit.getServer().getPlayer(p.toString()).sendMessage(ChatColor.LIGHT_PURPLE
                     + "[Server]" + ChatColor.GRAY + " whispers: " + ChatColor.WHITE + msg);
         }
     }//GEN-LAST:event_sendMessageActionPerformed
@@ -250,21 +251,21 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class KillPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Server serv = Util.getPlugin().getServer();
-            serv.dispatchCommand(new ConsoleCommandSender(serv), "kill " + playerList.getSelectedValue());
+            Server s = Bukkit.getServer();
+            s.dispatchCommand(new ConsoleCommandSender(s), "kill " + playerList.getSelectedValue());
         }
     }
 
     private class OpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Server s = Util.getPlugin().getServer();
+            Server s = Bukkit.getServer();
             s.dispatchCommand(new ConsoleCommandSender(s), "op " + playerList.getSelectedValue().toString());
         }
     }
 
     private class DeOpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Server s = Util.getPlugin().getServer();
+            Server s = Bukkit.getServer();
             s.dispatchCommand(new ConsoleCommandSender(s), "deop " + playerList.getSelectedValue().toString());
         }
     }

@@ -2,6 +2,8 @@
 package me.escapeNT.pail.GUIComponents;
 
 import me.escapeNT.pail.util.Util;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -17,7 +19,7 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         super(Util.getPlugin().getMainWindow());
         this.player = player;
 
-        for(Player p : Util.getPlugin().getServer().getOnlinePlayers()) {
+        for(Player p : Bukkit.getServer().getOnlinePlayers()) {
             if(p != null && !p.getName().equals(player)) {
                 locations.addItem(p.getName());
             }
@@ -82,12 +84,12 @@ public class TeleportPlayerView extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void teleportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teleportActionPerformed
-        Player teleporter = Util.getPlugin().getServer().getPlayer(player);
+        Player teleporter = Bukkit.getServer().getPlayer(player);
         if(locations.getSelectedItem().toString().equals("Spawn")) {
             teleporter.teleport(teleporter.getWorld().getSpawnLocation());
         }
         else {
-            Player teleportTo = Util.getPlugin().getServer().getPlayer(locations.getSelectedItem().toString());
+            Player teleportTo = Bukkit.getServer().getPlayer(locations.getSelectedItem().toString());
             teleporter.teleport(teleportTo);
         }
         dispose();

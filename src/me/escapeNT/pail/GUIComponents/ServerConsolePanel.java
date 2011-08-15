@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
 import me.escapeNT.pail.util.Util;
+import org.bukkit.Bukkit;
 
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
@@ -46,7 +47,7 @@ public class ServerConsolePanel extends JPanel {
      */
     private class ConsoleCommandListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Server server = Util.getPlugin().getServer();
+            Server server = Bukkit.getServer();
             if(consoleInput.getText().equals("reload")) {
                 Util.getPlugin().saveState();
             }
