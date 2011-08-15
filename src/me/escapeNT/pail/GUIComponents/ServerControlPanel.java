@@ -68,7 +68,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         deop.addActionListener(new DeOpPlayerListener());
         playerMenu.add(deop);
         
-        // TODO - new icons
         JMenuItem message = new JMenuItem("Message", msg);
         message.addActionListener(new MessagePlayerListener());
         playerMenu.add(message);
