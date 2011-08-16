@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.BorderLayout;
@@ -67,7 +66,7 @@ public class ServerConsolePanel extends JPanel {
             }
 
             consoleInput.setText("");
-            crl.setIndex(0);
+            crl.setIndex(-1);
         }
     }
 
@@ -76,32 +75,23 @@ public class ServerConsolePanel extends JPanel {
      */
     private class CommandRecallListener implements KeyListener {
 
-        private int index = 0;
+        private int index = -1;
 
         public void keyTyped(KeyEvent e) {}
         public void keyReleased(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_UP) {          
-                if((index == 0 && cmdHistory.size() >= 1)) {
-                    consoleInput.setText(cmdHistory.get(0));
-                    index++;
-                } else if(index < cmdHistory.size() - 1) {
+            if(e.getKeyCode() == KeyEvent.VK_DOWN && index == -1) return;
+            
+            if(e.getKeyCode() == KeyEvent.VK_UP && index < cmdHistory.size()-1) index++;
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) index--;
+            
+            if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP)
+                if(index > -1)
                     consoleInput.setText(cmdHistory.get(index));
-                    index++;
-                } else if(index < cmdHistory.size()) {
-                    consoleInput.setText(cmdHistory.get(index));
-                }
-            }
-            else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-                if(index > 0) {
-                    index--;
-                    consoleInput.setText(cmdHistory.get(index));
-                } else {
+                else
                     consoleInput.setText("");
-                }
-            }
-        }   
+        }
 
         public void setIndex(int index) {
             this.index = index;
