@@ -18,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * Panel containing the basic server controls.
@@ -186,8 +187,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class KillPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Server s = Bukkit.getServer();
-            s.dispatchCommand(new ConsoleCommandSender(s), "kill " + playerList.getSelectedValue());
+            Player p = Bukkit.getServer().getPlayer(playerList.getSelectedValue().toString());
+            p.damage(p.getHealth());
         }
     }
 
