@@ -82,9 +82,14 @@ public class ServerConsolePanel extends JPanel {
         public void keyReleased(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_UP) {
-                if(index < cmdHistory.size() - 1) {
+            if(e.getKeyCode() == KeyEvent.VK_UP) {          
+                if((index == 0 && cmdHistory.size() >= 1)) {
+                    consoleInput.setText(cmdHistory.get(0));
                     index++;
+                } else if(index < cmdHistory.size() - 1) {
+                    consoleInput.setText(cmdHistory.get(index));
+                    index++;
+                } else if(index < cmdHistory.size()) {
                     consoleInput.setText(cmdHistory.get(index));
                 }
             }
@@ -92,6 +97,8 @@ public class ServerConsolePanel extends JPanel {
                 if(index > 0) {
                     index--;
                     consoleInput.setText(cmdHistory.get(index));
+                } else {
+                    consoleInput.setText("");
                 }
             }
         }   
