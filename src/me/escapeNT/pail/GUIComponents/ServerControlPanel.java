@@ -188,7 +188,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
     private class KillPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Player p = Bukkit.getServer().getPlayer(playerList.getSelectedValue().toString());
-            p.damage(p.getHealth());
+            p.setHealth(0);
         }
     }
 
