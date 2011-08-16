@@ -96,7 +96,7 @@ public class GiveItemView extends javax.swing.JDialog {
 
         amount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 64, 1));
         getContentPane().add(amount);
-        amount.setBounds(340, 40, 58, 28);
+        amount.setBounds(350, 40, 58, 28);
 
         give.setText("Give");
         give.setFocusable(false);
@@ -116,11 +116,11 @@ public class GiveItemView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancel);
-        cancel.setBounds(250, 110, 86, 30);
+        cancel.setBounds(240, 110, 86, 30);
 
         item.setModel(new DefaultComboBoxModel(sortMatNames().toArray()));
         getContentPane().add(item);
-        item.setBounds(40, 20, 230, 70);
+        item.setBounds(50, 30, 230, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -70,7 +70,7 @@ public class Pail extends JavaPlugin {
 
                 for(Player p : getServer().getOnlinePlayers()) {
                     Util.getServerControls().getListModel().addElement(p.getName());
-                }       
+                }  
             }
         }, "Pail").start();
 

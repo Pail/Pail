@@ -1,7 +1,9 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import me.escapeNT.pail.config.WaypointConfig;
 import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.util.Waypoint;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,7 +34,15 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         teleLabel.setText("Teleport " + player + " to:");
         getRootPane().setDefaultButton(teleport);
         setResizable(false);
-        setSize(320, 150);
+        setSize(400, 260);
+
+        for(Waypoint p : WaypointConfig.getWaypoints()) {
+            if(p != null) {
+                waypoints.addItem(p);
+            }
+        }
+
+        waypoints.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -46,6 +56,9 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         cancel = new javax.swing.JButton();
         teleLabel = new javax.swing.JLabel();
         locations = new javax.swing.JComboBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        waypoints = new javax.swing.JComboBox();
+        toWaypoint = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -57,7 +70,7 @@ public class TeleportPlayerView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(teleport);
-        teleport.setBounds(220, 90, 96, 29);
+        teleport.setBounds(290, 190, 96, 29);
 
         cancel.setText("Cancel");
         cancel.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +79,7 @@ public class TeleportPlayerView extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancel);
-        cancel.setBounds(130, 90, 86, 29);
+        cancel.setBounds(200, 190, 86, 29);
 
         teleLabel.setText("Teleport *** to");
         getContentPane().add(teleLabel);
@@ -74,7 +87,21 @@ public class TeleportPlayerView extends javax.swing.JDialog {
 
         locations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Spawn" }));
         getContentPane().add(locations);
-        locations.setBounds(70, 50, 183, 27);
+        locations.setBounds(90, 50, 200, 27);
+        getContentPane().add(jSeparator1);
+        jSeparator1.setBounds(40, 90, 300, 10);
+
+        getContentPane().add(waypoints);
+        waypoints.setBounds(90, 140, 200, 27);
+
+        toWaypoint.setText("Waypoint");
+        toWaypoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toWaypointActionPerformed(evt);
+            }
+        });
+        getContentPane().add(toWaypoint);
+        toWaypoint.setBounds(140, 110, 106, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -85,20 +112,43 @@ public class TeleportPlayerView extends javax.swing.JDialog {
 
     private void teleportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teleportActionPerformed
         Player teleporter = Bukkit.getServer().getPlayer(player);
-        if(locations.getSelectedItem().toString().equals("Spawn")) {
-            teleporter.teleport(teleporter.getWorld().getSpawnLocation());
+        if(toWaypoint.isSelected()) {
+            Waypoint point = (Waypoint)waypoints.getSelectedItem();
+            if(point == null) {
+                return;
+            }
+            teleporter.teleport(point.getLocation());
         }
         else {
-            Player teleportTo = Bukkit.getServer().getPlayer(locations.getSelectedItem().toString());
-            teleporter.teleport(teleportTo);
+            if(locations.getSelectedItem().toString().equals("Spawn")) {
+            teleporter.teleport(teleporter.getWorld().getSpawnLocation());
+            }
+            else {
+                Player teleportTo = Bukkit.getServer().getPlayer(locations.getSelectedItem().toString());
+                teleporter.teleport(teleportTo);
+            }
         }
         dispose();
     }//GEN-LAST:event_teleportActionPerformed
 
+    private void toWaypointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toWaypointActionPerformed
+        if(toWaypoint.isSelected()) {
+            locations.setEnabled(false);
+            waypoints.setEnabled(true);
+        }
+        else {
+            locations.setEnabled(true);
+            waypoints.setEnabled(false);
+        }
+    }//GEN-LAST:event_toWaypointActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox locations;
     private javax.swing.JLabel teleLabel;
     private javax.swing.JButton teleport;
+    private javax.swing.JCheckBox toWaypoint;
+    private javax.swing.JComboBox waypoints;
     // End of variables declaration//GEN-END:variables
 }

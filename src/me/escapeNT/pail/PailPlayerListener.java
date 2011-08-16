@@ -2,6 +2,7 @@
 
 package me.escapeNT.pail;
 
+import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 import me.escapeNT.pail.util.Util;
 
@@ -21,6 +22,7 @@ public class PailPlayerListener extends PlayerListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Util.getServerControls().getListModel().addElement(event.getPlayer().getName());
+                Pail.handler.getSettings().getWaypointEditor().getPlayers().addItem(event.getPlayer().getName());
             }
         });
     }
@@ -30,6 +32,7 @@ public class PailPlayerListener extends PlayerListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+                Pail.handler.getSettings().getWaypointEditor().getPlayers().removeItem(event.getPlayer().getName());
             }
         });
     }
@@ -39,6 +42,7 @@ public class PailPlayerListener extends PlayerListener {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Util.getServerControls().getListModel().removeElement(event.getPlayer().getName());
+                Pail.handler.getSettings().getWaypointEditor().getPlayers().removeItem(event.getPlayer().getName());
             }
         });
     }

@@ -3,9 +3,14 @@ package me.escapeNT.pail.GUIComponents;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.PanelConfig;
 
 import me.escapeNT.pail.util.Util;

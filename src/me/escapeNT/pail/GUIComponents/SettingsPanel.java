@@ -1,4 +1,5 @@
 
+
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.Color;
@@ -9,12 +10,11 @@ import java.util.HashMap;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
 import me.escapeNT.pail.Pail;
-import me.escapeNT.pail.config.ServerConfigHandler;
-import me.escapeNT.pail.config.PanelConfig;
-import me.escapeNT.pail.util.Util;
 
+import me.escapeNT.pail.config.PanelConfig;
+import me.escapeNT.pail.config.ServerConfigHandler;
+import me.escapeNT.pail.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -25,9 +25,12 @@ import org.bukkit.World;
  */
 public class SettingsPanel extends javax.swing.JPanel {
 
+    private WaypointEditPanel waypointEditor;
+
     /** Creates new form SettingsPanel */
     public SettingsPanel() {
         initComponents();
+        waypointEditor = new WaypointEditPanel();
 
         craftVersion.setText("Craftbukkit version: " + parseCraftVersion());
         SwingUtilities.invokeLater(new Runnable() {
@@ -38,6 +41,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
 
         loadConfig();
+
+        settingsTabs.add("Waypoints", waypointEditor);
     }
 
     private String parseCraftVersion() {
@@ -102,7 +107,9 @@ public class SettingsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        settingsTabs = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         worldName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -133,77 +140,80 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Server  Settings"));
+        settingsTabs.setFocusable(false);
+
+        jPanel1.setFocusable(false);
         jPanel1.setLayout(null);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Server  Settings"));
+        jPanel2.setLayout(null);
+
         jLabel1.setText("World name");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(26, 48, 74, 16);
+        jPanel2.add(jLabel1);
+        jLabel1.setBounds(30, 30, 74, 16);
 
         worldName.setToolTipText("The name of the default world on the server");
-        jPanel1.add(worldName);
-        worldName.setBounds(110, 42, 224, 28);
+        jPanel2.add(worldName);
+        worldName.setBounds(110, 20, 224, 28);
 
         jLabel2.setText("World seed");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(26, 84, 69, 16);
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(30, 70, 69, 16);
 
         ip.setToolTipText("Set this if you want the server to bind to a particular IP.");
-        jPanel1.add(ip);
-        ip.setBounds(110, 120, 225, 28);
+        jPanel2.add(ip);
+        ip.setBounds(110, 100, 225, 28);
 
         nether.setText("Allow nether");
         nether.setToolTipText("Allow portal transport to the nether.");
-        jPanel1.add(nether);
-        nether.setBounds(30, 160, 111, 23);
+        jPanel2.add(nether);
+        nether.setBounds(30, 140, 111, 23);
 
         spawnMonsters.setText("Spawn monsters");
         spawnMonsters.setToolTipText("Spawn hostile monsters.");
-        jPanel1.add(spawnMonsters);
-        spawnMonsters.setBounds(30, 200, 135, 23);
+        jPanel2.add(spawnMonsters);
+        spawnMonsters.setBounds(30, 180, 135, 23);
 
         spawnAnimals.setText("Spawn animals");
         spawnAnimals.setToolTipText("Spawn non-hostile animals.");
-        jPanel1.add(spawnAnimals);
-        spawnAnimals.setBounds(30, 240, 125, 23);
+        jPanel2.add(spawnAnimals);
+        spawnAnimals.setBounds(30, 220, 125, 23);
 
         online.setText("Online mode");
         online.setToolTipText("Server checks connecting players against minecraft's account database.");
-        jPanel1.add(online);
-        online.setBounds(190, 200, 112, 23);
+        jPanel2.add(online);
+        online.setBounds(190, 180, 112, 23);
 
         pvp.setText("Enable PVP");
         pvp.setToolTipText("Enable player verses player damage.");
-        jPanel1.add(pvp);
-        pvp.setBounds(190, 160, 99, 23);
+        jPanel2.add(pvp);
+        pvp.setBounds(190, 140, 99, 23);
 
         whitelist.setText("Whitelist enabled");
         whitelist.setToolTipText("With a whitelist enabled, users not on the list will be unable to connect.");
-        jPanel1.add(whitelist);
-        whitelist.setBounds(190, 240, 140, 23);
+        jPanel2.add(whitelist);
+        whitelist.setBounds(190, 220, 140, 23);
 
         flight.setText("Allow flight");
         flight.setToolTipText("Will allow users to use flight/no-clip on the server.");
-        jPanel1.add(flight);
-        flight.setBounds(30, 280, 105, 23);
+        jPanel2.add(flight);
+        flight.setBounds(30, 260, 105, 23);
 
-        viewDistance.setModel(new javax.swing.SpinnerNumberModel(3, 3, 15, 1));
         viewDistance.setToolTipText("The number of chunks sent to the client. (3-15)");
-        jPanel1.add(viewDistance);
-        viewDistance.setBounds(130, 310, 55, 28);
+        jPanel2.add(viewDistance);
+        viewDistance.setBounds(130, 290, 55, 28);
 
         jLabel3.setText("View distance");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 306, 86, 30);
+        jPanel2.add(jLabel3);
+        jLabel3.setBounds(30, 290, 86, 30);
 
         jLabel4.setText("Server port");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 336, 68, 30);
+        jPanel2.add(jLabel4);
+        jLabel4.setBounds(30, 330, 68, 30);
 
-        port.setModel(new javax.swing.SpinnerNumberModel(25565, 1, 65535, 1));
         port.setToolTipText("Port on which the server is running.");
-        jPanel1.add(port);
-        port.setBounds(130, 340, 96, 28);
+        jPanel2.add(port);
+        port.setBounds(110, 330, 96, 28);
 
         revert.setText("Revert");
         revert.setFocusable(false);
@@ -212,8 +222,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                 revertActionPerformed(evt);
             }
         });
-        jPanel1.add(revert);
-        revert.setBounds(170, 400, 83, 29);
+        jPanel2.add(revert);
+        revert.setBounds(190, 370, 83, 29);
 
         save.setText("Save");
         save.setFocusable(false);
@@ -222,32 +232,30 @@ public class SettingsPanel extends javax.swing.JPanel {
                 saveActionPerformed(evt);
             }
         });
-        jPanel1.add(save);
-        save.setBounds(260, 400, 75, 29);
+        jPanel2.add(save);
+        save.setBounds(280, 370, 75, 29);
 
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 366, 80, 30);
-
-        maxPlayers.setModel(new javax.swing.SpinnerNumberModel(0, 0, 255, 1));
-        jPanel1.add(maxPlayers);
-        maxPlayers.setBounds(130, 370, 60, 28);
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(200, 290, 80, 30);
+        jPanel2.add(maxPlayers);
+        maxPlayers.setBounds(280, 290, 60, 28);
 
         jLabel6.setText("Server IP");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(40, 120, 70, 30);
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(40, 100, 70, 30);
 
         seed.setToolTipText("The seed used in generating new terrain.");
-        jPanel1.add(seed);
-        seed.setBounds(109, 78, 225, 28);
+        jPanel2.add(seed);
+        seed.setBounds(110, 60, 225, 28);
 
-        add(jPanel1);
-        jPanel1.setBounds(20, 10, 340, 440);
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(10, 10, 370, 410);
 
         craftVersion.setText("Craftbukkit version:");
-        add(craftVersion);
-        craftVersion.setBounds(370, 20, 490, 20);
+        jPanel1.add(craftVersion);
+        craftVersion.setBounds(390, 10, 450, 20);
 
         pailVersion.setText("Pail version:");
         pailVersion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,17 +263,17 @@ public class SettingsPanel extends javax.swing.JPanel {
                 pailVersionMouseClicked(evt);
             }
         });
-        add(pailVersion);
-        pailVersion.setBounds(370, 80, 410, 16);
+        jPanel1.add(pailVersion);
+        pailVersion.setBounds(390, 50, 370, 20);
 
         update.setText("Latest recommended build:");
-        add(update);
-        update.setBounds(370, 50, 480, 16);
+        jPanel1.add(update);
+        update.setBounds(390, 30, 440, 20);
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
 
         tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
-        tabActivationPanel.setBounds(10, 20, 440, 280);
+        tabActivationPanel.setBounds(10, 20, 420, 280);
         jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         reload.setText("Save");
@@ -274,16 +282,29 @@ public class SettingsPanel extends javax.swing.JPanel {
                 reloadActionPerformed(evt);
             }
         });
-        reload.setBounds(370, 300, 80, 30);
+        reload.setBounds(350, 300, 80, 30);
         jLayeredPane1.add(reload, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        add(jLayeredPane1);
-        jLayeredPane1.setBounds(370, 110, 460, 340);
+        jPanel1.add(jLayeredPane1);
+        jLayeredPane1.setBounds(390, 80, 440, 340);
+
+        settingsTabs.addTab("General", jPanel1);
+
+        add(settingsTabs);
+        settingsTabs.setBounds(-5, 2, 870, 470);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
-        loadConfig();
-    }//GEN-LAST:event_revertActionPerformed
+    private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
+        for(JCheckBox b : tabActivationPanel.getBoxes().values()) {
+            PanelConfig.getPanelsActivated().put(b.getText(), b.isSelected());
+        }
+        PanelConfig.save();
+        Util.getPlugin().getMainWindow().loadPanels();
+}//GEN-LAST:event_reloadActionPerformed
+
+    private void pailVersionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pailVersionMouseClicked
+        new AboutView().setVisible(true);
+}//GEN-LAST:event_pailVersionMouseClicked
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         HashMap<String, String> saveData = new HashMap<String, String>();
@@ -306,21 +327,13 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         ServerConfigHandler.save(saveData);
 
-        JOptionPane.showMessageDialog(Util.getPlugin().getMainWindow(), 
+        JOptionPane.showMessageDialog(Util.getPlugin().getMainWindow(),
                 "Server config saved!\nRestart the server to apply.", "Config Saved", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_saveActionPerformed
+}//GEN-LAST:event_saveActionPerformed
 
-    private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
-        for(JCheckBox b : tabActivationPanel.getBoxes().values()) {
-            PanelConfig.getPanelsActivated().put(b.getText(), b.isSelected());
-        }
-        PanelConfig.save();
-        Util.getPlugin().getMainWindow().loadPanels();
-    }//GEN-LAST:event_reloadActionPerformed
-
-    private void pailVersionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pailVersionMouseClicked
-        new AboutView().setVisible(true);
-    }//GEN-LAST:event_pailVersionMouseClicked
+    private void revertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertActionPerformed
+        loadConfig();
+}//GEN-LAST:event_revertActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -335,6 +348,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSpinner maxPlayers;
     private javax.swing.JCheckBox nether;
     private javax.swing.JCheckBox online;
@@ -345,6 +359,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JButton revert;
     private javax.swing.JButton save;
     private javax.swing.JTextField seed;
+    private javax.swing.JTabbedPane settingsTabs;
     private javax.swing.JCheckBox spawnAnimals;
     private javax.swing.JCheckBox spawnMonsters;
     private me.escapeNT.pail.GUIComponents.TabActivationPanel tabActivationPanel;
@@ -353,5 +368,12 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox whitelist;
     private javax.swing.JTextField worldName;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the waypointEditor
+     */
+    public WaypointEditPanel getWaypointEditor() {
+        return waypointEditor;
+    }
 
 }
