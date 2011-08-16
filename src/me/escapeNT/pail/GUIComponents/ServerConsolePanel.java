@@ -81,16 +81,25 @@ public class ServerConsolePanel extends JPanel {
         public void keyReleased(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_DOWN && index == -1) return;
+            if(e.getKeyCode() == KeyEvent.VK_DOWN && index == -1 
+                    || e.getKeyCode() == KeyEvent.VK_UP && cmdHistory.isEmpty()) {
+                return;
+            }
             
-            if(e.getKeyCode() == KeyEvent.VK_UP && index < cmdHistory.size()-1) index++;
-            else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) index--;
+            if(e.getKeyCode() == KeyEvent.VK_UP && index < cmdHistory.size()-1) {
+                index++;
+            }
+            else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) {
+                index--;
+            }
             
-            if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP)
-                if(index > -1)
+            if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) {
+                if (index > -1) {
                     consoleInput.setText(cmdHistory.get(index));
-                else
+                } else {
                     consoleInput.setText("");
+                }
+            }
         }
 
         public void setIndex(int index) {
