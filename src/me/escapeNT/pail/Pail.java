@@ -86,7 +86,10 @@ public class Pail extends JavaPlugin {
     
     @Override
     public void onDisable() {
-        getMainWindow().dispose();
+        if(getMainWindow() != null) {
+            getMainWindow().getTabPane().removeAll();
+            getMainWindow().dispose();
+        }
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     

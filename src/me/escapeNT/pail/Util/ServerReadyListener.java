@@ -3,6 +3,7 @@ package me.escapeNT.pail.util;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
@@ -20,8 +21,13 @@ public class ServerReadyListener extends Handler {
         if(record.getMessage().contains("Reload complete.")
                 || (record.getMessage().contains("Done") && record.getMessage().contains("help"))) {
             settings = new SettingsPanel();
-            Util.getPlugin().loadInterfaceComponent("Settings", getSettings());
-            Util.getPlugin().getMainWindow().loadPanels();
+
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    Util.getPlugin().loadInterfaceComponent("Settings", getSettings());
+                    Util.getPlugin().getMainWindow().loadPanels();
+                }
+            });
             Logger.getLogger("Minecraft").removeHandler(Pail.handler);
         }
     }

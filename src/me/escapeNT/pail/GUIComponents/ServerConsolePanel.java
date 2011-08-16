@@ -88,8 +88,7 @@ public class ServerConsolePanel extends JPanel {
             
             if(e.getKeyCode() == KeyEvent.VK_UP && index < cmdHistory.size()-1) {
                 index++;
-            }
-            else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) {
+            } else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) {
                 index--;
             }
             

@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
 
         // Load all registered GUI components
         loadPanels();
-        add(tabPane);
+        add(getTabPane());
     }
 
     /**
@@ -44,10 +44,10 @@ public class MainWindow extends JFrame {
      */
     public void loadPanels() {
         PanelConfig.load();
-        tabPane.removeAll();
+        getTabPane().removeAll();
         List<String> t = new ArrayList<String>();
         List<JPanel> p = new ArrayList<JPanel>();
-        tabPane.add(Util.getInterfaceComponents().get("Server Control"), "Server Control");
+        getTabPane().add(Util.getInterfaceComponents().get("Server Control"), "Server Control");
         for (String title : Util.getInterfaceComponents().keySet()) {
             t.add(title);
             p.add(Util.getInterfaceComponents().get(title));
@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
                 PanelConfig.getPanelsActivated().put(t.get(i), true);
             }
             if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(t.get(i))) {
-                tabPane.add(p.get(i),t.get(i));
+                getTabPane().add(p.get(i),t.get(i));
             }
         }
         validate();
@@ -76,5 +76,12 @@ public class MainWindow extends JFrame {
      */
     public ServerControlPanel getServerControls() {
         return serverControls;
+    }
+
+    /**
+     * @return the tabPane
+     */
+    public JTabbedPane getTabPane() {
+        return tabPane;
     }
 }
