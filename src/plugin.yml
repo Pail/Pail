@@ -1,6 +1,6 @@
 name: Pail
 main: me.escapeNT.pail.Pail
-version: 0.4.1
+version: 0.4.1_1
 author: escape
 website: http://forums.bukkit.org/threads/admn-dev-pail-v0-3-the-simplest-and-most-extensible-bukkit-gui-1000.30246/
 description: A GUI designed specifically for bukkit allowing admins to both manage the server as well as compatable plugins.
