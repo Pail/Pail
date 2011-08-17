@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import me.escapeNT.pail.config.WaypointConfig;
@@ -21,16 +20,17 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         super(Util.getPlugin().getMainWindow());
         this.player = player;
 
+        pack();
+        setLocationRelativeTo(Util.getPlugin().getMainWindow());
+        setModal(true);
+        initComponents();
+        
         for(Player p : Bukkit.getServer().getOnlinePlayers()) {
             if(p != null && !p.getName().equals(player)) {
                 locations.addItem(p.getName());
             }
         }
-
-        pack();
-        setLocationRelativeTo(Util.getPlugin().getMainWindow());
-        setModal(true);
-        initComponents();
+        
         teleLabel.setText("Teleport " + player + " to:");
         getRootPane().setDefaultButton(teleport);
         setResizable(false);
