@@ -1,18 +1,25 @@
 package me.escapeNT.pail.GUIComponents;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import me.escapeNT.pail.Pail;
-import me.escapeNT.pail.config.PanelConfig;
+import javax.swing.KeyStroke;
 
+import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.Util;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class containing the main JFrame of the plugin.
@@ -40,7 +47,7 @@ public class MainWindow extends JFrame {
         loadMenu();
         
         add(getTabPane());
-        setJMenuBar(getMenu());
+        setJMenuBar(menuBar);
     }
 
     /**
@@ -68,24 +75,21 @@ public class MainWindow extends JFrame {
     }
     
     public void loadMenu() {
-        /**
-         * Now, while you clean this up, I want you to keep in mind that I want to make an API where you can either:
-         * 1- Add a menu
-         * 2- Add an item to a menu (maybe...)
-         */
         JMenu server = new JMenu("Server");
         server.setMnemonic('S');
+
         JMenuItem reload = new JMenuItem("Reload");
         reload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
-        reload.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/reload.png")));
+        reload.setIcon(new ImageIcon(getClass().getResource("images/reload.png")));
         reload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Util.getPlugin().saveState();
-                Bukkit.getServer().reload();//.dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
             }
         });
+        
         JMenuItem stop = new JMenuItem("Stop");
-        stop.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png")));
+        stop.setIcon(new ImageIcon(getClass().getResource("images/stop.png")));
         stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         stop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -94,18 +98,19 @@ public class MainWindow extends JFrame {
         });
         
         JMenuItem save = new JMenuItem("Save All");
-        //save.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png")));
+        save.setIcon(new ImageIcon(getClass().getResource("images/save.png")));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "save-all");
             }
         });
+
         server.add(save);
         server.add(reload);
         server.add(stop);
         
-        getMenu().add(server);
+        menuBar.add(server);
     }
 
     /**

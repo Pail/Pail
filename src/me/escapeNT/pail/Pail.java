@@ -60,9 +60,11 @@ public class Pail extends JavaPlugin {
                 getMainWindow().addWindowListener(new WindowCloseListener());
                 getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 getMainWindow().pack();
-                getMainWindow().setSize(860, 535);
+                getMainWindow().setSize(860, 555);
                 getMainWindow().setLocationRelativeTo(null);
                 loadState();
+                getMainWindow().setFocusableWindowState(true);
+                getMainWindow().setFocusable(true);
                 getMainWindow().setVisible(true);
                 getMainWindow().requestFocus();
 
@@ -70,7 +72,7 @@ public class Pail extends JavaPlugin {
 
                 for(Player p : getServer().getOnlinePlayers()) {
                     Util.getServerControls().getListModel().addElement(p.getName());
-                }  
+                }
             }
         }, "Pail").start();
 

@@ -292,7 +292,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         settingsTabs.addTab("General", jPanel1);
 
         add(settingsTabs);
-        settingsTabs.setBounds(-5, 2, 870, 470);
+        settingsTabs.setBounds(-5, 2, 880, 470);
     }// </editor-fold>//GEN-END:initComponents
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed

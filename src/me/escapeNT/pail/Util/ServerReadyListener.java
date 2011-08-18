@@ -14,7 +14,7 @@ import me.escapeNT.pail.GUIComponents.SettingsPanel;
  */
 public class ServerReadyListener extends Handler {
 
-    private SettingsPanel settings;
+    public static SettingsPanel settings;
 
     @Override
     public void publish(LogRecord record) {
@@ -24,7 +24,7 @@ public class ServerReadyListener extends Handler {
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    Util.getPlugin().loadInterfaceComponent("Settings", getSettings());
+                    Util.getPlugin().loadInterfaceComponent("Settings", settings);
                     Util.getPlugin().getMainWindow().loadPanels();
                 }
             });
@@ -38,10 +38,4 @@ public class ServerReadyListener extends Handler {
     @Override
     public void close() throws SecurityException {}
 
-    /**
-     * @return the settings
-     */
-    public SettingsPanel getSettings() {
-        return settings;
-    }
 }

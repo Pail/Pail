@@ -222,6 +222,9 @@ public class WaypointEditPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_removeWaypointActionPerformed
 
     private void playerSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playerSubmitActionPerformed
+        if(getPlayers().getSelectedItem() == null) {
+            return;
+        }
         Player p = Bukkit.getServer().getPlayer(getPlayers().getSelectedItem().toString());
         if(p == null) {
             getPlayers().removeItem(getPlayers().getSelectedItem());

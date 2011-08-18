@@ -94,8 +94,6 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         serverConsolePanel = new me.escapeNT.pail.GUIComponents.ServerConsolePanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         playerList = new javax.swing.JList();
-        reload = new javax.swing.JButton();
-        stop = new javax.swing.JButton();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
@@ -118,39 +116,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(playerList);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(660, 10, 170, 360);
-
-        reload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/reload.png"))); // NOI18N
-        reload.setText("Reload Server");
-        reload.setFocusable(false);
-        reload.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reloadActionPerformed(evt);
-            }
-        });
-        add(reload);
-        reload.setBounds(660, 380, 170, 37);
-
-        stop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png"))); // NOI18N
-        stop.setText("Stop Server");
-        stop.setFocusable(false);
-        stop.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopActionPerformed(evt);
-            }
-        });
-        add(stop);
-        stop.setBounds(660, 420, 170, 37);
+        jScrollPane1.setBounds(660, 10, 170, 450);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
-        Util.getPlugin().saveState();
-        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
-    }//GEN-LAST:event_reloadActionPerformed
-
-    private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "stop");
-    }//GEN-LAST:event_stopActionPerformed
 
     private void playerListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerListMousePressed
         showPlayerMenu(evt);
@@ -224,7 +191,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
             String reason = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), "Enter kick reason:",
                     "Kick Player", JOptionPane.QUESTION_MESSAGE);
             if(reason == null) {
-                reason = "";
+                return;
             }
             reason = reason.replaceAll(" ", "_");
             s.dispatchCommand(new ConsoleCommandSender(s), "kick " + playerList.getSelectedValue().toString() + " " + reason);
@@ -243,9 +210,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList playerList;
-    private javax.swing.JButton reload;
     private me.escapeNT.pail.GUIComponents.ServerConsolePanel serverConsolePanel;
-    private javax.swing.JButton stop;
     // End of variables declaration//GEN-END:variables
 
     /**
