@@ -52,17 +52,19 @@ public class ServerConsolePanel extends JPanel {
      */
     private class ConsoleCommandListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            if(consoleInput.getText().trim().isEmpty()) { // No reason to send empty commands
+                consoleInput.setText(""); // Empty just in case
+                return;
+            }
             Server server = Bukkit.getServer();
             if(consoleInput.getText().equals("reload")) {
                 Util.getPlugin().saveState();
             }
             server.dispatchCommand(new ConsoleCommandSender(server), consoleInput.getText());
 
-            if(!consoleInput.getText().equals("")) {
-                cmdHistory.addFirst(consoleInput.getText());
-                if(cmdHistory.size() > 10) {
-                    cmdHistory.removeLast();
-                }
+            cmdHistory.addFirst(consoleInput.getText());
+            if(cmdHistory.size() > 10) {
+                cmdHistory.removeLast();
             }
 
             consoleInput.setText("");
@@ -76,33 +78,54 @@ public class ServerConsolePanel extends JPanel {
     private class CommandRecallListener implements KeyListener {
 
         private int index = -1;
+        private String prevText = "";
 
         public void keyTyped(KeyEvent e) {}
         public void keyReleased(KeyEvent e) {}
 
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_DOWN && index == -1 
-                    || e.getKeyCode() == KeyEvent.VK_UP && cmdHistory.isEmpty()) {
+            int key = e.getKeyCode();
+            
+            if((isKeyDown(key) && index == -1)
+                    || (isKeyUp(key) && cmdHistory.isEmpty())
+                    || !(isKeyDown(key)||isKeyUp(key))) {
                 return;
             }
             
-            if(e.getKeyCode() == KeyEvent.VK_UP && index < cmdHistory.size()-1) {
+            if(isKeyUp(key) && index < cmdHistory.size()-1) {
+                if(index == -1 && !consoleInput.getText().isEmpty()) {
+                    prevText = consoleInput.getText();
+                }
                 index++;
-            } else if(e.getKeyCode() == KeyEvent.VK_DOWN && index > -1) {
+            } else if(isKeyDown(key)) {
                 index--;
             }
             
-            if(e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) {
-                if (index > -1) {
-                    consoleInput.setText(cmdHistory.get(index));
-                } else {
-                    consoleInput.setText("");
-                }
+            consoleInput.setText(index>-1?cmdHistory.get(index):prevText);
+            
+            if(!prevText.isEmpty() && index == -1) {
+                prevText = "";
             }
         }
 
-        public void setIndex(int index) {
-            this.index = index;
+        private boolean isKeyUp(int key) {
+            if(key == KeyEvent.VK_UP 
+                    || key == KeyEvent.VK_KP_UP)
+                return true;
+            
+            return false;
+        }
+        private Boolean isKeyDown(Integer key) {
+            if(key == KeyEvent.VK_DOWN
+                    || key == KeyEvent.VK_KP_DOWN)
+                return true;
+            
+            return false;
+        }
+        
+        private void setIndex(int i) {
+            index = i;
+            prevText = "";
         }
     }
 }
