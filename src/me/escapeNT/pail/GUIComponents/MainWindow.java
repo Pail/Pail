@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import me.escapeNT.pail.util.Util;
 public class MainWindow extends JFrame {
 
     private JTabbedPane tabPane;
+    private JMenuBar menuBar;
     private ServerControlPanel serverControls;
 
     /**
@@ -29,6 +29,7 @@ public class MainWindow extends JFrame {
      */
     private void initComponents() { 
         tabPane = new JTabbedPane();
+        menuBar = new JMenuBar();
 
         // Register server control panel
         serverControls = new ServerControlPanel();
@@ -36,7 +37,10 @@ public class MainWindow extends JFrame {
 
         // Load all registered GUI components
         loadPanels();
+        loadMenu();
+        
         add(getTabPane());
+        setJMenuBar(getMenu());
     }
 
     /**
@@ -61,6 +65,47 @@ public class MainWindow extends JFrame {
             }
         }
         validate();
+    }
+    
+    public void loadMenu() {
+        /**
+         * Now, while you clean this up, I want you to keep in mind that I want to make an API where you can either:
+         * 1- Add a menu
+         * 2- Add an item to a menu (maybe...)
+         */
+        JMenu server = new JMenu("Server");
+        server.setMnemonic('S');
+        JMenuItem reload = new JMenuItem("Reload");
+        reload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+        reload.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/reload.png")));
+        reload.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Util.getPlugin().saveState();
+                Bukkit.getServer().reload();//.dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+            }
+        });
+        JMenuItem stop = new JMenuItem("Stop");
+        stop.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png")));
+        stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+        stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "stop");
+            }
+        });
+        
+        JMenuItem save = new JMenuItem("Save All");
+        //save.setIcon(new ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/stop.png")));
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "save-all");
+            }
+        });
+        server.add(save);
+        server.add(reload);
+        server.add(stop);
+        
+        getMenu().add(server);
     }
 
     /**
