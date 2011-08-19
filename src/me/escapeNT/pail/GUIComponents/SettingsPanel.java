@@ -3,6 +3,8 @@
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -12,8 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
+import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.ServerConfigHandler;
+import me.escapeNT.pail.util.UpdateHandler;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.Bukkit;
@@ -41,9 +45,23 @@ public class SettingsPanel extends javax.swing.JPanel {
         });
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
 
+        General.load();
+        autoUpdate.setSelected(General.isAutoUpdate());
         loadConfig();
 
         settingsTabs.add("Waypoints", waypointEditor);
+
+        autoUpdate.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                General.setAutoUpdate(autoUpdate.isSelected());
+                General.save();
+
+                if(autoUpdate.isSelected() && UpdateHandler.isUpToDate() != null
+                        && !UpdateHandler.isUpToDate()) {
+                    new UpdateView().setVisible(true);
+                }
+            }
+        });
     }
 
     private String parseCraftVersion() {
@@ -138,6 +156,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         tabActivationPanel = new me.escapeNT.pail.GUIComponents.TabActivationPanel();
         reload = new javax.swing.JButton();
+        autoUpdate = new javax.swing.JCheckBox();
 
         setLayout(null);
 
@@ -265,7 +284,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(pailVersion);
-        pailVersion.setBounds(390, 50, 370, 20);
+        pailVersion.setBounds(390, 50, 170, 20);
 
         update.setText("Latest recommended build:");
         jPanel1.add(update);
@@ -288,6 +307,12 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jPanel1.add(jLayeredPane1);
         jLayeredPane1.setBounds(390, 80, 440, 340);
+
+        autoUpdate.setText("Automatically check for updates");
+        autoUpdate.setActionCommand("Automatically check for updates");
+        autoUpdate.setFocusable(false);
+        jPanel1.add(autoUpdate);
+        autoUpdate.setBounds(560, 50, 240, 23);
 
         settingsTabs.addTab("General", jPanel1);
 
@@ -338,6 +363,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox autoUpdate;
     private javax.swing.JLabel craftVersion;
     private javax.swing.JCheckBox flight;
     private javax.swing.JTextField ip;
@@ -376,5 +402,4 @@ public class SettingsPanel extends javax.swing.JPanel {
     public WaypointEditPanel getWaypointEditor() {
         return waypointEditor;
     }
-
 }

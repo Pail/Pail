@@ -12,8 +12,11 @@ import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
+import me.escapeNT.pail.GUIComponents.UpdateView;
+import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.util.ServerReadyListener;
+import me.escapeNT.pail.util.UpdateHandler;
 import me.escapeNT.pail.util.Util;
 
 import org.bukkit.Material;
@@ -72,6 +75,12 @@ public class Pail extends JavaPlugin {
 
                 for(Player p : getServer().getOnlinePlayers()) {
                     Util.getServerControls().getListModel().addElement(p.getName());
+                }
+
+                General.load();
+                if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
+                        && !UpdateHandler.isUpToDate()) {
+                    new UpdateView().setVisible(true);
                 }
             }
         }, "Pail").start();
