@@ -7,16 +7,19 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
+import javax.swing.text.BadLocationException;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
 
 /**
- * Log Handler to print the console output to the GUI.
+ * Log Handler to print the console output to the GUI
  * @author escapeNT
  */
 public class PailLogHandler extends Handler {
     
     ScrollableTextArea output;
+    boolean scroll = true;
+    int scroller;
 
     /**
      * Constructs a new log handler using the specified text area for output.
@@ -26,38 +29,42 @@ public class PailLogHandler extends Handler {
         this.output = output;
     }
 
-    @Override
     public synchronized void publish(LogRecord record) {
-
-        Date date = new Date(record.getMillis());
-        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-
+        
         final StringBuilder sb = new StringBuilder();
-        sb.append(fmt.format(date));
+        if(!output.getText().isEmpty())
+            sb.append("\n");
+        sb.append(new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
         sb.append(" [");
         sb.append(record.getLevel().toString());
         sb.append("] ");
         sb.append(record.getMessage());
-        sb.append("\n");
 
+        final JScrollBar vert = output.getScroller().getVerticalScrollBar();
+        if(vert.getValue() != vert.getMaximum()-vert.getSize().height) {
+            scroll = false;
+            try {
+                scroller = output.getLineStartOffset((int) Math.round(output.getLineCount()*(vert.getValue() / (new Integer(vert.getMaximum()-vert.getSize().height).doubleValue()))));
+            } catch (BadLocationException ex) {
+                scroll = true;
+            }
+        } else if(!scroll) {
+            scroll = true;
+        }
+        
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
-                boolean scroll = false;
-                if(vert.getValue() == vert.getMaximum()) {
-                    scroll = true;
-                }
-                output.append(sb.toString().replace("[0m", ""));
-                if(scroll) {
-                    vert.setValue(vert.getMaximum());
-                }
+                output.append(sb.toString());//.replace("[0m", ""));
+                if(scroll && output.getCaretPosition() != output.getText().length())
+                    output.setCaretPosition(output.getText().length());
+                else if (!scroll && output.getCaretPosition() == output.getText().length())
+                    output.setCaretPosition(scroller);
             }
         });
     }
 
-    @Override
     public void flush() {}
 
-    @Override
     public void close() throws SecurityException {}
 }
