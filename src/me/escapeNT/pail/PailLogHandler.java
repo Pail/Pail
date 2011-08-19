@@ -32,34 +32,35 @@ public class PailLogHandler extends Handler {
     public synchronized void publish(LogRecord record) {
         
         final StringBuilder sb = new StringBuilder();
-        if(!output.getText().isEmpty())
-            sb.append("\n");
+        sb.append("\n");
         sb.append(new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
         sb.append(" [");
         sb.append(record.getLevel().toString());
         sb.append("] ");
         sb.append(record.getMessage());
 
-        final JScrollBar vert = output.getScroller().getVerticalScrollBar();
+        final JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
         if(vert.getValue() != vert.getMaximum()-vert.getSize().height) {
             scroll = false;
             try {
-                scroller = output.getLineStartOffset((int) Math.round(output.getLineCount()*(vert.getValue() / (new Integer(vert.getMaximum()-vert.getSize().height).doubleValue()))));
+                scroller = output.getLineStartOffset((int) Math.round(output.getLineCount() * (vert.getValue() /
+                        (new Integer(vert.getMaximum() - vert.getSize().height).doubleValue()))));
             } catch (BadLocationException ex) {
                 scroll = true;
             }
         } else if(!scroll) {
             scroll = true;
-        }
-        
+        }     
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                output.append(sb.toString());//.replace("[0m", ""));
-                if(scroll && output.getCaretPosition() != output.getText().length())
+                output.append(sb.toString().replace("[0m", ""));
+                if(scroll && output.getCaretPosition() != output.getText().length()) {
                     output.setCaretPosition(output.getText().length());
-                else if (!scroll && output.getCaretPosition() == output.getText().length())
+                }
+                else if (!scroll && output.getCaretPosition() == output.getText().length()) {
                     output.setCaretPosition(scroller);
+                }
             }
         });
     }
