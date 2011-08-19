@@ -309,7 +309,6 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLayeredPane1.setBounds(390, 80, 440, 340);
 
         autoUpdate.setText("Automatically check for updates");
-        autoUpdate.setActionCommand("Automatically check for updates");
         autoUpdate.setFocusable(false);
         jPanel1.add(autoUpdate);
         autoUpdate.setBounds(560, 50, 240, 23);
@@ -317,7 +316,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         settingsTabs.addTab("General", jPanel1);
 
         add(settingsTabs);
-        settingsTabs.setBounds(-5, 2, 880, 470);
+        settingsTabs.setBounds(-5, 2, 870, 470);
     }// </editor-fold>//GEN-END:initComponents
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed

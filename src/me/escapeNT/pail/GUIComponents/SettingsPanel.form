@@ -24,7 +24,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="-5" y="2" width="880" height="470"/>
+          <AbsoluteConstraints x="-5" y="2" width="870" height="470"/>
         </Constraint>
       </Constraints>
 
@@ -368,7 +368,6 @@
             <Component class="javax.swing.JCheckBox" name="autoUpdate">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Automatically check for updates"/>
-                <Property name="actionCommand" type="java.lang.String" value="Automatically check for updates"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Constraints>

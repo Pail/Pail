@@ -122,7 +122,7 @@ public class UpdateView extends javax.swing.JDialog {
             public void run() {
                 try {
                     UpdateHandler.downloadLatest(UpdateView.getInstance());
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(getRootPane(), "Update failed."
                             + "\nThe latest version can be downloaded manually\nfrom the plugin thread.",
                             "Update Failed", JOptionPane.ERROR_MESSAGE);
