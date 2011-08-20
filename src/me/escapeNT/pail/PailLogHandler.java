@@ -32,7 +32,9 @@ public class PailLogHandler extends Handler {
     public synchronized void publish(LogRecord record) {
         
         final StringBuilder sb = new StringBuilder();
-        sb.append("\n");
+        //if(!output.getText().isEmpty()) {
+            sb.append("\n");
+        //}
         sb.append(new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
         sb.append(" [");
         sb.append(record.getLevel().toString());

@@ -65,8 +65,12 @@ public class SettingsPanel extends javax.swing.JPanel {
     }
 
     private String parseCraftVersion() {
-        String v = Bukkit.getServer().getVersion();
-        return v.substring(v.indexOf("jnks") - 4, v.indexOf("jnks"));
+        try {
+            String v = Bukkit.getServer().getVersion();
+            return v.substring(v.indexOf("jnks") - 4, v.indexOf("jnks"));
+        } catch(Exception ex) {
+            return "0000";
+        }
     }
 
     private void parseCraftUpdate() {

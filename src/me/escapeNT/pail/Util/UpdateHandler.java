@@ -163,12 +163,12 @@ public class UpdateHandler {
     private static int compareVersions(String str1, String str2) {
         String[] vals1 = str1.split("\\.");
         String[] vals2 = str2.split("\\.");
-        int i=0;
-        while(i<vals1.length&&i<vals2.length&&vals1[i].equals(vals2[i])) {
-          i++;
+        int i = 0;
+        while(i < vals1.length && i < vals2.length && vals1[i].equals(vals2[i])) {
+            i++;
         }
 
-        if (i<vals1.length&&i<vals2.length) {
+        if(i < vals1.length && i < vals2.length) {
             int diff = new Integer(vals1[i]).compareTo(new Integer(vals2[i]));
             return diff<0?-1:diff==0?0:1;
         }
