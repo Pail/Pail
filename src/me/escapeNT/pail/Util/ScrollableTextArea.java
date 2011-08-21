@@ -2,15 +2,20 @@
 package me.escapeNT.pail.util;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
+import java.awt.Rectangle;
 import java.util.logging.Level;
 import javax.swing.BoundedRangeModel;
+import javax.swing.JComponent;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -32,19 +37,10 @@ public class ScrollableTextArea extends JTextPane {
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setEditable(false);
 
-        scroller.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+        DefaultCaret caret = (DefaultCaret)getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
-            BoundedRangeModel brm = scroller.getVerticalScrollBar().getModel();
-            boolean wasAtBottom = true;
-
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-               if (!brm.getValueIsAdjusting() && wasAtBottom) {
-                   brm.setValue(brm.getMaximum());
-               } else {
-                   wasAtBottom = ((brm.getValue() + brm.getExtent()) == brm.getMaximum());
-               }
-            }
-        });
+        getDocument().addDocumentListener(new ScrollingDocumentListener(this));
     }
 
     /**
@@ -89,5 +85,53 @@ public class ScrollableTextArea extends JTextPane {
      */
     public JScrollPane getScrollerPanel() {
        return scroller;
+    }
+
+    private class ScrollingDocumentListener implements DocumentListener {
+        
+        private ScrollableTextArea textArea;
+
+        public ScrollingDocumentListener(ScrollableTextArea textArea) {
+            this.textArea = textArea;
+        }
+
+        public void changedUpdate(DocumentEvent e) {
+            maybeScrollToBottom();
+        }
+
+        public void insertUpdate(DocumentEvent e) {
+            maybeScrollToBottom();
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            maybeScrollToBottom();
+        }
+
+        private void maybeScrollToBottom() {
+            JScrollBar scrollBar = scroller.getVerticalScrollBar();
+            boolean scrollBarAtBottom = isScrollBarFullyExtended(scrollBar);
+            if(scrollBarAtBottom) {
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        EventQueue.invokeLater(new Runnable() {
+                            public void run() {
+                                scrollToBottom(textArea);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    private static boolean isScrollBarFullyExtended(JScrollBar vScrollBar) {
+        BoundedRangeModel model = vScrollBar.getModel();
+        return (model.getExtent() + model.getValue()) == model.getMaximum();
+    }
+
+    private static void scrollToBottom(JComponent component) {
+        Rectangle visibleRect = component.getVisibleRect();
+        visibleRect.y = component.getHeight() - visibleRect.height;
+        component.scrollRectToVisible(visibleRect);
     }
 }
