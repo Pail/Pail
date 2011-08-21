@@ -176,7 +176,9 @@ public class Pail extends JavaPlugin {
                                 }
                                 output.append(Color.BLACK, sb.toString() + "\n");
                             }
-                        } catch(IndexOutOfBoundsException e) {
+                        } catch(IllegalArgumentException ex) {
+                            output.append(Color.BLACK, str);
+                        } catch (IndexOutOfBoundsException e) {
                             output.append(Color.BLACK, str);
                         }
                     }

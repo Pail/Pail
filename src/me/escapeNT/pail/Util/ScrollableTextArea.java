@@ -4,7 +4,6 @@ package me.escapeNT.pail.util;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
@@ -44,7 +43,7 @@ public class ScrollableTextArea extends JTextPane {
         try {
             doc.insertString(doc.getLength(), text, sas);
         } catch (BadLocationException ex) {
-            Logger.getLogger(ScrollableTextArea.class.getName()).log(Level.SEVERE, null, ex);
+            Util.log(Level.SEVERE, ex.toString());
         }
     }
 
@@ -63,7 +62,7 @@ public class ScrollableTextArea extends JTextPane {
         try {
             doc.insertString(doc.getLength(), text, sas);
         } catch (BadLocationException ex) {
-            Logger.getLogger(ScrollableTextArea.class.getName()).log(Level.SEVERE, null, ex);
+            Util.log(Level.SEVERE, ex.toString());
         }
     }
 

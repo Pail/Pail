@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
@@ -55,6 +56,12 @@ public class PailLogHandler extends Handler {
                     }
                 }
                 output.append(Color.BLACK, "\n");
+
+                JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
+                if(vert.getValue() == vert.getMaximum() - vert.getSize().height
+                        && output.getCaretPosition() != output.getDocument().getLength()) {
+                    output.setCaretPosition(output.getDocument().getLength());
+                }
             }
         });
 
