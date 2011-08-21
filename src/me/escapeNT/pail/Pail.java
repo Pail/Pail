@@ -165,8 +165,14 @@ public class Pail extends JavaPlugin {
 
                                 StringBuilder sb = new StringBuilder();
                                 for(int i = 2; i < s.length; i++) {
-                                    sb.append(s[i]);
-                                    sb.append(" ");
+                                    if(s[i].startsWith("[") && s[i].contains("]")) {
+                                        output.append(Color.BLACK, sb.toString());
+                                        sb = new StringBuilder();
+                                        output.append(Color.BLACK, true, s[i] + " ");
+                                    } else {
+                                        sb.append(s[i]);
+                                        sb.append(" ");
+                                    }
                                 }
                                 output.append(Color.BLACK, sb.toString() + "\n");
                             }
@@ -175,11 +181,8 @@ public class Pail extends JavaPlugin {
                         }
                     }
                 } catch (Exception e) {
-                  e.printStackTrace();
+                    e.printStackTrace();
                 }
-
-                //Util.getServerControls().getServerConsolePanel().getConsoleOutput().setText(prev.getConsoleText());
-
 
                 JScrollBar vertical = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getScrollerPanel().getVerticalScrollBar();
                 vertical.setValue(vertical.getMaximum());

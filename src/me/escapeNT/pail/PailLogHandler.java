@@ -46,7 +46,15 @@ public class PailLogHandler extends Handler {
                 }
 
                 output.append(color, " [" + record.getLevel().toString() + "] ");
-                output.append(Color.BLACK, record.getMessage() + "\n");
+
+                for(String s : record.getMessage().split(" ")) {
+                    if(s.startsWith("[") && s.contains("]")) {
+                        output.append(Color.BLACK, true, s + " ");
+                    } else {
+                        output.append(Color.BLACK, s + " ");
+                    }
+                }
+                output.append(Color.BLACK, "\n");
             }
         });
 

@@ -1,5 +1,4 @@
 
-
 package me.escapeNT.pail.util;
 
 import java.awt.Color;
