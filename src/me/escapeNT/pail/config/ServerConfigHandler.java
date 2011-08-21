@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+
+import me.escapeNT.pail.util.Util;
 
 /**
  * Class intended to handle the vanilla server configuration.
@@ -35,7 +38,7 @@ public class ServerConfigHandler {
 
             writer.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Util.log(Level.SEVERE, ex.toString());
         }
     }
 }

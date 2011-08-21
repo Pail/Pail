@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import me.escapeNT.pail.util.Util;
 
@@ -30,7 +31,7 @@ public class PanelConfig {
             oos.writeObject(panelsActivated);
             oos.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Util.log(Level.SEVERE, ex.toString());
         }
     }
 
@@ -44,7 +45,7 @@ public class PanelConfig {
             panelsActivated = (Map<String, Boolean>)ois.readObject();
             ois.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Util.log(Level.SEVERE, ex.toString());
         }
     }
 

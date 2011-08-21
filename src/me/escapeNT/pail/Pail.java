@@ -183,7 +183,7 @@ public class Pail extends JavaPlugin {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Util.log(Level.SEVERE, e.toString());
                 }
 
                 JScrollBar vertical = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getScrollerPanel().getVerticalScrollBar();
