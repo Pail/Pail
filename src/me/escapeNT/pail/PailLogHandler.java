@@ -1,13 +1,13 @@
 
 package me.escapeNT.pail;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
-import javax.swing.text.BadLocationException;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
 
@@ -29,18 +29,28 @@ public class PailLogHandler extends Handler {
         this.output = output;
     }
 
-    public synchronized void publish(LogRecord record) {
-        
-        final StringBuilder sb = new StringBuilder();
-        //if(!output.getText().isEmpty()) {
-            sb.append("\n");
-        //}
-        sb.append(new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
-        sb.append(" [");
-        sb.append(record.getLevel().toString());
-        sb.append("] ");
-        sb.append(record.getMessage());
+    public synchronized void publish(final LogRecord record) {
 
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run(){
+                output.append(Color.GRAY, true, new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
+
+                Color color = Color.BLACK;
+                Level lv = record.getLevel();
+                if(lv == Level.INFO) {
+                    color = Color.BLUE;
+                } else if(lv == Level.WARNING) {
+                    color = Color.ORANGE;
+                } else if(lv == Level.SEVERE) {
+                    color = Color.RED;
+                }
+
+                output.append(color, " [" + record.getLevel().toString() + "] ");
+                output.append(Color.BLACK, record.getMessage() + "\n");
+            }
+        });
+
+        /*
         final JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
         if(vert.getValue() != vert.getMaximum()-vert.getSize().height) {
             scroll = false;
@@ -52,11 +62,11 @@ public class PailLogHandler extends Handler {
             }
         } else if(!scroll) {
             scroll = true;
-        }     
+        }
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                output.append(sb.toString().replace("[0m", ""));
+                output.append(Color.GREEN, sb.toString().replace("[0m", ""));
                 if(scroll && output.getCaretPosition() != output.getText().length()) {
                     output.setCaretPosition(output.getText().length());
                 }
@@ -64,7 +74,7 @@ public class PailLogHandler extends Handler {
                     output.setCaretPosition(scroller);
                 }
             }
-        });
+        });*/
     }
 
     public void flush() {}

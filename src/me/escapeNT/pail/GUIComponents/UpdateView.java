@@ -1,9 +1,6 @@
 
 package me.escapeNT.pail.GUIComponents;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import me.escapeNT.pail.util.UpdateHandler;
@@ -74,7 +71,7 @@ public class UpdateView extends javax.swing.JDialog {
         getContentPane().add(progressLabel);
         progressLabel.setBounds(20, 260, 440, 20);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14));
         jLabel1.setText("An update for Pail is available!");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(140, 10, 230, 17);
@@ -101,14 +98,14 @@ public class UpdateView extends javax.swing.JDialog {
         getContentPane().add(update);
         update.setBounds(370, 210, 88, 29);
 
-        Ignore.setText("Ignore");
+        Ignore.setText("Remind me later");
         Ignore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IgnoreActionPerformed(evt);
             }
         });
         getContentPane().add(Ignore);
-        Ignore.setBounds(280, 210, 84, 29);
+        Ignore.setBounds(234, 210, 130, 29);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -1,7 +1,10 @@
 package me.escapeNT.pail;
 
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -15,6 +18,7 @@ import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
+import me.escapeNT.pail.util.ScrollableTextArea;
 import me.escapeNT.pail.util.ServerReadyListener;
 import me.escapeNT.pail.util.UpdateHandler;
 import me.escapeNT.pail.util.Util;
@@ -134,9 +138,49 @@ public class Pail extends JavaPlugin {
         }
         final PailPersistance prev = new PailPersistance().load();
         getMainWindow().setLocation(prev.getWindowLocation());
+
+        final ScrollableTextArea output = Util.getServerControls().getServerConsolePanel().getConsoleOutput();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Util.getServerControls().getServerConsolePanel().getConsoleOutput().setText(prev.getConsoleText());
+                BufferedReader reader = new BufferedReader(new StringReader(prev.getConsoleText()));
+
+                String str;
+                try {
+                    while ((str = reader.readLine()) != null) {
+                        try {
+                            if (str.length() > 0) {
+                                String[] s = str.split(" ");
+                                output.append(Color.GRAY, true, s[0]);
+
+                                Color color = Color.BLACK;
+                                Level lv = Level.parse(s[1].substring(1, s[1].length() - 1));
+                                if(lv == Level.INFO) {
+                                    color = Color.BLUE;
+                                } else if(lv == Level.WARNING) {
+                                    color = Color.ORANGE;
+                                } else if(lv == Level.SEVERE) {
+                                    color = Color.RED;
+                                }
+                                output.append(color, " [" + lv.toString() + "] ");
+
+                                StringBuilder sb = new StringBuilder();
+                                for(int i = 2; i < s.length; i++) {
+                                    sb.append(s[i]);
+                                    sb.append(" ");
+                                }
+                                output.append(Color.BLACK, sb.toString() + "\n");
+                            }
+                        } catch(IndexOutOfBoundsException e) {
+                            output.append(Color.BLACK, str);
+                        }
+                    }
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+
+                //Util.getServerControls().getServerConsolePanel().getConsoleOutput().setText(prev.getConsoleText());
+
+
                 JScrollBar vertical = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getScrollerPanel().getVerticalScrollBar();
                 vertical.setValue(vertical.getMaximum());
             }
