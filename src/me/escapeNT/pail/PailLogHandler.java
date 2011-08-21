@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.util.ScrollableTextArea;
@@ -18,9 +17,9 @@ import me.escapeNT.pail.util.ScrollableTextArea;
  */
 public class PailLogHandler extends Handler {
     
-    ScrollableTextArea output;
-    boolean scroll = true;
-    int scroller;
+    private ScrollableTextArea output;
+    private boolean scroll = true;
+    private int scroller;
 
     /**
      * Constructs a new log handler using the specified text area for output.
@@ -56,40 +55,8 @@ public class PailLogHandler extends Handler {
                     }
                 }
                 output.append(Color.BLACK, "\n");
-
-                JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
-                if(vert.getValue() == vert.getMaximum() - vert.getSize().height
-                        && output.getCaretPosition() != output.getDocument().getLength()) {
-                    output.setCaretPosition(output.getDocument().getLength());
-                }
             }
         });
-
-        /*
-        final JScrollBar vert = output.getScrollerPanel().getVerticalScrollBar();
-        if(vert.getValue() != vert.getMaximum()-vert.getSize().height) {
-            scroll = false;
-            try {
-                scroller = output.getLineStartOffset((int) Math.round(output.getLineCount() * (vert.getValue() /
-                        (new Integer(vert.getMaximum() - vert.getSize().height).doubleValue()))));
-            } catch (BadLocationException ex) {
-                scroll = true;
-            }
-        } else if(!scroll) {
-            scroll = true;
-        }
-        
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run(){
-                output.append(Color.GREEN, sb.toString().replace("[0m", ""));
-                if(scroll && output.getCaretPosition() != output.getText().length()) {
-                    output.setCaretPosition(output.getText().length());
-                }
-                else if (!scroll && output.getCaretPosition() == output.getText().length()) {
-                    output.setCaretPosition(scroller);
-                }
-            }
-        });*/
     }
 
     public void flush() {}

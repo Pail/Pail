@@ -3,7 +3,10 @@ package me.escapeNT.pail.util;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.logging.Level;
+import javax.swing.BoundedRangeModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
@@ -21,13 +24,29 @@ public class ScrollableTextArea extends JTextPane {
     private JScrollPane scroller;
 
     public ScrollableTextArea() {
-       scroller = new JScrollPane(this);
-       scroller.setVerticalScrollBarPolicy(
-               ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-       scroller.setHorizontalScrollBarPolicy(
-               ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-       setFont(new Font("SansSerif", Font.PLAIN, 12));
-       setEditable(false);
+        scroller = new JScrollPane(this);
+        scroller.setVerticalScrollBarPolicy(
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setHorizontalScrollBarPolicy(
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        setFont(new Font("SansSerif", Font.PLAIN, 12));
+        setEditable(false);
+
+        scroller.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+
+            BoundedRangeModel brm = scroller.getVerticalScrollBar().getModel();
+            boolean wasAtBottom = true;
+
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+               if (!brm.getValueIsAdjusting()) {
+                   if (wasAtBottom) {
+                       brm.setValue(brm.getMaximum());
+                   }
+               } else {
+                wasAtBottom = ((brm.getValue() + brm.getExtent()) == brm.getMaximum());
+               }
+            }
+        });
     }
 
     /**
