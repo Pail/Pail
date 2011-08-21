@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.util;
 
 import java.awt.Color;
@@ -37,8 +36,7 @@ public class ScrollableTextArea extends JTextPane {
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setEditable(false);
 
-        DefaultCaret caret = (DefaultCaret)getCaret();
-        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        ((DefaultCaret)getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         getDocument().addDocumentListener(new ScrollingDocumentListener(this));
     }
