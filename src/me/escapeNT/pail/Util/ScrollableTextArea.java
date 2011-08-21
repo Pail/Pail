@@ -38,12 +38,10 @@ public class ScrollableTextArea extends JTextPane {
             boolean wasAtBottom = true;
 
             public void adjustmentValueChanged(AdjustmentEvent e) {
-               if (!brm.getValueIsAdjusting()) {
-                   if (wasAtBottom) {
-                       brm.setValue(brm.getMaximum());
-                   }
+               if (!brm.getValueIsAdjusting() && wasAtBottom) {
+                   brm.setValue(brm.getMaximum());
                } else {
-                wasAtBottom = ((brm.getValue() + brm.getExtent()) == brm.getMaximum());
+                   wasAtBottom = ((brm.getValue() + brm.getExtent()) == brm.getMaximum());
                }
             }
         });
