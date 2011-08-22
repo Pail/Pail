@@ -34,6 +34,7 @@ public class ScrollableTextArea extends JTextPane {
         scroller.setHorizontalScrollBarPolicy(
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         setFont(new Font("SansSerif", Font.PLAIN, 12));
+        setContentType("charset=UTF-8");
         setEditable(false);
 
         ((DefaultCaret)getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
