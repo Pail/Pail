@@ -1,6 +1,7 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 import me.escapeNT.pail.util.UpdateHandler;
@@ -120,6 +121,7 @@ public class UpdateView extends javax.swing.JDialog {
                 try {
                     UpdateHandler.downloadLatest(UpdateView.getInstance());
                 } catch (Exception ex) {
+                    Util.log(Level.SEVERE, ex.toString());
                     JOptionPane.showMessageDialog(getRootPane(), "Update failed."
                             + "\nThe latest version can be downloaded manually\nfrom the plugin thread.",
                             "Update Failed", JOptionPane.ERROR_MESSAGE);

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class UpdateHandler {
     private static final String version = Pail.PLUGIN_VERSION;
     private static String currentVersion;
 
-    public static final File updateFile = new File(Util.getPlugin().getDataFolder().getPath() + File.separator + "Pail.jar");
+    public static final File updateFile = new File(new File(Bukkit.getServer().getUpdateFolder()).getPath(), "Pail.jar");
 
     /**
      * Checks if the current Pail version is up to date.
@@ -63,6 +64,7 @@ public class UpdateHandler {
         List<String> changes = new ArrayList<String>();
         try {
             URL url = new URL("http://pail.hostzi.com/");
+            touchLink(url);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             in.readLine();
 
@@ -99,7 +101,7 @@ public class UpdateHandler {
             }
         });
 
-        URL url = new URL("http://bit.ly/pF51cW");
+        URL url = new URL("http://dl.dropbox.com/u/27262769/Pail.jar");
 
         if (!updateFile.getParentFile().exists()) {
             updateFile.getParentFile().mkdir();
@@ -147,15 +149,12 @@ public class UpdateHandler {
                 dialog.getProgressLabel().setText("Download complete");
             }
         });
-        
-        new File("plugins/Pail.jar").delete();
-        updateFile.renameTo(new File("plugins/Pail.jar"));
 
         int reload = JOptionPane.showConfirmDialog(dialog, "Download complete. Reload now?",
                 "Success", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         dialog.dispose();
-        if(reload == JOptionPane.YES_OPTION) {
-            Util.getPlugin().saveState();
+        
+        if(reload == JOptionPane.YES_OPTION) {          
             Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
         }
     }
@@ -173,6 +172,19 @@ public class UpdateHandler {
             return diff<0?-1:diff==0?0:1;
         }
         return vals1.length<vals2.length?-1:vals1.length==vals2.length?0:1;
+    }
+
+    private static void touchLink(URL url) {
+        try {
+            HttpURLConnection con = (HttpURLConnection)(url.openConnection());
+            System.setProperty("http.agent", "");
+            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.100 Safari/534.30");
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String str = "";
+            while((str = in.readLine()) != null);
+            in.close();
+        }
+        catch(Exception e) {}
     }
 
     /**

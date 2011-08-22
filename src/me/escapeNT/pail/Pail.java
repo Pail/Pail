@@ -125,8 +125,10 @@ public class Pail extends JavaPlugin {
      * Saves the current plugin state to file.
      */
     public void saveState() {
-        new PailPersistance().save(getMainWindow().getLocationOnScreen(),
+        if(main.isVisible()) {
+            new PailPersistance().save(getMainWindow().getLocationOnScreen(),
                 Util.getServerControls().getServerConsolePanel().getConsoleOutput().getText());
+        }
     }
 
     /**
