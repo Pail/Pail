@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.UpdateView;
@@ -52,6 +53,12 @@ public class Pail extends JavaPlugin {
         PLUGIN_VERSION = getDescription().getVersion();
         log.addHandler(handler);
         Util.setPlugin(this);
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         new Thread(new Runnable() {
             public void run() {

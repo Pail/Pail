@@ -64,7 +64,6 @@ public class UpdateHandler {
         List<String> changes = new ArrayList<String>();
         try {
             URL url = new URL("http://pail.hostzi.com/");
-            touchLink(url);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             in.readLine();
 
@@ -101,7 +100,8 @@ public class UpdateHandler {
             }
         });
 
-        URL url = new URL("http://dl.dropbox.com/u/27262769/Pail.jar");
+        URL url = new URL("http://bit.ly/pF51cW");
+        touchLink(url);
 
         if (!updateFile.getParentFile().exists()) {
             updateFile.getParentFile().mkdir();

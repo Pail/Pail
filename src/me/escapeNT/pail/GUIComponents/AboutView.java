@@ -38,7 +38,7 @@ public class AboutView extends javax.swing.JDialog {
         title.setFont(new java.awt.Font("Lucida Grande", 1, 26)); // NOI18N
         title.setText("Pail");
         getContentPane().add(title);
-        title.setBounds(90, 10, 47, 32);
+        title.setBounds(87, 10, 150, 32);
 
         version.setText("Version ");
         getContentPane().add(version);
