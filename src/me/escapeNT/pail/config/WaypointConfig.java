@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.config;
 
 import java.io.File;
@@ -20,7 +19,7 @@ import me.escapeNT.pail.util.Waypoint;
  */
 public class WaypointConfig {
 
-    public static final File file = new File(Util.getPlugin().getDataFolder().getPath() + File.separator + "waypoints.dat");
+    public static final File file = new File(Util.getPlugin().getDataFolder(), "waypoints.dat");
 
     private static List<Waypoint> waypoints = new ArrayList<Waypoint>();
 
