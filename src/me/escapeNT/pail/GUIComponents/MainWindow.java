@@ -6,8 +6,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,11 +14,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import me.escapeNT.pail.Pail;
 
 import me.escapeNT.pail.config.PanelConfig;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -38,7 +34,7 @@ public class MainWindow extends JFrame {
     /**
      * Called by the constructor to initialize the GUI components.
      */
-    private void initComponents() {
+    private void initComponents() { 
         tabPane = new JTabbedPane();
         menuBar = new JMenuBar();
 
@@ -52,13 +48,6 @@ public class MainWindow extends JFrame {
         
         add(getTabPane());
         setJMenuBar(menuBar);
-
-        try {
-            UIManager.installLookAndFeel("SeaGlass", "com.seaglasslookandfeel.SeaGlassLookAndFeel");
-            UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
-        } catch (Exception ex) {
-            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

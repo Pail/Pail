@@ -1,9 +1,9 @@
 
-package me.escapeNT.pail.util;
+package me.escapeNT.pail.Util;
 
 import java.io.Serializable;
-import org.bukkit.Bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
@@ -30,6 +30,10 @@ public class Waypoint implements Serializable {
         this.name = name;
     }
 
+    /**
+     * Gets this Waypoint's location.
+     * @return The Location of the waypoint.
+     */
     public Location getLocation() {
         return new Location(Bukkit.getServer().getWorld(world), x, y, z);
     }

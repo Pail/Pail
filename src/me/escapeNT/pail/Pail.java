@@ -1,6 +1,5 @@
 package me.escapeNT.pail;
 
-
 import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -14,15 +13,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
-import me.escapeNT.pail.util.ScrollableTextArea;
-import me.escapeNT.pail.util.ServerReadyListener;
-import me.escapeNT.pail.util.UpdateHandler;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.ScrollableTextArea;
+import me.escapeNT.pail.Util.ServerReadyListener;
+import me.escapeNT.pail.Util.UpdateHandler;
+import me.escapeNT.pail.Util.Util;
+import me.escapeNT.pail.Util.Waypoint;
+import me.escapeNT.pail.config.WaypointConfig;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -53,6 +55,12 @@ public class Pail extends JavaPlugin {
         PLUGIN_VERSION = getDescription().getVersion();
         log.addHandler(handler);
         Util.setPlugin(this);
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         new Thread(new Runnable() {
             public void run() {
@@ -87,8 +95,6 @@ public class Pail extends JavaPlugin {
                         && !UpdateHandler.isUpToDate()) {
                     new UpdateView().setVisible(true);
                 }
-
-                SwingUtilities.updateComponentTreeUI(main);
             }
         }, "Pail").start();
 
@@ -108,6 +114,8 @@ public class Pail extends JavaPlugin {
             getMainWindow().getTabPane().removeAll();
             getMainWindow().dispose();
         }
+        WaypointConfig.save();
+        PanelConfig.save();
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     
@@ -274,6 +282,45 @@ public class Pail extends JavaPlugin {
         PanelConfig.getPanelsActivated().put(title, activated);
         PanelConfig.save();
         getMainWindow().loadPanels();
+    }
+
+    /**
+     * Gets the waypoint with the specified name, or null if it doesn't exist.
+     * @param name The name of the waypoint.
+     * @return
+     */
+    public Waypoint getWaypoint(String name) {
+        for(Waypoint w : WaypointConfig.getWaypoints()) {
+            if(w.getName().equals(name)) {
+                return w;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Add the provided Waypoint to the list.
+     * @param waypoint The Waypoint to add.
+     */
+    public void addWaypoint(Waypoint waypoint) {
+        WaypointConfig.getWaypoints().add(waypoint);
+        WaypointConfig.save();
+    }
+
+    /**
+     * Removes the waypoint with the given name from the list.
+     * @param name The name of the Waypoint to remove.
+     * @return True if a waypoint was indeed removed.
+     */
+    public boolean removeWaypoint(String name) {
+        for(Waypoint w : WaypointConfig.getWaypoints()) {
+            if(w.getName().equals(name)) {
+                WaypointConfig.getWaypoints().remove(w);
+                WaypointConfig.save();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

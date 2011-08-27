@@ -1,5 +1,4 @@
 
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.Color;
@@ -17,8 +16,8 @@ import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.ServerConfigHandler;
-import me.escapeNT.pail.util.UpdateHandler;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.UpdateHandler;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;

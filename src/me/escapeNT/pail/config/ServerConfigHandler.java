@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 /**
  * Class intended to handle the vanilla server configuration.

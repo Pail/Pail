@@ -1,4 +1,4 @@
-package me.escapeNT.pail.util;
+package me.escapeNT.pail.Util;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;

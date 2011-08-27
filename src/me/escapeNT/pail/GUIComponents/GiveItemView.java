@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

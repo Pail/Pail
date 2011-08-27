@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import javax.swing.SwingUtilities;
 
-import me.escapeNT.pail.util.ScrollableTextArea;
+import me.escapeNT.pail.Util.ScrollableTextArea;
 
 /**
  * Log Handler to print the console output to the GUI

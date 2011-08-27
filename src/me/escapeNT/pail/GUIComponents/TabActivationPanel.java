@@ -10,7 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import me.escapeNT.pail.config.PanelConfig;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 /**
  * Panel displaying the loaded components and their activation status.

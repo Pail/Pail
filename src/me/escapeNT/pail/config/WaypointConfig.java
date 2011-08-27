@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import me.escapeNT.pail.util.Util;
-import me.escapeNT.pail.util.Waypoint;
+import me.escapeNT.pail.Util.Util;
+import me.escapeNT.pail.Util.Waypoint;
 
 /**
  * Class for handling saved waypoints.

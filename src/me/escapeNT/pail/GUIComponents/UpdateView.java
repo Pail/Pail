@@ -4,8 +4,8 @@ package me.escapeNT.pail.GUIComponents;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
-import me.escapeNT.pail.util.UpdateHandler;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.UpdateHandler;
+import me.escapeNT.pail.Util.Util;
 
 /**
  * Dialog displaying update status and progress.

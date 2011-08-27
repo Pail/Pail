@@ -2,7 +2,7 @@
 package me.escapeNT.pail.GUIComponents;
 
 import me.escapeNT.pail.Pail;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 /**
  * Pail about window.

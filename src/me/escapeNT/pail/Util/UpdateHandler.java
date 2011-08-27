@@ -1,5 +1,5 @@
 
-package me.escapeNT.pail.util;
+package me.escapeNT.pail.Util;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

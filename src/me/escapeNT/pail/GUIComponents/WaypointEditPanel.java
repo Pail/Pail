@@ -5,7 +5,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 import me.escapeNT.pail.config.WaypointConfig;
-import me.escapeNT.pail.util.Waypoint;
+import me.escapeNT.pail.Util.Waypoint;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

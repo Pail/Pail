@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.logging.Level;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 
 /**

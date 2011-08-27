@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 import org.bukkit.Bukkit;
 
 import org.bukkit.ChatColor;

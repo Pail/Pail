@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import me.escapeNT.pail.util.ScrollableTextArea;
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.ScrollableTextArea;
+import me.escapeNT.pail.Util.Util;
 import org.bukkit.Bukkit;
 
 import org.bukkit.Server;

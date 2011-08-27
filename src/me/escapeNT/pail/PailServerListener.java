@@ -1,7 +1,7 @@
 
 package me.escapeNT.pail;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.event.server.ServerListener;

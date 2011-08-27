@@ -1,11 +1,10 @@
 
-
 package me.escapeNT.pail;
 
-import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
-import me.escapeNT.pail.util.ServerReadyListener;
-import me.escapeNT.pail.util.Util;
+
+import me.escapeNT.pail.Util.ServerReadyListener;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;

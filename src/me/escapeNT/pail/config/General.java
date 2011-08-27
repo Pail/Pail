@@ -1,7 +1,7 @@
 
 package me.escapeNT.pail.config;
 
-import me.escapeNT.pail.util.Util;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.util.config.Configuration;
 
