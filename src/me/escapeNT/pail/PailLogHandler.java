@@ -32,7 +32,7 @@ public class PailLogHandler extends Handler {
     public synchronized void publish(final LogRecord record) {
 
         SwingUtilities.invokeLater(new Runnable() {
-            public void run(){
+            public void run() {
                 output.append(Color.GRAY, true, new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
 
                 Color color = Color.BLACK;

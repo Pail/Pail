@@ -52,8 +52,7 @@ public class Pail extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        PLUGIN_VERSION = getDescription().getVersion();
-        log.addHandler(handler);
+        PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
 
         try {
@@ -66,10 +65,12 @@ public class Pail extends JavaPlugin {
             public void run() {
                 main = new MainWindow();
 
-                PailLogHandler handler = new PailLogHandler(
-                    Util.getServerControls().getServerConsolePanel().getConsoleOutput());
-                handler.setLevel(Level.ALL);
                 log.addHandler(handler);
+
+                PailLogHandler mainHandler = new PailLogHandler(
+                    Util.getServerControls().getServerConsolePanel().getConsoleOutput());
+                mainHandler.setLevel(Level.ALL);
+                log.addHandler(mainHandler);
 
                 getMainWindow().setTitle("Pail Server Manager");
                 getMainWindow().setResizable(false);
