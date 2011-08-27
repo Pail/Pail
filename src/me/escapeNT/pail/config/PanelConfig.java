@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.config;
 
 import java.io.File;
@@ -21,7 +20,7 @@ public class PanelConfig {
 
     private static Map<String, Boolean> panelsActivated = new HashMap<String, Boolean>();
 
-    public static final File file = new File(Util.getPlugin().getDataFolder().getPath() + File.separator + "panels.dat");
+    public static final File file = new File(Util.getPlugin().getDataFolder(), "panels.dat");
 
     public static void save() {
         Util.getPlugin().getDataFolder().mkdir();
