@@ -51,7 +51,11 @@ public class GiveItemView extends javax.swing.JDialog {
                 mats.put(m, new ImageIcon());
             }
             else {
-                mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
+                try {
+                    mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
+                } catch(Exception ex) {
+                    mats.put(m, new ImageIcon());
+                }
             }
         }
 

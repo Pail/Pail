@@ -8,9 +8,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.General;
@@ -18,6 +23,8 @@ import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.ServerConfigHandler;
 import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
+
+import net.infonode.gui.laf.InfoNodeLookAndFeel;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -33,6 +40,8 @@ public class SettingsPanel extends javax.swing.JPanel {
 
     /** Creates new form SettingsPanel */
     public SettingsPanel() {
+        General.load();
+
         initComponents();
         waypointEditor = new WaypointEditPanel();
 
@@ -43,8 +52,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
-
-        General.load();
+ 
         autoUpdate.setSelected(General.isAutoUpdate());
         loadConfig();
 
@@ -61,6 +69,20 @@ public class SettingsPanel extends javax.swing.JPanel {
                 }
             }
         });
+
+        for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {   
+            try {
+                Class feel = Class.forName(laf.getClassName());
+                if(((LookAndFeel)feel.newInstance()).isSupportedLookAndFeel()) {
+                    themes.addItem(laf.getName());
+                    if(laf.getClassName().equals(General.getLookAndFeel())) {
+                        themes.setSelectedItem(laf.getName());
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private String parseCraftVersion() {
@@ -160,6 +182,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         tabActivationPanel = new me.escapeNT.pail.GUIComponents.TabActivationPanel();
         reload = new javax.swing.JButton();
         autoUpdate = new javax.swing.JCheckBox();
+        themes = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -291,12 +315,12 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         update.setText("Latest recommended build:");
         jPanel1.add(update);
-        update.setBounds(390, 30, 440, 20);
+        update.setBounds(390, 30, 450, 20);
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
 
         tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
-        tabActivationPanel.setBounds(10, 20, 420, 280);
+        tabActivationPanel.setBounds(10, 20, 420, 240);
         jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         reload.setText("Save");
@@ -305,21 +329,34 @@ public class SettingsPanel extends javax.swing.JPanel {
                 reloadActionPerformed(evt);
             }
         });
-        reload.setBounds(350, 300, 80, 30);
+        reload.setBounds(350, 260, 80, 30);
         jLayeredPane1.add(reload, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel1.add(jLayeredPane1);
-        jLayeredPane1.setBounds(390, 80, 440, 340);
+        jLayeredPane1.setBounds(390, 120, 440, 300);
 
         autoUpdate.setText("Automatically check for updates");
         autoUpdate.setFocusable(false);
         jPanel1.add(autoUpdate);
         autoUpdate.setBounds(560, 50, 240, 23);
 
+        themes.setFocusable(false);
+        themes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                themesItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(themes);
+        themes.setBounds(440, 80, 390, 30);
+
+        jLabel7.setText("Theme");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(390, 80, 60, 30);
+
         settingsTabs.addTab("General", jPanel1);
 
         add(settingsTabs);
-        settingsTabs.setBounds(-5, 2, 870, 470);
+        settingsTabs.setBounds(-5, 2, 880, 470);
     }// </editor-fold>//GEN-END:initComponents
 
     private void reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadActionPerformed
@@ -363,6 +400,25 @@ public class SettingsPanel extends javax.swing.JPanel {
         loadConfig();
 }//GEN-LAST:event_revertActionPerformed
 
+    private void themesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_themesItemStateChanged
+       if(evt.getStateChange() == ItemEvent.SELECTED && getThemes().getSelectedItem() != null) {
+            for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+                if(laf.getName().equals((String)getThemes().getSelectedItem())) {
+                    try {
+                        if(laf.getName().equals("InfoNode")) {
+                            UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
+                        } else {
+                            UIManager.setLookAndFeel(laf.getClassName());
+                        }
+                        SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
+                    } catch (Exception ex) {
+                        Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_themesItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox autoUpdate;
@@ -375,6 +431,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -392,6 +449,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox spawnAnimals;
     private javax.swing.JCheckBox spawnMonsters;
     private me.escapeNT.pail.GUIComponents.TabActivationPanel tabActivationPanel;
+    private javax.swing.JComboBox themes;
     private javax.swing.JLabel update;
     private javax.swing.JSpinner viewDistance;
     private javax.swing.JCheckBox whitelist;
@@ -403,5 +461,12 @@ public class SettingsPanel extends javax.swing.JPanel {
      */
     public WaypointEditPanel getWaypointEditor() {
         return waypointEditor;
+    }
+
+    /**
+     * @return the theme
+     */
+    public javax.swing.JComboBox getThemes() {
+        return themes;
     }
 }

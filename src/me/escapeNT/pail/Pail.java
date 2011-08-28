@@ -14,8 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
+import me.escapeNT.pail.GUIComponents.SettingsPanel;
 import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
@@ -25,6 +28,8 @@ import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
 import me.escapeNT.pail.config.WaypointConfig;
+
+import net.infonode.gui.laf.InfoNodeLookAndFeel;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -55,11 +60,7 @@ public class Pail extends JavaPlugin {
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
 
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UIManager.installLookAndFeel("InfoNode", InfoNodeLookAndFeel.class.getName());
 
         new Thread(new Runnable() {
             public void run() {
@@ -117,6 +118,13 @@ public class Pail extends JavaPlugin {
         }
         WaypointConfig.save();
         PanelConfig.save();
+
+        for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+            if(laf.getName().equals(((SettingsPanel)this.getInterfaceComponent("Settings")).getThemes().getSelectedItem())) {
+                General.setLookAndFeel(laf.getClassName());
+            }
+        }
+        General.save();
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     
