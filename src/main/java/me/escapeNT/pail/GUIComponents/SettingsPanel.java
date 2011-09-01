@@ -1,6 +1,8 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -399,11 +401,19 @@ public class SettingsPanel extends javax.swing.JPanel {
 
     private void themesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_themesItemStateChanged
        if(evt.getStateChange() == ItemEvent.SELECTED && getThemes().getSelectedItem() != null) {
-            for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
+            for(final LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
                 if(laf.getName().equals((String)getThemes().getSelectedItem())) {
                     try {
-                        UIManager.setLookAndFeel(laf.getClassName());
-                        SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                try {
+                                    UIManager.setLookAndFeel((LookAndFeel) Class.forName(laf.getClassName()).newInstance());
+                                } catch(Exception ex) {
+                                    Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
+                            }
+                        });
                     } catch (Exception ex) {
                         Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }

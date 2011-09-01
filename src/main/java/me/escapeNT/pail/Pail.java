@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -58,8 +59,11 @@ public class Pail extends JavaPlugin {
         Util.setPlugin(this);
         General.load();
 
+        UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
+
         try {
-            UIManager.setLookAndFeel(General.getLookAndFeel());
+            LookAndFeel laf = (LookAndFeel) Class.forName(General.getLookAndFeel()).newInstance();
+            UIManager.setLookAndFeel(laf);
         } catch (Exception ex) {
             Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,6 +71,8 @@ public class Pail extends JavaPlugin {
         new Thread(new Runnable() {
             public void run() {
                 main = new MainWindow();
+
+                main.getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
 
                 log.addHandler(handler);
 
