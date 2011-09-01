@@ -24,8 +24,6 @@ import me.escapeNT.pail.config.ServerConfigHandler;
 import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 
-import net.infonode.gui.laf.InfoNodeLookAndFeel;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.World;
@@ -404,11 +402,7 @@ public class SettingsPanel extends javax.swing.JPanel {
             for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
                 if(laf.getName().equals((String)getThemes().getSelectedItem())) {
                     try {
-                        if(laf.getName().equals("InfoNode")) {
-                            UIManager.setLookAndFeel(new InfoNodeLookAndFeel());
-                        } else {
-                            UIManager.setLookAndFeel(laf.getClassName());
-                        }
+                        UIManager.setLookAndFeel(laf.getClassName());
                         SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
                     } catch (Exception ex) {
                         Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);

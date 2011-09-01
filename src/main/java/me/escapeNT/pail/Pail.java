@@ -5,7 +5,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -28,8 +27,6 @@ import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
 import me.escapeNT.pail.config.WaypointConfig;
-
-import net.infonode.gui.laf.InfoNodeLookAndFeel;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -59,13 +56,8 @@ public class Pail extends JavaPlugin {
     public void onEnable() {
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
-
         General.load();
 
-        if(!Arrays.asList(UIManager.getInstalledLookAndFeels()).contains(
-                new LookAndFeelInfo("InfoNode", InfoNodeLookAndFeel.class.getName()))) {
-            UIManager.installLookAndFeel("InfoNode", InfoNodeLookAndFeel.class.getName());
-        }
         try {
             UIManager.setLookAndFeel(General.getLookAndFeel());
         } catch (Exception ex) {
@@ -102,7 +94,6 @@ public class Pail extends JavaPlugin {
                     Util.getServerControls().getListModel().addElement(p.getName());
                 }
 
-                General.load();
                 if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
                         && !UpdateHandler.isUpToDate()) {
                     new UpdateView().setVisible(true);
