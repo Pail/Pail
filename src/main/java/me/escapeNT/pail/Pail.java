@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -15,7 +16,6 @@ import javax.swing.JScrollBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
@@ -60,7 +60,17 @@ public class Pail extends JavaPlugin {
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
 
-        UIManager.installLookAndFeel("InfoNode", InfoNodeLookAndFeel.class.getName());
+        General.load();
+
+        if(!Arrays.asList(UIManager.getInstalledLookAndFeels()).contains(
+                new LookAndFeelInfo("InfoNode", InfoNodeLookAndFeel.class.getName()))) {
+            UIManager.installLookAndFeel("InfoNode", InfoNodeLookAndFeel.class.getName());
+        }
+        try {
+            UIManager.setLookAndFeel(General.getLookAndFeel());
+        } catch (Exception ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         new Thread(new Runnable() {
             public void run() {

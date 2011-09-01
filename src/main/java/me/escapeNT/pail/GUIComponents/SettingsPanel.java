@@ -40,7 +40,6 @@ public class SettingsPanel extends javax.swing.JPanel {
 
     /** Creates new form SettingsPanel */
     public SettingsPanel() {
-        General.load();
 
         initComponents();
         waypointEditor = new WaypointEditPanel();
