@@ -346,11 +346,11 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(themes);
-        themes.setBounds(440, 80, 390, 30);
+        themes.setBounds(430, 90, 400, 20);
 
-        jLabel7.setText("Theme");
+        jLabel7.setText("Skin");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(390, 80, 60, 30);
+        jLabel7.setBounds(390, 90, 50, 20);
 
         settingsTabs.addTab("General", jPanel1);
 
@@ -411,6 +411,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                                 } catch(Exception ex) {
                                     Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                                UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
+                                Util.getPlugin().getMainWindow().getRootPane().updateUI();
                                 SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
                             }
                         });

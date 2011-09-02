@@ -167,7 +167,7 @@ public class WaypointEditPanel extends javax.swing.JPanel {
         jLabel4.setBounds(420, 150, 36, 20);
 
         add(worlds);
-        worlds.setBounds(460, 140, 360, 40);
+        worlds.setBounds(460, 150, 360, 20);
 
         save.setText("Save Waypoint");
         save.addActionListener(new java.awt.event.ActionListener() {
@@ -200,7 +200,7 @@ public class WaypointEditPanel extends javax.swing.JPanel {
         add(playerSubmit);
         playerSubmit.setBounds(740, 270, 75, 29);
         add(jSeparator1);
-        jSeparator1.setBounds(430, 210, 380, 10);
+        jSeparator1.setBounds(430, 210, 380, 12);
     }// </editor-fold>//GEN-END:initComponents
 
     private void addWaypointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addWaypointActionPerformed

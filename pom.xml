@@ -37,6 +37,22 @@
                    <include> **/*.png </include>
                 </includes>
             </resource>
+            <resource>
+                <targetPath>com/jtattoo/plaf/icons</targetPath>
+                <directory>${basedir}/src/main/resources/commonicons/</directory>
+                <includes>
+                   <include> **/*.png </include>
+                   <include> **/*.gif </include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>com/jtattoo/plaf/acryl/icons</targetPath>
+                <directory>${basedir}/src/main/resources/acrylicons/</directory>
+                <includes>
+                   <include> **/*.png </include>
+                   <include> **/*.gif </include>
+                </includes>
+            </resource>
         </resources>
     </build>
     <dependencies>

@@ -59,11 +59,20 @@ public class Pail extends JavaPlugin {
         Util.setPlugin(this);
         General.load();
 
-        UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
+        boolean load = true;
+        for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if(info.getName().equals("Acryl")) {
+                load = false;
+            }
+        }
+        if(load) {
+            UIManager.installLookAndFeel("Acryl", "com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+        }
 
         try {
             LookAndFeel laf = (LookAndFeel) Class.forName(General.getLookAndFeel()).newInstance();
             UIManager.setLookAndFeel(laf);
+            UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
         } catch (Exception ex) {
             Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
         }
