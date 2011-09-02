@@ -1,14 +1,19 @@
 
 package me.escapeNT.pail.Util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 
+import me.escapeNT.pail.GUIComponents.FileMenu;
 import me.escapeNT.pail.GUIComponents.ServerControlPanel;
 import me.escapeNT.pail.Pail;
 
@@ -23,6 +28,7 @@ public class Util {
     private static Pail plugin;
     private static HashMap<String, JPanel> interfaceComponents = new HashMap<String, JPanel>();
     private static ServerControlPanel serverControls;
+    private static FileMenu fileMenu;
 
     /**
      * Reads the last number of specified lines in a file.
@@ -69,6 +75,22 @@ public class Util {
     }
 
     /**
+     * Saves the specified text to a file.
+     * @param text The text to save.
+     * @param saveTo The file to write the text to.
+     */
+    public static void saveTextFile(String text, File saveTo) throws IOException {
+        PrintWriter out = new PrintWriter(new FileOutputStream(saveTo));
+        BufferedReader reader = new BufferedReader(new StringReader(text));
+        String str;
+        while ((str = reader.readLine()) != null) {
+            out.println(str);
+        }
+        reader.close();
+        out.close();
+    }
+
+    /**
      * @return the plugin
      */
     public static Pail getPlugin() {
@@ -101,5 +123,19 @@ public class Util {
      */
     public static void setServerControls(ServerControlPanel aServerControls) {
         serverControls = aServerControls;
+    }
+
+    /**
+     * @return the fileMenu
+     */
+    public static FileMenu getFileMenu() {
+        return fileMenu;
+    }
+
+    /**
+     * @param aFileMenu the fileMenu to set
+     */
+    public static void setFileMenu(FileMenu aFileMenu) {
+        fileMenu = aFileMenu;
     }
 }

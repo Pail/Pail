@@ -1,8 +1,11 @@
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
@@ -11,8 +14,8 @@ import javax.swing.JTextField;
 
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.Util.Util;
-import org.bukkit.Bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 
@@ -37,6 +40,8 @@ public class ServerConsolePanel extends JPanel {
         consoleInput.addActionListener(new ConsoleCommandListener());
         consoleInput.addKeyListener(crl);
         this.add(BorderLayout.SOUTH, consoleInput);
+
+        this.addKeyListener(new CopyListener());
     }
 
     /**
@@ -73,6 +78,22 @@ public class ServerConsolePanel extends JPanel {
     }
 
     /**
+     * Copies the selected console text to the clipboard.
+     */
+    private class CopyListener implements KeyListener {
+        public void keyTyped(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_C && e.getModifiers() == InputEvent.CTRL_MASK) {
+                ScrollableTextArea a = Util.getServerControls().getServerConsolePanel().getConsoleOutput();
+                if(a.isTextSelected()) {
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(a.getSelectedText()), null);
+                }
+            }
+        }
+        public void keyReleased(KeyEvent e) {}
+    }
+
+    /**
      * Listener for up and down arrow events to recall command history.
      */
     private class CommandRecallListener implements KeyListener {
@@ -101,7 +122,7 @@ public class ServerConsolePanel extends JPanel {
                 index--;
             }
             
-            consoleInput.setText(index>-1?cmdHistory.get(index):prevText);
+            consoleInput.setText(index > - 1 ? cmdHistory.get(index) : prevText);
             
             if(!prevText.isEmpty() && index == -1) {
                 prevText = "";
@@ -110,16 +131,16 @@ public class ServerConsolePanel extends JPanel {
 
         private boolean isKeyUp(int key) {
             if(key == KeyEvent.VK_UP 
-                    || key == KeyEvent.VK_KP_UP)
+                    || key == KeyEvent.VK_KP_UP) {
                 return true;
-            
+            }
             return false;
         }
-        private Boolean isKeyDown(Integer key) {
+        private Boolean isKeyDown(int key) {
             if(key == KeyEvent.VK_DOWN
-                    || key == KeyEvent.VK_KP_DOWN)
+                    || key == KeyEvent.VK_KP_DOWN) {
                 return true;
-            
+            }
             return false;
         }
         

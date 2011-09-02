@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import javax.swing.BoundedRangeModel;
 import javax.swing.JComponent;
@@ -26,6 +28,7 @@ import javax.swing.text.StyleConstants;
 public class ScrollableTextArea extends JTextPane {
 
     private JScrollPane scroller;
+    private boolean textSelected = false;
 
     public ScrollableTextArea() {
         scroller = new JScrollPane(this);
@@ -40,6 +43,7 @@ public class ScrollableTextArea extends JTextPane {
         ((DefaultCaret)getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 
         getDocument().addDocumentListener(new ScrollingDocumentListener(this));
+        addMouseListener(new ConsoleMouseListener(this));
     }
 
     /**
@@ -84,6 +88,35 @@ public class ScrollableTextArea extends JTextPane {
      */
     public JScrollPane getScrollerPanel() {
        return scroller;
+    }
+
+    /**
+     * @return the textSelected
+     */
+    public boolean isTextSelected() {
+        return textSelected;
+    }
+
+    private class ConsoleMouseListener implements MouseListener {
+        
+        ScrollableTextArea a;
+
+        public ConsoleMouseListener(ScrollableTextArea a) {
+            this.a = a;
+        }
+
+        public void mouseReleased(MouseEvent e) {
+           if(a.getSelectedText() != null) {
+               textSelected = true;
+           } else {
+               textSelected = false;
+           }
+           Util.getFileMenu().getSaveSelection().setEnabled(textSelected);
+        }
+        public void mouseClicked(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
     }
 
     private class ScrollingDocumentListener implements DocumentListener {

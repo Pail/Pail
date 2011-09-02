@@ -44,7 +44,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Independent, comprehensive, and extensible GUI for Bukkit.
  * @author escapeNT
  */
-public class Pail extends JavaPlugin {
+public final class Pail extends JavaPlugin {
     
     private static final Logger log = Logger.getLogger("Minecraft");
 
@@ -55,6 +55,7 @@ public class Pail extends JavaPlugin {
     private MainWindow main;
 
     @Override
+    @SuppressWarnings("LeakingThisInConstructor")
     public void onEnable() {
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
