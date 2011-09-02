@@ -1,8 +1,6 @@
 
 package me.escapeNT.pail.GUIComponents;
 
-import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
-
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -413,6 +411,7 @@ public class SettingsPanel extends javax.swing.JPanel {
                                 }
                                 UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
                                 Util.getPlugin().getMainWindow().getRootPane().updateUI();
+                                Util.getPlugin().getMainWindow().getJMenuBar().updateUI();
                                 SwingUtilities.updateComponentTreeUI(Util.getPlugin().getMainWindow());
                             }
                         });

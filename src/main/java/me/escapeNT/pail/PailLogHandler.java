@@ -8,6 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import me.escapeNT.pail.Util.ScrollableTextArea;
 
@@ -47,14 +48,19 @@ public class PailLogHandler extends Handler {
 
                 output.append(color, " [" + record.getLevel().toString() + "] ");
 
+                if(UIManager.getLookAndFeel().getName().equals("HiFi")) {
+                    color = Color.WHITE;
+                } else {
+                    color = Color.BLACK;
+                }
                 for(String s : record.getMessage().split(" ")) {
                     if(s.startsWith("[") && s.contains("]")) {
-                        output.append(Color.BLACK, true, s + " ");
+                        output.append(color, true, s + " ");
                     } else {
-                        output.append(Color.BLACK, s + " ");
+                        output.append(color, s + " ");
                     }
                 }
-                output.append(Color.BLACK, "\n");
+                output.append(color, "\n");
             }
         });
     }

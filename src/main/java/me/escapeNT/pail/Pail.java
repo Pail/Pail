@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -59,14 +60,27 @@ public class Pail extends JavaPlugin {
         Util.setPlugin(this);
         General.load();
 
-        boolean load = true;
+        HashMap<String, Boolean> installQueue = new HashMap<String, Boolean>();
+        installQueue.put("com.jtattoo.plaf.acryl.AcrylLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.hifi.HiFiLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.graphite.GraphiteLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.aero.AeroLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.fast.FastLookAndFeel", Boolean.TRUE);
+        
         for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            if(info.getName().equals("Acryl")) {
-                load = false;
+            if(installQueue.keySet().contains(info.getClassName())) {
+                installQueue.put(info.getClassName(), Boolean.FALSE);
             }
         }
-        if(load) {
-            UIManager.installLookAndFeel("Acryl", "com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+        for(String n : installQueue.keySet()) {
+            if(installQueue.get(n)) {
+                try {
+                    UIManager.installLookAndFeel(((LookAndFeel) Class.forName(n).newInstance()).getName(), n);
+                } catch (Exception ex) {
+                    Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
 
         try {
@@ -80,8 +94,6 @@ public class Pail extends JavaPlugin {
         new Thread(new Runnable() {
             public void run() {
                 main = new MainWindow();
-
-                main.getRootPane().putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
 
                 log.addHandler(handler);
 
@@ -115,6 +127,12 @@ public class Pail extends JavaPlugin {
                 }
             }
         }, "Pail").start();
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         PluginManager pm = this.getServer().getPluginManager();
         PailPlayerListener playerListener = new PailPlayerListener();
@@ -186,7 +204,7 @@ public class Pail extends JavaPlugin {
                 try {
                     while ((str = reader.readLine()) != null) {
                         try {
-                            if (str.length() > 0) {
+                            if(str.length() > 0) {
                                 String[] s = str.split(" ");
                                 output.append(Color.GRAY, true, s[0]);
 
@@ -201,18 +219,23 @@ public class Pail extends JavaPlugin {
                                 }
                                 output.append(color, " [" + lv.toString() + "] ");
 
+                                if(UIManager.getLookAndFeel().getName().equals("HiFi")) {
+                                    color = Color.WHITE;
+                                } else {
+                                    color = Color.BLACK;
+                                }
                                 StringBuilder sb = new StringBuilder();
                                 for(int i = 2; i < s.length; i++) {
                                     if(s[i].startsWith("[") && s[i].contains("]")) {
-                                        output.append(Color.BLACK, sb.toString());
+                                        output.append(color, sb.toString());
                                         sb = new StringBuilder();
-                                        output.append(Color.BLACK, true, s[i] + " ");
+                                        output.append(color, true, s[i] + " ");
                                     } else {
                                         sb.append(s[i]);
                                         sb.append(" ");
                                     }
                                 }
-                                output.append(Color.BLACK, sb.toString() + "\n");
+                                output.append(color, sb.toString() + "\n");
                             }
                         } catch(IllegalArgumentException ex) {
                             output.append(Color.BLACK, str);

@@ -53,6 +53,22 @@
                    <include> **/*.gif </include>
                 </includes>
             </resource>
+            <resource>
+                <targetPath>com/jtattoo/plaf/hifi/icons</targetPath>
+                <directory>${basedir}/src/main/resources/hifiicons/</directory>
+                <includes>
+                   <include> **/*.png </include>
+                   <include> **/*.gif </include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>com/jtattoo/plaf/aluminium/icons</targetPath>
+                <directory>${basedir}/src/main/resources/aluminiumicons/</directory>
+                <includes>
+                   <include> **/*.png </include>
+                   <include> **/*.gif </include>
+                </includes>
+            </resource>
         </resources>
     </build>
     <dependencies>
