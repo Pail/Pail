@@ -211,37 +211,37 @@ public class SettingsPanel extends javax.swing.JPanel {
         nether.setText("Allow nether");
         nether.setToolTipText("Allow portal transport to the nether.");
         jPanel2.add(nether);
-        nether.setBounds(30, 140, 111, 23);
+        nether.setBounds(30, 140, 160, 23);
 
         spawnMonsters.setText("Spawn monsters");
         spawnMonsters.setToolTipText("Spawn hostile monsters.");
         jPanel2.add(spawnMonsters);
-        spawnMonsters.setBounds(30, 180, 135, 23);
+        spawnMonsters.setBounds(30, 180, 160, 23);
 
         spawnAnimals.setText("Spawn animals");
         spawnAnimals.setToolTipText("Spawn non-hostile animals.");
         jPanel2.add(spawnAnimals);
-        spawnAnimals.setBounds(30, 220, 125, 23);
+        spawnAnimals.setBounds(30, 220, 160, 23);
 
         online.setText("Online mode");
         online.setToolTipText("Server checks connecting players against minecraft's account database.");
         jPanel2.add(online);
-        online.setBounds(190, 180, 112, 23);
+        online.setBounds(190, 180, 160, 23);
 
         pvp.setText("Enable PVP");
         pvp.setToolTipText("Enable player verses player damage.");
         jPanel2.add(pvp);
-        pvp.setBounds(190, 140, 99, 23);
+        pvp.setBounds(190, 140, 160, 23);
 
         whitelist.setText("Whitelist enabled");
         whitelist.setToolTipText("With a whitelist enabled, users not on the list will be unable to connect.");
         jPanel2.add(whitelist);
-        whitelist.setBounds(190, 220, 140, 23);
+        whitelist.setBounds(190, 220, 170, 23);
 
         flight.setText("Allow flight");
         flight.setToolTipText("Will allow users to use flight/no-clip on the server.");
         jPanel2.add(flight);
-        flight.setBounds(30, 260, 105, 23);
+        flight.setBounds(30, 260, 190, 23);
 
         viewDistance.setToolTipText("The number of chunks sent to the client. (3-15)");
         jPanel2.add(viewDistance);
@@ -335,7 +335,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         autoUpdate.setText("Automatically check for updates");
         autoUpdate.setFocusable(false);
         jPanel1.add(autoUpdate);
-        autoUpdate.setBounds(560, 50, 240, 23);
+        autoUpdate.setBounds(550, 50, 300, 23);
 
         themes.setFocusable(false);
         themes.addItemListener(new java.awt.event.ItemListener() {
