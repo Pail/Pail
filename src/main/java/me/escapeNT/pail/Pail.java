@@ -3,6 +3,7 @@ package me.escapeNT.pail;
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
@@ -261,6 +262,7 @@ public final class Pail extends JavaPlugin {
             mainHandler.setLevel(Level.ALL);
             log.addHandler(mainHandler);
 
+            getMainWindow().setIconImage(Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png")));
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
             getMainWindow().setResizable(false);
             getMainWindow().addWindowListener(new WindowCloseListener());
