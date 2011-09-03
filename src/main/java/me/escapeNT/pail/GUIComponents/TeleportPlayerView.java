@@ -1,5 +1,6 @@
 package me.escapeNT.pail.GUIComponents;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.config.WaypointConfig;
 import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
  * Player teleport interface.
  * @author escapeNT
  */
-public class TeleportPlayerView extends javax.swing.JDialog {
+public class TeleportPlayerView extends javax.swing.JDialog implements Localizable {
 
     private String player;
 
@@ -31,7 +32,7 @@ public class TeleportPlayerView extends javax.swing.JDialog {
             }
         }
         
-        teleLabel.setText("Teleport " + player + " to:");
+        teleLabel.setText(Util.translate("Teleport " + player + " to:"));
         getRootPane().setDefaultButton(teleport);
         setResizable(false);
         setSize(400, 260);
@@ -43,6 +44,8 @@ public class TeleportPlayerView extends javax.swing.JDialog {
         }
 
         waypoints.setEnabled(false);
+
+        translateComponent();
     }
 
     /** This method is called from within the constructor to
@@ -151,4 +154,11 @@ public class TeleportPlayerView extends javax.swing.JDialog {
     private javax.swing.JCheckBox toWaypoint;
     private javax.swing.JComboBox waypoints;
     // End of variables declaration//GEN-END:variables
+
+    public final void translateComponent() {
+        Util.translateTextComponent(cancel);
+        Util.translateTextComponent(teleLabel);
+        Util.translateTextComponent(teleport);
+        Util.translateTextComponent(toWaypoint);
+    }
 }

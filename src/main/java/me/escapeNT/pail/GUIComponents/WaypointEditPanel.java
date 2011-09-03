@@ -3,6 +3,8 @@ package me.escapeNT.pail.GUIComponents;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import me.escapeNT.pail.Util.Localizable;
+import me.escapeNT.pail.Util.Util;
 
 import me.escapeNT.pail.config.WaypointConfig;
 import me.escapeNT.pail.Util.Waypoint;
@@ -16,7 +18,7 @@ import org.bukkit.entity.Player;
  * Panel for editing teleport waypoints.
  * @author escapeNT
  */
-public class WaypointEditPanel extends javax.swing.JPanel {
+public class WaypointEditPanel extends javax.swing.JPanel implements Localizable {
 
     /** Creates new form WaypointEditPanel */
     public WaypointEditPanel() {
@@ -38,6 +40,8 @@ public class WaypointEditPanel extends javax.swing.JPanel {
         waypoints.setSelectedIndex(0);
 
         updateFields();
+
+        translateComponent();
     }
 
     private void updateFields() {
@@ -160,11 +164,11 @@ public class WaypointEditPanel extends javax.swing.JPanel {
 
         jLabel3.setText("X");
         add(jLabel3);
-        jLabel3.setBounds(420, 90, 20, 30);
+        jLabel3.setBounds(410, 90, 30, 30);
 
         jLabel4.setText("World");
         add(jLabel4);
-        jLabel4.setBounds(420, 150, 36, 20);
+        jLabel4.setBounds(406, 150, 60, 20);
 
         add(worlds);
         worlds.setBounds(460, 150, 360, 20);
@@ -180,13 +184,13 @@ public class WaypointEditPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Name");
         add(jLabel5);
-        jLabel5.setBounds(420, 36, 36, 20);
+        jLabel5.setBounds(410, 36, 60, 20);
         add(name);
         name.setBounds(470, 30, 350, 28);
 
         jLabel6.setText("Use player location:");
         add(jLabel6);
-        jLabel6.setBounds(420, 250, 130, 16);
+        jLabel6.setBounds(420, 250, 300, 16);
 
         add(players);
         players.setBounds(420, 270, 310, 30);
@@ -231,7 +235,7 @@ public class WaypointEditPanel extends javax.swing.JPanel {
             return;
         }
         Location l = p.getLocation();
-        name.setText(p.getName() + "'s location");
+        name.setText(p.getName() + "'s " + Util.translate("location"));
         x.setValue(l.getBlockX());
         y.setValue(l.getBlockY());
         z.setValue(l.getBlockZ());
@@ -249,7 +253,8 @@ public class WaypointEditPanel extends javax.swing.JPanel {
         WaypointConfig.save();
         updateFields();
 
-        JOptionPane.showMessageDialog(this, "Waypoint saved.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,  Util.translate("Waypoint saved."),  Util.translate("Success"),
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveActionPerformed
 
     private void waypointsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_waypointsValueChanged
@@ -285,5 +290,17 @@ public class WaypointEditPanel extends javax.swing.JPanel {
      */
     public javax.swing.JComboBox getPlayers() {
         return players;
+    }
+
+    public final void translateComponent() {
+        Util.translateTextComponent(jLabel1);
+        Util.translateTextComponent(jLabel2);
+        Util.translateTextComponent(jLabel3);
+        Util.translateTextComponent(jLabel4);
+        Util.translateTextComponent(jLabel5);
+        Util.translateTextComponent(jLabel6);
+        Util.translateTextComponent(playerSubmit);
+        Util.translateTextComponent(removeWaypoint);
+        Util.translateTextComponent(save);
     }
 }

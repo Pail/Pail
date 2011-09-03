@@ -1,5 +1,6 @@
 package me.escapeNT.pail;
 
+import com.google.api.translate.Translate;
 import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -49,14 +50,19 @@ public final class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
 
     public static final String PLUGIN_NAME = "Pail";
+    public static final String PLUGIN_THREAD = "http://forums.bukkit.org/threads/"
+            + "admn-dev-pail-v0-6-the-simplest-and-most-extensible-bukkit-gui-1060.30246";
     public static final ServerReadyListener handler = new ServerReadyListener();
     public static String PLUGIN_VERSION;
 
     private MainWindow main;
 
+    private boolean guiReady = false;
+
     @Override
     @SuppressWarnings("LeakingThisInConstructor")
     public void onEnable() {
+        Translate.setHttpReferrer(PLUGIN_THREAD);
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
         General.load();
@@ -92,7 +98,7 @@ public final class Pail extends JavaPlugin {
             Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 main = new MainWindow();
 
@@ -103,7 +109,7 @@ public final class Pail extends JavaPlugin {
                 mainHandler.setLevel(Level.ALL);
                 log.addHandler(mainHandler);
 
-                getMainWindow().setTitle("Pail Server Manager");
+                getMainWindow().setTitle(Util.translate("Pail Server Manager"));
                 getMainWindow().setResizable(false);
                 getMainWindow().addWindowListener(new WindowCloseListener());
                 getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -127,13 +133,9 @@ public final class Pail extends JavaPlugin {
                     new UpdateView().setVisible(true);
                 }
             }
-        }, "Pail").start();
+        }, "Pail");
 
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        t.start();
 
         PluginManager pm = this.getServer().getPluginManager();
         PailPlayerListener playerListener = new PailPlayerListener();
@@ -141,6 +143,12 @@ public final class Pail extends JavaPlugin {
         pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.SERVER_COMMAND, new PailServerListener(), Priority.Monitor, this);
+        
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Enabled");
     }
@@ -160,6 +168,7 @@ public final class Pail extends JavaPlugin {
             }
         }
         General.save();
+        guiReady = false;
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     

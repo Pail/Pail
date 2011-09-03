@@ -15,21 +15,22 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
 
 /**
  * Class representing the File dropdown menu.
  * @author escapeNT
  */
-public class FileMenu extends JMenu {
+public class FileMenu extends JMenu implements Localizable {
 
     private JMenuItem saveSelection;
 
     public FileMenu() {
-        super("File");
+        super(Util.translate("File"));
         setMnemonic('F');
 
-        JMenuItem about = new JMenuItem("About");
+        JMenuItem about = new JMenuItem(Util.translate("About"));
         about.setIcon(new ImageIcon(getClass().getResource("images/about.png")));
         about.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -38,7 +39,7 @@ public class FileMenu extends JMenu {
         });
         add(about);
 
-        JMenuItem saveConsole = new JMenuItem("Save console text...");
+        JMenuItem saveConsole = new JMenuItem(Util.translate("Save console text..."));
         saveConsole.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK + InputEvent.SHIFT_DOWN_MASK));
         saveConsole.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +60,7 @@ public class FileMenu extends JMenu {
         });
         add(saveConsole);
 
-        saveSelection = new JMenuItem("Save selected text...");
+        saveSelection = new JMenuItem(Util.translate("Save selected text..."));
         saveSelection.setEnabled(false);
         saveSelection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -88,4 +89,6 @@ public class FileMenu extends JMenu {
     public JMenuItem getSaveSelection() {
         return saveSelection;
     }
+
+    public void translateComponent() {}
 }

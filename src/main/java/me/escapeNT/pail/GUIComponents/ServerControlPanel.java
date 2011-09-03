@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
+import me.escapeNT.pail.Util.Localizable;
 
 import me.escapeNT.pail.Util.Util;
 
@@ -24,7 +25,7 @@ import org.bukkit.entity.Player;
  * Panel containing the basic server controls.
  * @author escapeNT
  */
-public final class ServerControlPanel extends javax.swing.JPanel {
+public final class ServerControlPanel extends javax.swing.JPanel implements Localizable {
 
     private DefaultListModel listModel = new DefaultListModel();
     private JPopupMenu playerMenu = null;
@@ -34,7 +35,7 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         initComponents();
         Util.setServerControls(this);
         playerList.setModel(listModel);
-        jScrollPane1.setBorder(new TitledBorder("Players"));
+        jScrollPane1.setBorder(new TitledBorder(Util.translate("Players")));
 
         // Load images
         ImageIcon plus = new ImageIcon(getClass().getResource("images/plus.png"));
@@ -49,35 +50,35 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         // Construct player popup menu
         playerMenu = new JPopupMenu();
 
-        JMenuItem giveItem = new JMenuItem("Give Item", plus);
+        JMenuItem giveItem = new JMenuItem(Util.translate("Give Item"), plus);
         giveItem.addActionListener(new GiveItemListener());
         playerMenu.add(giveItem);
 
-        JMenuItem tele = new JMenuItem("Teleport", arrow);
+        JMenuItem tele = new JMenuItem(Util.translate("Teleport"), arrow);
         tele.addActionListener(new TeleportListener());
         playerMenu.add(tele);
 
-        JMenuItem killPlayer = new JMenuItem("Kill", kill);
+        JMenuItem killPlayer = new JMenuItem(Util.translate("Kill"), kill);
         killPlayer.addActionListener(new KillPlayerListener());
         playerMenu.add(killPlayer);
 
-        JMenuItem op = new JMenuItem("Promote to OP", up);
+        JMenuItem op = new JMenuItem(Util.translate("Promote to OP"), up);
         op.addActionListener(new OpPlayerListener());
         playerMenu.add(op);
 
-        JMenuItem deop = new JMenuItem("Demote from OP", down);
+        JMenuItem deop = new JMenuItem(Util.translate("Demote from OP"), down);
         deop.addActionListener(new DeOpPlayerListener());
         playerMenu.add(deop);
         
-        JMenuItem message = new JMenuItem("Message", msg);
+        JMenuItem message = new JMenuItem(Util.translate("Message"), msg);
         message.addActionListener(new MessagePlayerListener());
         playerMenu.add(message);
 
-        JMenuItem kick = new JMenuItem("Kick", kickico);
+        JMenuItem kick = new JMenuItem(Util.translate("Kick"), kickico);
         kick.addActionListener(new KickPlayerListener());
         playerMenu.add(kick);
 
-        JMenuItem ban = new JMenuItem("Ban", banico);
+        JMenuItem ban = new JMenuItem(Util.translate("Ban"), banico);
         ban.addActionListener(new BanPlayerListener());
         playerMenu.add(ban);
     }
@@ -140,6 +141,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
         }
     }
 
+    public void translateComponent() {}
+
     private class GiveItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             new GiveItemView((String)playerList.getSelectedValue()).setVisible(true);
@@ -175,8 +178,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
 
     private class MessagePlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String msg = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), "Enter your message:",
-                    "Message Player", JOptionPane.QUESTION_MESSAGE);
+            String msg = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), Util.translate("Enter your message:"),
+                    Util.translate("Message Player"), JOptionPane.QUESTION_MESSAGE);
             if(msg == null) {
                 return;
             }
@@ -188,8 +191,8 @@ public final class ServerControlPanel extends javax.swing.JPanel {
     private class KickPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Server s = Bukkit.getServer();
-            String reason = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), "Enter kick reason:",
-                    "Kick Player", JOptionPane.QUESTION_MESSAGE);
+            String reason = JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(), Util.translate("Enter kick reason:"),
+                    Util.translate("Kick Player"), JOptionPane.QUESTION_MESSAGE);
             if(reason == null) {
                 return;
             }

@@ -1,6 +1,8 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import com.google.api.translate.Language;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,7 +10,9 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
+import me.escapeNT.pail.config.General;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,7 +23,7 @@ import org.bukkit.command.ConsoleCommandSender;
  * Interface for giving items.
  * @author escapeNT
  */
-public class GiveItemView extends javax.swing.JDialog {
+public class GiveItemView extends javax.swing.JDialog implements Localizable {
 
     private String player;
 
@@ -36,6 +40,8 @@ public class GiveItemView extends javax.swing.JDialog {
         setSize(425, 175);
 
         item.setRenderer(new IconListRenderer(getMaterials()));
+
+        translateComponent();
     }
 
     /**
@@ -92,11 +98,11 @@ public class GiveItemView extends javax.swing.JDialog {
 
         idLabel.setText("Item");
         getContentPane().add(idLabel);
-        idLabel.setBounds(10, 40, 28, 30);
+        idLabel.setBounds(0, 40, 60, 30);
 
         amountLabel.setText("Amount");
         getContentPane().add(amountLabel);
-        amountLabel.setBounds(290, 40, 50, 30);
+        amountLabel.setBounds(280, 40, 70, 30);
 
         amount.setModel(new javax.swing.SpinnerNumberModel(1, 1, 64, 1));
         getContentPane().add(amount);
@@ -148,4 +154,12 @@ public class GiveItemView extends javax.swing.JDialog {
     private javax.swing.JLabel idLabel;
     private javax.swing.JComboBox item;
     // End of variables declaration//GEN-END:variables
+
+    public final void translateComponent() {
+        if(General.getLang() == Language.ENGLISH) return;
+        idLabel.setText(Util.translate(idLabel.getText()));
+        amountLabel.setText(Util.translate(amountLabel.getText()));
+        give.setText(Util.translate(give.getText()));
+        cancel.setText(Util.translate(cancel.getText()));
+    }
 }

@@ -1,6 +1,8 @@
 
 package me.escapeNT.pail.Util;
 
+import com.google.api.translate.Language;
+import com.google.api.translate.Translate;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,11 +13,15 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import me.escapeNT.pail.GUIComponents.FileMenu;
 import me.escapeNT.pail.GUIComponents.ServerControlPanel;
 import me.escapeNT.pail.Pail;
+import me.escapeNT.pail.config.General;
 
 /**
  * Various static utility methods.
@@ -51,12 +57,12 @@ public class Util {
      * Logs an info message from the plugin to the console.
      * @param message The message to send.
      */
-    public static void log(String message) {
+    public static void log(Object message) {
         StringBuilder s = new StringBuilder();
         s.append("[");
         s.append(Pail.PLUGIN_NAME);
         s.append("] ");
-        s.append(message);
+        s.append(message.toString());
         log.log(Level.INFO, s.toString());
     }
 
@@ -65,12 +71,12 @@ public class Util {
      * @param level The log level.
      * @param message The message to send.
      */
-    public static void log(Level level, String message) {
+    public static void log(Level level, Object message) {
         StringBuilder s = new StringBuilder();
         s.append("[");
         s.append(Pail.PLUGIN_NAME);
         s.append("] ");
-        s.append(message);
+        s.append(message.toString());
         log.log(level, s.toString());
     }
 
@@ -88,6 +94,22 @@ public class Util {
         }
         reader.close();
         out.close();
+    }
+
+    /**
+     * Translates the text to the configured language.
+     * @param text The text to translate.
+     * @return The translated text.
+     */
+    public static String translate(String text) {
+        if(General.getLang() == Language.ENGLISH) {
+            return text;
+        }
+        try {
+            return Translate.execute(text, Language.ENGLISH, General.getLang());
+        } catch (Exception ex) {
+            return text;
+        }
     }
 
     /**
@@ -137,5 +159,17 @@ public class Util {
      */
     public static void setFileMenu(FileMenu aFileMenu) {
         fileMenu = aFileMenu;
+    }
+
+    public static void translateTextComponent(JCheckBox c) {
+        c.setText(Util.translate(c.getText()));
+    }
+
+    public static void translateTextComponent(JLabel c) {
+        c.setText(Util.translate(c.getText()));
+    }
+
+    public static void translateTextComponent(JButton c) {
+        c.setText(Util.translate(c.getText()));
     }
 }

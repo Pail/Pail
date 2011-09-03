@@ -7,6 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.Util.Util;
 
@@ -15,7 +16,7 @@ import me.escapeNT.pail.Util.Util;
  * Class containing the main JFrame of the plugin.
  * @author escapeNT
  */
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements Localizable {
 
     private JTabbedPane tabPane;
     private JMenuBar menuBar;
@@ -48,7 +49,7 @@ public class MainWindow extends JFrame {
         getTabPane().removeAll();
         List<String> t = new ArrayList<String>();
         List<JPanel> p = new ArrayList<JPanel>();
-        getTabPane().add(Util.getInterfaceComponents().get("Server Control"), "Server Control");
+        getTabPane().add(Util.getInterfaceComponents().get("Server Control"), Util.translate("Server Control"));
         for (String title : Util.getInterfaceComponents().keySet()) {
             t.add(title);
             p.add(Util.getInterfaceComponents().get(title));
@@ -58,7 +59,7 @@ public class MainWindow extends JFrame {
                 PanelConfig.getPanelsActivated().put(t.get(i), true);
             }
             if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(t.get(i))) {
-                getTabPane().add(p.get(i),t.get(i));
+                getTabPane().add(p.get(i),Util.translate(t.get(i)));
             }
         }
         validate();
@@ -92,4 +93,6 @@ public class MainWindow extends JFrame {
     public JTabbedPane getTabPane() {
         return tabPane;
     }
+
+    public void translateComponent() {}
 }

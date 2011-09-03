@@ -14,19 +14,21 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import me.escapeNT.pail.Pail;
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
 
 /**
  * Class representing the Help dropdown menu.
  * @author escapeNT
  */
-public class HelpMenu extends JMenu {
+public class HelpMenu extends JMenu implements Localizable {
 
     public HelpMenu() {
-        super("Help");
+        super(Util.translate("Help"));
         setMnemonic('H');
 
-        JMenuItem thread = new JMenuItem("Plugin thread");
+        JMenuItem thread = new JMenuItem(Util.translate("Plugin thread"));
         thread.setIcon(new ImageIcon(getClass().getResource("images/help.png")));
         thread.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK));
         if(!Desktop.getDesktop().isSupported(Action.BROWSE)) {
@@ -35,12 +37,14 @@ public class HelpMenu extends JMenu {
         thread.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Desktop.getDesktop().browse(new URI("http://forums.bukkit.org/threads/admn-dev-pail-v0-6-the-simplest-and-most-extensible-bukkit-gui-1060.30246/"));
+                    Desktop.getDesktop().browse(new URI(Pail.PLUGIN_THREAD));
                 } catch(Exception ex) {
-                    Util.log(Level.WARNING, "Could not open plugin thread.");
+                    Util.log(Level.WARNING, Util.translate("Could not open plugin thread."));
                 }
             }
         });
         add(thread);
     }
+
+    public void translateComponent() {}
 }

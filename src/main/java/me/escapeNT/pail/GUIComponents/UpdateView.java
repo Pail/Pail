@@ -4,6 +4,7 @@ package me.escapeNT.pail.GUIComponents;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 
@@ -11,7 +12,7 @@ import me.escapeNT.pail.Util.Util;
  * Dialog displaying update status and progress.
  * @author escapeNT
  */
-public class UpdateView extends javax.swing.JDialog {
+public class UpdateView extends javax.swing.JDialog implements Localizable {
 
     private static UpdateView instance;
 
@@ -40,10 +41,12 @@ public class UpdateView extends javax.swing.JDialog {
         setSize(475, 310);
         getRootPane().setDefaultButton(update);
 
-        changes.append("Version " + UpdateHandler.getCurrentVersion() + ":\n");
+        changes.append(Util.translate("Version ") + UpdateHandler.getCurrentVersion() + ":\n");
         for(String s : UpdateHandler.getChanges()) {
-            changes.append("\n    • " + s);
+            changes.append("\n    • " + Util.translate(s));
         }
+
+        translateComponent();
     }
 
     /** This method is called from within the constructor to
@@ -122,9 +125,9 @@ public class UpdateView extends javax.swing.JDialog {
                     UpdateHandler.downloadLatest(UpdateView.getInstance());
                 } catch (Exception ex) {
                     Util.log(Level.SEVERE, ex.toString());
-                    JOptionPane.showMessageDialog(getRootPane(), "Update failed."
-                            + "\nThe latest version can be downloaded manually\nfrom the plugin thread.",
-                            "Update Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(getRootPane(), Util.translate("Update failed.")
+                            + Util.translate("\nThe latest version can be downloaded manually\nfrom the plugin thread."),
+                            Util.translate("Update Failed"), JOptionPane.ERROR_MESSAGE);
                     UpdateHandler.updateFile.delete();
                     UpdateView.getInstance().dispose();
                 }
@@ -170,5 +173,12 @@ public class UpdateView extends javax.swing.JDialog {
      */
     public javax.swing.JButton getUpdate() {
         return update;
+    }
+
+    public final void translateComponent() {
+        Util.translateTextComponent(Ignore);
+        Util.translateTextComponent(jLabel1);
+        Util.translateTextComponent(progressLabel);
+        Util.translateTextComponent(update);
     }
 }

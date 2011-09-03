@@ -1,6 +1,8 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import com.google.api.translate.Language;
+
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -18,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import me.escapeNT.pail.Pail;
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.ServerConfigHandler;
@@ -27,33 +30,45 @@ import me.escapeNT.pail.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Panel for editing server settings.
  * @author escapeNT
  */
-public class SettingsPanel extends javax.swing.JPanel {
+public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
     private WaypointEditPanel waypointEditor;
+    private boolean sel = true;
 
     /** Creates new form SettingsPanel */
     public SettingsPanel() {
-
         initComponents();
+
+        // load languages
+        for(Language l : Language.class.getEnumConstants()) {
+            if(!l.toString().equals("")) {
+                language.addItem(l.getFullName());
+                if(General.getLang().toString().equals(l.toString())) {
+                    language.setSelectedItem(l.getFullName());
+                }
+            }
+        }
+
         waypointEditor = new WaypointEditPanel();
 
-        craftVersion.setText("Craftbukkit version: " + parseCraftVersion());
+        craftVersion.setText(Util.translate("Craftbukkit version: ") + parseCraftVersion());
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 parseCraftUpdate();
             }
         });
-        pailVersion.setText("Pail version: " + Pail.PLUGIN_VERSION);
+        pailVersion.setText(Util.translate("Pail version: ") + Pail.PLUGIN_VERSION);
  
         autoUpdate.setSelected(General.isAutoUpdate());
         loadConfig();
 
-        settingsTabs.add("Waypoints", waypointEditor);
+        settingsTabs.add(Util.translate("Waypoints"), waypointEditor);
 
         autoUpdate.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -80,6 +95,8 @@ public class SettingsPanel extends javax.swing.JPanel {
                 Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        translateComponent();
     }
 
     private String parseCraftVersion() {
@@ -104,15 +121,15 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
 
             if(upToDate) {
-                update.setText("Latest recommended build: " + v);
+                update.setText(Util.translate("Latest recommended build: ") + v);
                 update.setForeground(new Color(13, 190, 17));
             }
             else {
-                update.setText("Latest recommended build: " + v + " - Update required!");
+                update.setText(Util.translate("Latest recommended build: ") + v + Util.translate(" - Update required!"));
                 update.setForeground(Color.red);
             }
         } catch (Exception ex) {
-            update.setText("Latest recommended build: Unknown");
+            update.setText(Util.translate("Latest recommended build: Unknown"));
                 update.setForeground(new Color(255, 200, 33));
         }
     }
@@ -181,6 +198,9 @@ public class SettingsPanel extends javax.swing.JPanel {
         autoUpdate = new javax.swing.JCheckBox();
         themes = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        language = new javax.swing.JComboBox();
+        applyLang = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -194,7 +214,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel1.setText("World name");
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(30, 30, 74, 16);
+        jLabel1.setBounds(20, 26, 90, 20);
 
         worldName.setToolTipText("The name of the default world on the server");
         jPanel2.add(worldName);
@@ -202,7 +222,7 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel2.setText("World seed");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(30, 70, 69, 16);
+        jLabel2.setBounds(19, 66, 80, 20);
 
         ip.setToolTipText("Set this if you want the server to bind to a particular IP.");
         jPanel2.add(ip);
@@ -211,27 +231,27 @@ public class SettingsPanel extends javax.swing.JPanel {
         nether.setText("Allow nether");
         nether.setToolTipText("Allow portal transport to the nether.");
         jPanel2.add(nether);
-        nether.setBounds(30, 140, 160, 23);
+        nether.setBounds(20, 140, 170, 23);
 
         spawnMonsters.setText("Spawn monsters");
         spawnMonsters.setToolTipText("Spawn hostile monsters.");
         jPanel2.add(spawnMonsters);
-        spawnMonsters.setBounds(30, 180, 160, 23);
+        spawnMonsters.setBounds(20, 180, 170, 23);
 
         spawnAnimals.setText("Spawn animals");
         spawnAnimals.setToolTipText("Spawn non-hostile animals.");
         jPanel2.add(spawnAnimals);
-        spawnAnimals.setBounds(30, 220, 160, 23);
+        spawnAnimals.setBounds(20, 220, 170, 23);
 
         online.setText("Online mode");
         online.setToolTipText("Server checks connecting players against minecraft's account database.");
         jPanel2.add(online);
-        online.setBounds(190, 180, 160, 23);
+        online.setBounds(190, 180, 170, 23);
 
         pvp.setText("Enable PVP");
         pvp.setToolTipText("Enable player verses player damage.");
         jPanel2.add(pvp);
-        pvp.setBounds(190, 140, 160, 23);
+        pvp.setBounds(190, 140, 170, 23);
 
         whitelist.setText("Whitelist enabled");
         whitelist.setToolTipText("With a whitelist enabled, users not on the list will be unable to connect.");
@@ -241,7 +261,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         flight.setText("Allow flight");
         flight.setToolTipText("Will allow users to use flight/no-clip on the server.");
         jPanel2.add(flight);
-        flight.setBounds(30, 260, 190, 23);
+        flight.setBounds(20, 260, 310, 23);
 
         viewDistance.setToolTipText("The number of chunks sent to the client. (3-15)");
         jPanel2.add(viewDistance);
@@ -249,11 +269,11 @@ public class SettingsPanel extends javax.swing.JPanel {
 
         jLabel3.setText("View distance");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(30, 290, 86, 30);
+        jLabel3.setBounds(20, 290, 110, 30);
 
         jLabel4.setText("Server port");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(30, 330, 68, 30);
+        jLabel4.setBounds(20, 330, 90, 30);
 
         port.setToolTipText("Port on which the server is running.");
         jPanel2.add(port);
@@ -282,13 +302,13 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel5.setText("Max players");
         jLabel5.setToolTipText("The maximum number of players allowed to connect.");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(200, 290, 80, 30);
+        jLabel5.setBounds(200, 290, 90, 30);
         jPanel2.add(maxPlayers);
-        maxPlayers.setBounds(280, 290, 60, 28);
+        maxPlayers.setBounds(290, 290, 60, 28);
 
         jLabel6.setText("Server IP");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(40, 100, 70, 30);
+        jLabel6.setBounds(20, 100, 90, 30);
 
         seed.setToolTipText("The seed used in generating new terrain.");
         jPanel2.add(seed);
@@ -317,7 +337,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
 
         tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
-        tabActivationPanel.setBounds(10, 20, 420, 240);
+        tabActivationPanel.setBounds(10, 20, 420, 180);
         jLayeredPane1.add(tabActivationPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         reload.setText("Save");
@@ -326,11 +346,11 @@ public class SettingsPanel extends javax.swing.JPanel {
                 reloadActionPerformed(evt);
             }
         });
-        reload.setBounds(350, 260, 80, 30);
+        reload.setBounds(350, 200, 80, 30);
         jLayeredPane1.add(reload, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel1.add(jLayeredPane1);
-        jLayeredPane1.setBounds(390, 120, 440, 300);
+        jLayeredPane1.setBounds(390, 180, 440, 240);
 
         autoUpdate.setText("Automatically check for updates");
         autoUpdate.setFocusable(false);
@@ -349,6 +369,27 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel7.setText("Skin");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(390, 90, 50, 20);
+
+        jLabel8.setText("Language");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(390, 120, 80, 20);
+
+        language.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                languageItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(language);
+        language.setBounds(460, 120, 370, 20);
+
+        applyLang.setText("Apply language");
+        applyLang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyLangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(applyLang);
+        applyLang.setBounds(690, 150, 140, 30);
 
         settingsTabs.addTab("General", jPanel1);
 
@@ -423,8 +464,22 @@ public class SettingsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_themesItemStateChanged
 
+    private void languageItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_languageItemStateChanged
+        if(evt.getStateChange() == ItemEvent.SELECTED && !sel) {
+            General.setLang(Language.fromString((String)language.getSelectedItem()));
+        } else {
+            sel = false;
+        }
+    }//GEN-LAST:event_languageItemStateChanged
+
+    private void applyLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyLangActionPerformed
+        Util.getPlugin().saveState();
+        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+    }//GEN-LAST:event_applyLangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton applyLang;
     private javax.swing.JCheckBox autoUpdate;
     private javax.swing.JLabel craftVersion;
     private javax.swing.JCheckBox flight;
@@ -436,9 +491,11 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JComboBox language;
     private javax.swing.JSpinner maxPlayers;
     private javax.swing.JCheckBox nether;
     private javax.swing.JCheckBox online;
@@ -472,5 +529,28 @@ public class SettingsPanel extends javax.swing.JPanel {
      */
     public javax.swing.JComboBox getThemes() {
         return themes;
+    }
+
+    public final void translateComponent() {
+        Util.translateTextComponent(jLabel1);
+        Util.translateTextComponent(jLabel2);
+        Util.translateTextComponent(jLabel3);
+        Util.translateTextComponent(jLabel4);
+        Util.translateTextComponent(jLabel5);
+        Util.translateTextComponent(jLabel6);
+        Util.translateTextComponent(jLabel7);
+        Util.translateTextComponent(jLabel8);
+        Util.translateTextComponent(applyLang);
+        Util.translateTextComponent(autoUpdate);
+        Util.translateTextComponent(flight);
+        Util.translateTextComponent(nether);
+        Util.translateTextComponent(online);
+        Util.translateTextComponent(pvp);
+        Util.translateTextComponent(reload);
+        Util.translateTextComponent(revert);
+        Util.translateTextComponent(save);
+        Util.translateTextComponent(spawnAnimals);
+        Util.translateTextComponent(spawnMonsters);
+        Util.translateTextComponent(whitelist);
     }
 }

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import me.escapeNT.pail.Util.Localizable;
 
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.Util.Util;
@@ -16,13 +17,13 @@ import me.escapeNT.pail.Util.Util;
  * Class representing the Edit dropdown menu.
  * @author escapeNT
  */
-public class EditMenu extends JMenu {
+public class EditMenu extends JMenu implements Localizable {
 
     public EditMenu() {
-        super("Edit");
+        super(Util.translate("Edit"));
         setMnemonic('E');
 
-        JMenuItem selectall = new JMenuItem("Select all");
+        JMenuItem selectall = new JMenuItem(Util.translate("Select all"));
         selectall.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
         selectall.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -32,4 +33,6 @@ public class EditMenu extends JMenu {
         });
         add(selectall);
     }
+
+    public void translateComponent() {}
 }
