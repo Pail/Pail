@@ -204,12 +204,13 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
         setLayout(null);
 
+        settingsTabs.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         settingsTabs.setFocusable(false);
 
         jPanel1.setFocusable(false);
         jPanel1.setLayout(null);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Server  Settings"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(Util.translate("Server Properties")));
         jPanel2.setLayout(null);
 
         jLabel1.setText("World name");
@@ -334,7 +335,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
         jPanel1.add(update);
         update.setBounds(390, 30, 450, 20);
 
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Active Tabs"));
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(Util.translate("Active Tabs")));
 
         tabActivationPanel.setLayout(new java.awt.GridLayout(0, 2));
         tabActivationPanel.setBounds(10, 20, 420, 180);

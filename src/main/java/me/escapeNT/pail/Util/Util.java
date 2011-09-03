@@ -106,7 +106,7 @@ public class Util {
             return text;
         }
         try {
-            return Translate.execute(text, Language.ENGLISH, General.getLang());
+            return Translate.execute(text, Language.AUTO_DETECT, General.getLang());
         } catch (Exception ex) {
             return text;
         }

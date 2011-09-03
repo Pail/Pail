@@ -59,7 +59,7 @@ public class MainWindow extends JFrame implements Localizable {
                 PanelConfig.getPanelsActivated().put(t.get(i), true);
             }
             if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(t.get(i))) {
-                getTabPane().add(p.get(i),Util.translate(t.get(i)));
+                getTabPane().add(p.get(i), Util.translate(t.get(i)));
             }
         }
         validate();
