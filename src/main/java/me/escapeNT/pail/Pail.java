@@ -66,74 +66,9 @@ public final class Pail extends JavaPlugin {
         Util.setPlugin(this);
         General.load();
 
-        HashMap<String, Boolean> installQueue = new HashMap<String, Boolean>();
-        installQueue.put("com.jtattoo.plaf.acryl.AcrylLookAndFeel", Boolean.TRUE);
-        installQueue.put("com.jtattoo.plaf.hifi.HiFiLookAndFeel", Boolean.TRUE);
-        installQueue.put("com.jtattoo.plaf.graphite.GraphiteLookAndFeel", Boolean.TRUE);
-        installQueue.put("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel", Boolean.TRUE);
-        installQueue.put("com.jtattoo.plaf.aero.AeroLookAndFeel", Boolean.TRUE);
-        installQueue.put("com.jtattoo.plaf.fast.FastLookAndFeel", Boolean.TRUE);
-        
-        for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            if(installQueue.keySet().contains(info.getClassName())) {
-                installQueue.put(info.getClassName(), Boolean.FALSE);
-            }
-        }
-        for(String n : installQueue.keySet()) {
-            if(installQueue.get(n)) {
-                try {
-                    UIManager.installLookAndFeel(((LookAndFeel) Class.forName(n).newInstance()).getName(), n);
-                } catch (Exception ex) {
-                    Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        setupLookAndFeels();
 
-        try {
-            LookAndFeel laf = (LookAndFeel) Class.forName(General.getLookAndFeel()).newInstance();
-            UIManager.setLookAndFeel(laf);
-            UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
-        } catch (Exception ex) {
-            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                main = new MainWindow();
-
-                log.addHandler(handler);
-
-                PailLogHandler mainHandler = new PailLogHandler(
-                    Util.getServerControls().getServerConsolePanel().getConsoleOutput());
-                mainHandler.setLevel(Level.ALL);
-                log.addHandler(mainHandler);
-
-                getMainWindow().setTitle(Util.translate("Pail Server Manager"));
-                getMainWindow().setResizable(false);
-                getMainWindow().addWindowListener(new WindowCloseListener());
-                getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                getMainWindow().pack();
-                getMainWindow().setSize(860, 555);
-                getMainWindow().setLocationRelativeTo(null);
-                loadState();
-                getMainWindow().setFocusableWindowState(true);
-                getMainWindow().setFocusable(true);
-                getMainWindow().setVisible(true);
-                getMainWindow().requestFocus();
-
-                Util.setServerControls(getMainWindow().getServerControls());   
-
-                for(Player p : getServer().getOnlinePlayers()) {
-                    Util.getServerControls().getListModel().addElement(p.getName());
-                }
-
-                if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
-                        && !UpdateHandler.isUpToDate()) {
-                    new UpdateView().setVisible(true);
-                }
-            }
-        }, "Pail");
-
+        Thread t = new Thread(new InitMain(), "Pail");
         t.start();
 
         PluginManager pm = this.getServer().getPluginManager();
@@ -142,7 +77,7 @@ public final class Pail extends JavaPlugin {
         pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
         pm.registerEvent(Type.SERVER_COMMAND, new PailServerListener(), Priority.Monitor, this);
-        
+
         try {
             t.join();
         } catch (InterruptedException ex) {
@@ -181,6 +116,37 @@ public final class Pail extends JavaPlugin {
             return true;
         }
         return false;
+    }
+
+    private void setupLookAndFeels() {
+        HashMap<String, Boolean> installQueue = new HashMap<String, Boolean>();
+        installQueue.put("com.jtattoo.plaf.acryl.AcrylLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.hifi.HiFiLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.graphite.GraphiteLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.aero.AeroLookAndFeel", Boolean.TRUE);
+        installQueue.put("com.jtattoo.plaf.fast.FastLookAndFeel", Boolean.TRUE);
+        for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if (installQueue.keySet().contains(info.getClassName())) {
+                installQueue.put(info.getClassName(), Boolean.FALSE);
+            }
+        }
+        for (String n : installQueue.keySet()) {
+            if (installQueue.get(n)) {
+                try {
+                    UIManager.installLookAndFeel(((LookAndFeel) Class.forName(n).newInstance()).getName(), n);
+                } catch (Exception ex) {
+                    Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        try {
+            LookAndFeel laf = (LookAndFeel) Class.forName(General.getLookAndFeel()).newInstance();
+            UIManager.setLookAndFeel(laf);
+            UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
+        } catch (Exception ex) {
+            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -283,6 +249,42 @@ public final class Pail extends JavaPlugin {
         public void windowDeiconified(WindowEvent e) {}
         public void windowActivated(WindowEvent e) {}
         public void windowDeactivated(WindowEvent e) {}
+    }
+
+    public class InitMain implements Runnable {
+        public void run() {
+            main = new MainWindow();
+            log.addHandler(handler);
+
+            PailLogHandler mainHandler = new PailLogHandler(
+                Util.getServerControls().getServerConsolePanel().getConsoleOutput());
+            mainHandler.setLevel(Level.ALL);
+            log.addHandler(mainHandler);
+
+            getMainWindow().setTitle(Util.translate("Pail Server Manager"));
+            getMainWindow().setResizable(false);
+            getMainWindow().addWindowListener(new WindowCloseListener());
+            getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            getMainWindow().pack();
+            getMainWindow().setSize(860, 555);
+            getMainWindow().setLocationRelativeTo(null);
+            loadState();
+            getMainWindow().setFocusableWindowState(true);
+            getMainWindow().setFocusable(true);
+            getMainWindow().setVisible(true);
+            getMainWindow().requestFocus();
+
+            Util.setServerControls(getMainWindow().getServerControls());
+
+            for(Player p : getServer().getOnlinePlayers()) {
+                Util.getServerControls().getListModel().addElement(p.getName());
+            }
+
+            if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
+                    && !UpdateHandler.isUpToDate()) {
+                new UpdateView().setVisible(true);
+            }
+        }
     }
 
 
