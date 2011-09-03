@@ -44,7 +44,7 @@ public class FileMenu extends JMenu implements Localizable {
         saveConsole.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
-                fc.setSelectedFile(new File("console.txt"));
+                fc.setSelectedFile(new File("console.log"));
                 int res = fc.showSaveDialog(null);
                 if(res == JFileChooser.APPROVE_OPTION) {
                     File saveTo = fc.getSelectedFile();
@@ -65,7 +65,7 @@ public class FileMenu extends JMenu implements Localizable {
         saveSelection.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
-                fc.setSelectedFile(new File("console.txt"));
+                fc.setSelectedFile(new File("console.log"));
                 String text = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getSelectedText();             
                 int res = fc.showSaveDialog(null);
                 if(res == JFileChooser.APPROVE_OPTION && text != null) {
