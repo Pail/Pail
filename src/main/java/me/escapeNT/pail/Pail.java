@@ -1,8 +1,13 @@
 package me.escapeNT.pail;
 
+import com.apple.eawt.AboutHandler;
+import com.apple.eawt.AppEvent.AboutEvent;
+import com.apple.eawt.Application;
+
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,6 +26,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import me.escapeNT.pail.GUIComponents.AboutView;
 import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
 import me.escapeNT.pail.GUIComponents.UpdateView;
@@ -54,6 +60,7 @@ public final class Pail extends JavaPlugin {
     public static final String PLUGIN_NAME = "Pail";
     public static final String PLUGIN_THREAD = "http://forums.bukkit.org/threads/"
             + "admn-dev-pail-v0-6-the-simplest-and-most-extensible-bukkit-gui-1060.30246";
+    public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
     public static final ServerReadyListener handler = new ServerReadyListener();
     public static String PLUGIN_VERSION;
 
@@ -62,6 +69,19 @@ public final class Pail extends JavaPlugin {
     @Override
     @SuppressWarnings("LeakingThisInConstructor")
     public void onEnable() {
+
+        if(System.getProperty("os.name").contains("Mac")) {
+            Application app = Application.getApplication();   
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Pail");
+            app.setDockIconImage(PAIL_ICON);
+            app.setAboutHandler(new AboutHandler() {
+                public void handleAbout(AboutEvent ae) {
+                    new AboutView().setVisible(true);
+                }
+            });
+        }
+
         Translate.setHttpReferrer(PLUGIN_THREAD);
         PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
@@ -262,7 +282,7 @@ public final class Pail extends JavaPlugin {
             mainHandler.setLevel(Level.ALL);
             log.addHandler(mainHandler);
 
-            getMainWindow().setIconImage(Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png")));
+            getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
             getMainWindow().setResizable(false);
             getMainWindow().addWindowListener(new WindowCloseListener());

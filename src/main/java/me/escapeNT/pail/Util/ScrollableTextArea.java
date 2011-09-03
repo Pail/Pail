@@ -33,7 +33,7 @@ public class ScrollableTextArea extends JTextPane {
     public ScrollableTextArea() {
         scroller = new JScrollPane(this);
         scroller.setVerticalScrollBarPolicy(
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroller.setHorizontalScrollBarPolicy(
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         setFont(new Font("SansSerif", Font.PLAIN, 12));
