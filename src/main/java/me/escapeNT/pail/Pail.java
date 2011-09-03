@@ -1,6 +1,7 @@
 package me.escapeNT.pail;
 
 import com.google.api.translate.Translate;
+
 import java.awt.Color;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -56,8 +57,6 @@ public final class Pail extends JavaPlugin {
     public static String PLUGIN_VERSION;
 
     private MainWindow main;
-
-    private boolean guiReady = false;
 
     @Override
     @SuppressWarnings("LeakingThisInConstructor")
@@ -168,7 +167,6 @@ public final class Pail extends JavaPlugin {
             }
         }
         General.save();
-        guiReady = false;
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
     
@@ -273,8 +271,8 @@ public final class Pail extends JavaPlugin {
 
     private class WindowCloseListener implements WindowListener {
         public void windowClosing(WindowEvent e) {
-            int confirm = JOptionPane.showConfirmDialog(getMainWindow(), "Are you sure you want to close the Pail window?",
-                    "Confirm Close", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int confirm = JOptionPane.showConfirmDialog(getMainWindow(), Util.translate("Are you sure you want to close the Pail window?"),
+                    Util.translate("Confirm Close"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.OK_OPTION) {
                 getMainWindow().setVisible(false);
             }
