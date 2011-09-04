@@ -39,7 +39,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         setResizable(false);
         setSize(425, 180);
 
-        item.setRenderer(new IconListRenderer(getMaterials()));
+        item.setRenderer(new IconListRenderer(getMaterials(), false));
 
         translateComponent();
     }

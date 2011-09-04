@@ -36,7 +36,7 @@ import org.bukkit.entity.Player;
 public final class ServerControlPanel extends javax.swing.JPanel implements Localizable {
 
     private HashMap<Object, ImageIcon> onlinePlayers = new HashMap<Object, ImageIcon>();
-    private IconListRenderer listModel = new IconListRenderer(onlinePlayers);
+    private IconListRenderer listModel = new IconListRenderer(onlinePlayers, true);
     private JPopupMenu playerMenu = null;
     private JMenuItem op;
     private JMenuItem deop;
@@ -267,12 +267,12 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
             face = resize(face, 23, 23, true);
         } catch (IOException ex) {
             onlinePlayers.put(name, new ImageIcon());
-            playerList.setCellRenderer(new IconListRenderer(onlinePlayers));
+            playerList.setCellRenderer(new IconListRenderer(onlinePlayers, true));
             getListModel().addElement(name);
             return;
         }
         onlinePlayers.put(name, new ImageIcon(face));
-        playerList.setCellRenderer(new IconListRenderer(onlinePlayers));
+        playerList.setCellRenderer(new IconListRenderer(onlinePlayers, true));
         getListModel().addElement(name);
     }
 

@@ -1,10 +1,9 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,9 +17,11 @@ import javax.swing.JList;
 public class IconListRenderer extends DefaultListCellRenderer {
 
     private Map<Object, ImageIcon> icons = null;
+    private boolean highlightrows;
 
-    public IconListRenderer(Map<Object, ImageIcon> icons) {
+    public IconListRenderer(Map<Object, ImageIcon> icons, boolean highlightrows) {
         this.icons = icons;
+        this.highlightrows = highlightrows;
     }
 
     @Override
@@ -32,6 +33,16 @@ public class IconListRenderer extends DefaultListCellRenderer {
                         value, index, isSelected, cellHasFocus);
         Icon icon = icons.get(value);
         label.setIcon(icon);
+
+        if(highlightrows) {
+            Color c = ((index % 2 == 0) ? Color.WHITE : Color.LIGHT_GRAY);
+            label.setBackground(c);
+
+            if(isSelected) {
+                label.setForeground(Color.BLACK);
+                label.setBackground(new Color(163, 225, 255));
+            }
+        }
         return label;
     }
 }
