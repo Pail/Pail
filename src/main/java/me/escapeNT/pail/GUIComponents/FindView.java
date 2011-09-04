@@ -132,7 +132,10 @@ public class FindView extends javax.swing.JDialog implements Localizable {
     }//GEN-LAST:event_matchCaseActionPerformed
 
     private void nextActionPerformed(ActionEvent evt) {//GEN-FIRST:event_nextActionPerformed
-        if(textMatchesIndex <= textMatches.size() - 1) {
+            if(textMatches.isEmpty()) {
+                return;
+            }
+
             TextLocation l = textMatches.get(textMatchesIndex);
             DefaultCaret c = (DefaultCaret)a.getCaret();
             c.setDot(l.getStart());
@@ -141,29 +144,36 @@ public class FindView extends javax.swing.JDialog implements Localizable {
             matches.setForeground(Color.BLACK);
             matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
                     + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
-            if(textMatchesIndex != textMatches.size() - 1) {
+            if(textMatchesIndex <= textMatches.size() - 1) {
+                Util.log("Up");
                 textMatchesIndex++;
-            } else if(textMatchesIndex == textMatches.size() - 1) {
+            }
+            if(textMatchesIndex > textMatches.size() - 1) {
+                Util.log("Bottom");
                 textMatchesIndex = 0;
             }
-        }       
     }//GEN-LAST:event_nextActionPerformed
 
     private void backActionPerformed(ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        if(textMatchesIndex >= 0) {
-            TextLocation l = textMatches.get(textMatchesIndex);
-            DefaultCaret c = (DefaultCaret)a.getCaret();
-            c.setDot(l.getStart());
-            a.scrollRectToVisible(c);
+        if(textMatches.isEmpty()) {
+            return;
+        }
 
-            matches.setForeground(Color.BLACK);
-            matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
-                    + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
-            if(textMatchesIndex != 0) {
-                textMatchesIndex--;
-            } else if(textMatchesIndex == 0) {
-                textMatchesIndex = textMatches.size() - 1;
-            }
+        TextLocation l = textMatches.get(textMatchesIndex);
+        DefaultCaret c = (DefaultCaret)a.getCaret();
+        c.setDot(l.getStart());
+        a.scrollRectToVisible(c);
+
+        matches.setForeground(Color.BLACK);
+        matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
+                + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
+        if(textMatchesIndex >= 0) {
+            Util.log("Down");
+            textMatchesIndex--;
+        }
+        if(textMatchesIndex < 0) {
+            Util.log("Top");
+            textMatchesIndex = textMatches.size() - 1;
         }
     }//GEN-LAST:event_backActionPerformed
 
