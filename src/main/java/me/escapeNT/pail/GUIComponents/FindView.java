@@ -143,6 +143,8 @@ public class FindView extends javax.swing.JDialog implements Localizable {
                     + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
             if(textMatchesIndex != textMatches.size() - 1) {
                 textMatchesIndex++;
+            } else if(textMatchesIndex == textMatches.size() - 1) {
+                textMatchesIndex = 0;
             }
         }       
     }//GEN-LAST:event_nextActionPerformed
@@ -159,6 +161,8 @@ public class FindView extends javax.swing.JDialog implements Localizable {
                     + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
             if(textMatchesIndex != 0) {
                 textMatchesIndex--;
+            } else if(textMatchesIndex == 0) {
+                textMatchesIndex = textMatches.size() - 1;
             }
         }
     }//GEN-LAST:event_backActionPerformed
