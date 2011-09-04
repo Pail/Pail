@@ -219,7 +219,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
         worldName.setToolTipText("The name of the default world on the server");
         jPanel2.add(worldName);
-        worldName.setBounds(110, 20, 224, 28);
+        worldName.setBounds(110, 20, 240, 28);
 
         jLabel2.setText("World seed");
         jPanel2.add(jLabel2);
@@ -227,7 +227,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
         ip.setToolTipText("Set this if you want the server to bind to a particular IP.");
         jPanel2.add(ip);
-        ip.setBounds(110, 100, 225, 28);
+        ip.setBounds(110, 100, 240, 28);
 
         nether.setText("Allow nether");
         nether.setToolTipText("Allow portal transport to the nether.");
@@ -313,7 +313,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
         seed.setToolTipText("The seed used in generating new terrain.");
         jPanel2.add(seed);
-        seed.setBounds(110, 60, 225, 28);
+        seed.setBounds(110, 60, 240, 28);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(10, 10, 370, 410);

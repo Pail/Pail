@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import me.escapeNT.pail.Util.Localizable;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.Util.Util;
 
@@ -18,6 +18,8 @@ import me.escapeNT.pail.Util.Util;
  * @author escapeNT
  */
 public class EditMenu extends JMenu implements Localizable {
+
+    public static boolean findOpen = false;
 
     public EditMenu() {
         super(Util.translate("Edit"));
@@ -32,6 +34,18 @@ public class EditMenu extends JMenu implements Localizable {
             }
         });
         add(selectall);
+
+        JMenuItem find = new JMenuItem(Util.translate("Find"));
+        find.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
+        find.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(!findOpen) {
+                    new FindView().setVisible(true);
+                    findOpen = true;
+                }
+            }
+        });
+        add(find);
     }
 
     public void translateComponent() {}

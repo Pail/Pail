@@ -19,8 +19,6 @@ import me.escapeNT.pail.Util.ScrollableTextArea;
 public class PailLogHandler extends Handler {
     
     private ScrollableTextArea output;
-    private boolean scroll = true;
-    private int scroller;
 
     /**
      * Constructs a new log handler using the specified text area for output.
@@ -34,7 +32,7 @@ public class PailLogHandler extends Handler {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                output.append(Color.GRAY, true, new SimpleDateFormat("HH:mm:ss").format(new Date(record.getMillis())));
+                output.append(Color.GRAY, true, new SimpleDateFormat("hh:mm a").format(new Date(record.getMillis())));
 
                 Color color = Color.BLACK;
                 Level lv = record.getLevel();

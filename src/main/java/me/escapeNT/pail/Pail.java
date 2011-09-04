@@ -3,7 +3,6 @@ package me.escapeNT.pail;
 import com.apple.eawt.AboutHandler;
 import com.apple.eawt.AppEvent.AboutEvent;
 import com.apple.eawt.Application;
-
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
@@ -29,12 +28,10 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import me.escapeNT.pail.GUIComponents.AboutView;
 import me.escapeNT.pail.GUIComponents.MainWindow;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
-import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.Util.ServerReadyListener;
-import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
 import me.escapeNT.pail.config.WaypointConfig;
@@ -58,11 +55,11 @@ public final class Pail extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
 
     public static final String PLUGIN_NAME = "Pail";
-    public static final String PLUGIN_THREAD = "http://forums.bukkit.org/threads/"
-            + "admn-dev-pail-v0-6-the-simplest-and-most-extensible-bukkit-gui-1060.30246";
-    public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
-    public static final ServerReadyListener handler = new ServerReadyListener();
+    public static String PLUGIN_THREAD;
     public static String PLUGIN_VERSION;
+    public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
+
+    public static final ServerReadyListener handler = new ServerReadyListener();
 
     private MainWindow main;
 
@@ -71,9 +68,9 @@ public final class Pail extends JavaPlugin {
     public void onEnable() {
 
         if(System.getProperty("os.name").contains("Mac")) {
-            Application app = Application.getApplication();   
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            Application app = Application.getApplication();
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Pail");
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
             app.setDockIconImage(PAIL_ICON);
             app.setAboutHandler(new AboutHandler() {
                 public void handleAbout(AboutEvent ae) {
@@ -82,8 +79,9 @@ public final class Pail extends JavaPlugin {
             });
         }
 
+        PLUGIN_THREAD = getDescription().getWebsite();  
+        PLUGIN_VERSION = getDescription().getVersion();
         Translate.setHttpReferrer(PLUGIN_THREAD);
-        PLUGIN_VERSION = getDescription().getVersion();  
         Util.setPlugin(this);
         General.load();
 
@@ -100,7 +98,9 @@ public final class Pail extends JavaPlugin {
         pm.registerEvent(Type.SERVER_COMMAND, new PailServerListener(), Priority.Monitor, this);
 
         try {
-            t.join();
+            if(t.isAlive()) {
+                t.join();
+            }
         } catch (InterruptedException ex) {
             Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -194,23 +194,26 @@ public final class Pail extends JavaPlugin {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 BufferedReader reader = new BufferedReader(new StringReader(prev.getConsoleText()));
-
                 String str;
+                
                 try {
-                    while ((str = reader.readLine()) != null) {
+                    while((str = reader.readLine()) != null) {
                         try {
                             if(str.length() > 0) {
                                 String[] s = str.split(" ");
                                 output.append(Color.GRAY, true, s[0]);
+                                output.append(Color.GRAY, true, " " + s[1]);
 
                                 Color color = Color.BLACK;
-                                Level lv = Level.parse(s[1].substring(1, s[1].length() - 1));
+                                Level lv = Level.parse(s[2].substring(1, s[2].length() - 1));
                                 if(lv == Level.INFO) {
                                     color = Color.BLUE;
                                 } else if(lv == Level.WARNING) {
                                     color = Color.ORANGE;
                                 } else if(lv == Level.SEVERE) {
                                     color = Color.RED;
+                                } else if(lv == Level.CONFIG) {
+                                    color = Color.GREEN;
                                 }
                                 output.append(color, " [" + lv.toString() + "] ");
 
@@ -220,7 +223,7 @@ public final class Pail extends JavaPlugin {
                                     color = Color.BLACK;
                                 }
                                 StringBuilder sb = new StringBuilder();
-                                for(int i = 2; i < s.length; i++) {
+                                for(int i = 3; i < s.length; i++) {
                                     if(s[i].startsWith("[") && s[i].contains("]")) {
                                         output.append(color, sb.toString());
                                         sb = new StringBuilder();
@@ -302,10 +305,10 @@ public final class Pail extends JavaPlugin {
                 Util.getServerControls().getListModel().addElement(p.getName());
             }
 
-            if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
+            /*if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
                     && !UpdateHandler.isUpToDate()) {
                 new UpdateView().setVisible(true);
-            }
+            }*/
         }
     }
 
