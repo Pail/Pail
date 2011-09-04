@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -154,7 +155,7 @@ public class FindView extends javax.swing.JDialog implements Localizable {
                 matches.setForeground(Color.BLACK);
                 matches.setText(Util.translate(nMatches + " match" + ( nMatches > 1 ? "es" : "" )));
             }
-        } catch(Exception ex) {}
+        } catch(PatternSyntaxException ex) {}
     }
 
     private class WindowCloseListener implements WindowListener {
