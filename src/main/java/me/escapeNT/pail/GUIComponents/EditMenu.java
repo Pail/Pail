@@ -46,6 +46,14 @@ public class EditMenu extends JMenu implements Localizable {
             }
         });
         add(find);
+
+        JMenuItem clear = new JMenuItem(Util.translate("Clear"));
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        add(clear);
     }
 
     public void translateComponent() {}
