@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JOptionPane.showMessageDialog(null, "Welcome to main!");
+        JOptionPane.showMessageDialog(null, "Pail goes in plugins!");
 
     }
 }
