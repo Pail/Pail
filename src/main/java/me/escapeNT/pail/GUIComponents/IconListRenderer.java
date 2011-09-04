@@ -34,15 +34,4 @@ public class IconListRenderer extends DefaultListCellRenderer {
         label.setIcon(icon);
         return label;
     }
-
-    @Override
-    public void finalize() {
-        try {
-            super.finalize();
-        }
-        catch (Throwable ex) {
-            Logger.getLogger(IconListRenderer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Renderer collected.");
-    }
 }
