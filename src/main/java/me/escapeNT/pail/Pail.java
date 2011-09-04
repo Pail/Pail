@@ -302,7 +302,7 @@ public final class Pail extends JavaPlugin {
             Util.setServerControls(getMainWindow().getServerControls());
 
             for(Player p : getServer().getOnlinePlayers()) {
-                Util.getServerControls().getListModel().addElement(p.getName());
+                Util.getServerControls().addPlayer(p.getName());
             }
 
             /*if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null

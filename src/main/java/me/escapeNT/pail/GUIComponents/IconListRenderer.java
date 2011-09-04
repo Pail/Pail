@@ -3,6 +3,8 @@ package me.escapeNT.pail.GUIComponents;
 
 import java.awt.Component;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,5 +33,16 @@ public class IconListRenderer extends DefaultListCellRenderer {
         Icon icon = icons.get(value);
         label.setIcon(icon);
         return label;
+    }
+
+    @Override
+    public void finalize() {
+        try {
+            super.finalize();
+        }
+        catch (Throwable ex) {
+            Logger.getLogger(IconListRenderer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Renderer collected.");
     }
 }

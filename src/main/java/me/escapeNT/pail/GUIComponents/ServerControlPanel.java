@@ -1,18 +1,26 @@
 
 package me.escapeNT.pail.GUIComponents;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.TitledBorder;
-import me.escapeNT.pail.Util.Localizable;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
@@ -27,14 +35,16 @@ import org.bukkit.entity.Player;
  */
 public final class ServerControlPanel extends javax.swing.JPanel implements Localizable {
 
-    private DefaultListModel listModel = new DefaultListModel();
+    private HashMap<Object, ImageIcon> onlinePlayers = new HashMap<Object, ImageIcon>();
+    private IconListRenderer listModel = new IconListRenderer(onlinePlayers);
     private JPopupMenu playerMenu = null;
 
     /** Creates new form ServerControlPanel */
     public ServerControlPanel() {
         initComponents();
         Util.setServerControls(this);
-        playerList.setModel(listModel);
+        playerList.setModel(new DefaultListModel());
+        playerList.setCellRenderer(listModel);
         jScrollPane1.setBorder(new TitledBorder(Util.translate("Players")));
 
         // Load images
@@ -130,7 +140,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
 
     private void showPlayerMenu(MouseEvent e) {        
         if(e.isPopupTrigger()) {
-            for(int i = 0; i < listModel.getSize(); i++) {
+            for(int i = 0; i < ((DefaultListModel) playerList.getModel()).getSize(); i++) {
                 Rectangle r = playerList.getCellBounds(i, i);
                 if(r.contains(e.getPoint())) {
                     playerList.setSelectedIndex(i);
@@ -229,6 +239,41 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
      * @return the listModel
      */
     public DefaultListModel getListModel() {
-        return listModel;
+        return (DefaultListModel) playerList.getModel();
+    }
+
+    /**
+     * Adds a player and their face to the list.
+     * @param name The player name.
+     */
+    public void addPlayer(String name) {
+        BufferedImage skin;
+        BufferedImage face;
+        try {
+            skin = ImageIO.read(new URL("http://www.minecraft.net/skin/" + name + ".png"));
+            face = skin.getSubimage(8, 8, 8, 8);
+            face = resize(face, 23, 23, true);
+        } catch (IOException ex) {
+            onlinePlayers.put(name, new ImageIcon());
+            playerList.setCellRenderer(new IconListRenderer(onlinePlayers));
+            getListModel().addElement(name);
+            return;
+        }
+        onlinePlayers.put(name, new ImageIcon(face));
+        playerList.setCellRenderer(new IconListRenderer(onlinePlayers));
+        getListModel().addElement(name);
+    }
+
+    private BufferedImage resize(Image originalImage,
+                int scaledWidth, int scaledHeight, boolean preserveAlpha) {
+        int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
+        Graphics2D g = scaledBI.createGraphics();
+        if(preserveAlpha) {
+            g.setComposite(AlphaComposite.Src);
+        }
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+        g.dispose();
+        return scaledBI;
     }
 }

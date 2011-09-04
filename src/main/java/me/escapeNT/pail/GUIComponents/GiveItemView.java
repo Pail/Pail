@@ -37,7 +37,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         initComponents();
         getRootPane().setDefaultButton(give);
         setResizable(false);
-        setSize(425, 175);
+        setSize(425, 180);
 
         item.setRenderer(new IconListRenderer(getMaterials()));
 
@@ -98,7 +98,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
 
         idLabel.setText("Item");
         getContentPane().add(idLabel);
-        idLabel.setBounds(0, 40, 60, 30);
+        idLabel.setBounds(10, 40, 50, 30);
 
         amountLabel.setText("Amount");
         getContentPane().add(amountLabel);
@@ -130,7 +130,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
 
         item.setModel(new DefaultComboBoxModel(sortMatNames().toArray()));
         getContentPane().add(item);
-        item.setBounds(50, 30, 230, 50);
+        item.setBounds(50, 30, 220, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

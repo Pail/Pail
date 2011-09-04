@@ -21,7 +21,8 @@ public class PailPlayerListener extends PlayerListener {
     public void onPlayerJoin(final PlayerJoinEvent event) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Util.getServerControls().getListModel().addElement(event.getPlayer().getName());
+                //Util.getServerControls().getListModel().addElement(event.getPlayer().getName());
+                Util.getServerControls().addPlayer(event.getPlayer().getName());
                 if(ServerReadyListener.settings != null) {
                     ServerReadyListener.settings.getWaypointEditor().getPlayers().addItem(event.getPlayer().getName());
                 }
