@@ -113,7 +113,10 @@ public class FindView extends javax.swing.JDialog implements Localizable {
         Util.translateTextComponent(matchCase);
     }
 
-    private void search() {
+    /**
+     * Searches and highlights the console based on the current input.
+     */
+    public void search() {
         highlighter.removeAllHighlights();
         if (search.getText().equals("")) {
             matches.setVisible(false);
@@ -123,29 +126,35 @@ public class FindView extends javax.swing.JDialog implements Localizable {
         matches.setVisible(true);
         int nMatches = 0;
         Pattern p;
-        if (matchCase.isSelected()) {
-            p = Pattern.compile(search.getText());
-        } else {
-            p = Pattern.compile(search.getText(), Pattern.CASE_INSENSITIVE);
-        }
-        Matcher m = p.matcher(a.getText());
-        while (m.find()) {
-            try {
-                highlighter.addHighlight(m.start(), m.end(), new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
-            } catch (BadLocationException ex) {
-                Logger.getLogger(FindView.class.getName()).log(Level.SEVERE, null, ex);
+        Matcher m;
+        
+        try {
+            if (matchCase.isSelected()) {
+                p = Pattern.compile(search.getText());
+                m = p.matcher(a.getText());
+            } else {
+                p = Pattern.compile(search.getText(), Pattern.CASE_INSENSITIVE);
+                m = p.matcher(a.getText());
             }
-            found = true;
-            nMatches++;
-        }
-        if (!found) {
-            matches.setForeground(Color.RED);
-            matches.setText(Util.translate("No matches"));
-            Toolkit.getDefaultToolkit().beep();
-        } else {
-            matches.setForeground(Color.BLACK);
-            matches.setText(Util.translate(nMatches + " match" + ( nMatches > 1 ? "es" : "" )));
-        }
+
+            while (m.find()) {
+                try {
+                    highlighter.addHighlight(m.start(), m.end(), new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
+                } catch (BadLocationException ex) {
+                    Logger.getLogger(FindView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                found = true;
+                nMatches++;
+            }
+            if (!found) {
+                matches.setForeground(Color.RED);
+                matches.setText(Util.translate("No matches"));
+                Toolkit.getDefaultToolkit().beep();
+            } else {
+                matches.setForeground(Color.BLACK);
+                matches.setText(Util.translate(nMatches + " match" + ( nMatches > 1 ? "es" : "" )));
+            }
+        } catch(Exception ex) {}
     }
 
     private class WindowCloseListener implements WindowListener {
