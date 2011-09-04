@@ -28,6 +28,21 @@ public class HelpMenu extends JMenu implements Localizable {
         super(Util.translate("Help"));
         setMnemonic('H');
 
+        JMenuItem issue = new JMenuItem(Util.translate("Report an issue"));
+        if(!Desktop.getDesktop().isSupported(Action.BROWSE)) {
+            issue.setEnabled(false);
+        }
+        issue.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI("http://dev.bukkit.org/server-mods/pail/tickets/"));
+                } catch(Exception ex) {
+                    Util.log(Level.WARNING, Util.translate("Could not open issues."));
+                }
+            }
+        });
+        add(issue);
+
         JMenuItem thread = new JMenuItem(Util.translate("Plugin thread"));
         thread.setIcon(new ImageIcon(getClass().getResource("images/help.png")));
         thread.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_MASK));
@@ -43,7 +58,7 @@ public class HelpMenu extends JMenu implements Localizable {
                 }
             }
         });
-        add(thread);
+        add(thread);  
     }
 
     public void translateComponent() {}
