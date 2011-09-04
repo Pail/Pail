@@ -38,6 +38,8 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
     private HashMap<Object, ImageIcon> onlinePlayers = new HashMap<Object, ImageIcon>();
     private IconListRenderer listModel = new IconListRenderer(onlinePlayers);
     private JPopupMenu playerMenu = null;
+    private JMenuItem op;
+    private JMenuItem deop;
 
     /** Creates new form ServerControlPanel */
     public ServerControlPanel() {
@@ -72,11 +74,11 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
         killPlayer.addActionListener(new KillPlayerListener());
         playerMenu.add(killPlayer);
 
-        JMenuItem op = new JMenuItem(Util.translate("Promote to OP"), up);
+        op = new JMenuItem(Util.translate("Promote to OP"), up);
         op.addActionListener(new OpPlayerListener());
         playerMenu.add(op);
 
-        JMenuItem deop = new JMenuItem(Util.translate("Demote from OP"), down);
+        deop = new JMenuItem(Util.translate("Demote from OP"), down);
         deop.addActionListener(new DeOpPlayerListener());
         playerMenu.add(deop);
         
@@ -144,6 +146,16 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
                 Rectangle r = playerList.getCellBounds(i, i);
                 if(r.contains(e.getPoint())) {
                     playerList.setSelectedIndex(i);
+
+                    Player p = Bukkit.getServer().getPlayer((String)playerList.getSelectedValue());
+                    if(p.isOp()) {
+                        op.setEnabled(false);
+                        deop.setEnabled(true);
+                    } else {
+                        op.setEnabled(true);
+                        deop.setEnabled(false);
+                    } 
+
                     playerMenu.show(playerList, e.getX(), e.getY());
                     break;
                 }
