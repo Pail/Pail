@@ -224,7 +224,8 @@ public final class Pail extends JavaPlugin {
                                 }
                                 StringBuilder sb = new StringBuilder();
                                 for(int i = 3; i < s.length; i++) {
-                                    if(s[i].startsWith("[") && s[i].contains("]")) {
+                                    if((s[i].startsWith("[") && s[i].contains("]"))
+                                            || (s[i].startsWith("<") && s[i].contains(">"))) {
                                         output.append(color, sb.toString());
                                         sb = new StringBuilder();
                                         output.append(color, true, s[i] + " ");

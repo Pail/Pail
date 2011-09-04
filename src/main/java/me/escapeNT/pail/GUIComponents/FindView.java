@@ -24,7 +24,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
-import javax.swing.text.Highlighter.Highlight;
 
 import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.ScrollableTextArea;
