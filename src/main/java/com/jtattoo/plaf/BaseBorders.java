@@ -305,11 +305,11 @@ public class BaseBorders {
             int xs = -h + 4;
             int ys = fm.getAscent() + 2;
 
-            imageGraphics.setColor(ColorHelper.darker(logoColor, 20));
+            /*imageGraphics.setColor(ColorHelper.darker(logoColor, 20));
             imageGraphics.drawString(JTattooUtilities.getClippedText(AbstractLookAndFeel.getTheme().getLogoString(), fm, h - 16), xs - 1, ys + 1);
 
             imageGraphics.setColor(Color.white);
-            imageGraphics.drawString(JTattooUtilities.getClippedText(AbstractLookAndFeel.getTheme().getLogoString(), fm, h - 16), xs, ys);
+            imageGraphics.drawString(JTattooUtilities.getClippedText(AbstractLookAndFeel.getTheme().getLogoString(), fm, h - 16), xs, ys);*/
 
             Rectangle2D r2D = new Rectangle2D.Double(0, 0, w, h);
             TexturePaint texturePaint = new TexturePaint(image, r2D);

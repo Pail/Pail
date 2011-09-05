@@ -1,5 +1,6 @@
 package me.escapeNT.pail;
 
+import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
@@ -415,6 +416,24 @@ public final class Pail extends JavaPlugin {
             }
         }
         return false;
+    }
+
+    /**
+     * Gets the currently selected language.
+     * @return THe Language selected.
+     */
+    public Language getLanguage() {
+        return General.getLang();
+    }
+
+    /**
+     * Translates the given text to the currently selected language.
+     * @param text The text to translate.
+     * @return the translated text, or the original text if English is the
+     * currently selected language.
+     */
+    public String Translate(String text) {
+        return Util.translate(text);
     }
 
     /**
