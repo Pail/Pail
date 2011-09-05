@@ -105,10 +105,7 @@ public class WaypointEditPanel extends javax.swing.JPanel implements Localizable
         playerSubmit = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setLayout(null);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Waypoints"));
-        jPanel1.setLayout(null);
 
         waypoints.setModel(new DefaultListModel());
         waypoints.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -118,17 +115,12 @@ public class WaypointEditPanel extends javax.swing.JPanel implements Localizable
         });
         jScrollPane1.setViewportView(waypoints);
 
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 20, 360, 330);
-
         addWaypoint.setText("+");
         addWaypoint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addWaypointActionPerformed(evt);
             }
         });
-        jPanel1.add(addWaypoint);
-        addWaypoint.setBounds(320, 360, 50, 40);
 
         removeWaypoint.setText("-");
         removeWaypoint.addActionListener(new java.awt.event.ActionListener() {
@@ -136,42 +128,43 @@ public class WaypointEditPanel extends javax.swing.JPanel implements Localizable
                 removeWaypointActionPerformed(evt);
             }
         });
-        jPanel1.add(removeWaypoint);
-        removeWaypoint.setBounds(260, 360, 50, 40);
 
-        add(jPanel1);
-        jPanel1.setBounds(20, 10, 380, 410);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(4, 4, 4)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 360, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(254, 254, 254)
+                .add(removeWaypoint, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(addWaypoint, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 50, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 330, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(removeWaypoint, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(addWaypoint, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jLabel1.setText("Z");
-        add(jLabel1);
-        jLabel1.setBounds(700, 90, 20, 30);
 
         z.setModel(new javax.swing.SpinnerNumberModel());
-        add(z);
-        z.setBounds(720, 90, 100, 28);
 
         y.setModel(new javax.swing.SpinnerNumberModel());
-        add(y);
-        y.setBounds(580, 90, 100, 28);
 
         jLabel2.setText("Y");
-        add(jLabel2);
-        jLabel2.setBounds(560, 90, 20, 30);
 
         x.setModel(new javax.swing.SpinnerNumberModel());
-        add(x);
-        x.setBounds(440, 90, 100, 28);
 
         jLabel3.setText("X");
-        add(jLabel3);
-        jLabel3.setBounds(410, 90, 30, 30);
 
         jLabel4.setText("World");
-        add(jLabel4);
-        jLabel4.setBounds(406, 150, 60, 20);
-
-        add(worlds);
-        worlds.setBounds(460, 150, 360, 20);
 
         save.setText("Save Waypoint");
         save.addActionListener(new java.awt.event.ActionListener() {
@@ -179,21 +172,10 @@ public class WaypointEditPanel extends javax.swing.JPanel implements Localizable
                 saveActionPerformed(evt);
             }
         });
-        add(save);
-        save.setBounds(690, 380, 130, 29);
 
         jLabel5.setText("Name");
-        add(jLabel5);
-        jLabel5.setBounds(410, 36, 60, 20);
-        add(name);
-        name.setBounds(470, 30, 350, 28);
 
         jLabel6.setText("Use player location:");
-        add(jLabel6);
-        jLabel6.setBounds(420, 250, 300, 16);
-
-        add(players);
-        players.setBounds(420, 270, 310, 30);
 
         playerSubmit.setText("Go");
         playerSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -201,10 +183,88 @@ public class WaypointEditPanel extends javax.swing.JPanel implements Localizable
                 playerSubmitActionPerformed(evt);
             }
         });
-        add(playerSubmit);
-        playerSubmit.setBounds(740, 270, 75, 29);
-        add(jSeparator1);
-        jSeparator1.setBounds(430, 210, 380, 12);
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(20, 20, 20)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(6, 6, 6)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(4, 4, 4)
+                        .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(name, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 350, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(4, 4, 4)
+                        .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(x, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(20, 20, 20)
+                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(y, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(20, 20, 20)
+                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(z, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createSequentialGroup()
+                        .add(54, 54, 54)
+                        .add(worlds, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 360, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(24, 24, 24)
+                        .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(14, 14, 14)
+                        .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(14, 14, 14)
+                        .add(players, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 310, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(10, 10, 10)
+                        .add(playerSubmit))
+                    .add(layout.createSequentialGroup()
+                        .add(284, 284, 284)
+                        .add(save, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(10, 10, 10)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 410, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(30, 30, 30)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .add(6, 6, 6)
+                                .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(name, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(32, 32, 32)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(x, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(y, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(z, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(30, 30, 30)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(worlds, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(40, 40, 40)
+                        .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(28, 28, 28)
+                        .add(jLabel6)
+                        .add(4, 4, 4)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(players, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 30, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(playerSubmit))
+                        .add(80, 80, 80)
+                        .add(save)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void addWaypointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addWaypointActionPerformed

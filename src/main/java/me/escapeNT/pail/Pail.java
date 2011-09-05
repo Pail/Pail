@@ -292,7 +292,7 @@ public final class Pail extends JavaPlugin {
 
             getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
-            getMainWindow().setResizable(false);
+            //getMainWindow().setResizable(false);
             getMainWindow().addWindowListener(new WindowCloseListener());
             getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             getMainWindow().pack();

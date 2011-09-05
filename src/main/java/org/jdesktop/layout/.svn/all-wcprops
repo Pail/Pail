@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/swing-layout~svn/!svn/ver/56/trunk/src/java/org/jdesktop/layout
+END
+MetalLayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/swing-layout~svn/!svn/ver/46/trunk/src/java/org/jdesktop/layout/MetalLayoutStyle.java
+END
+Baseline.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/swing-layout~svn/!svn/ver/56/trunk/src/java/org/jdesktop/layout/Baseline.java
+END
+GnomeLayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/swing-layout~svn/!svn/ver/46/trunk/src/java/org/jdesktop/layout/GnomeLayoutStyle.java
+END
+AquaLayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/swing-layout~svn/!svn/ver/53/trunk/src/java/org/jdesktop/layout/AquaLayoutStyle.java
+END
+SwingLayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/swing-layout~svn/!svn/ver/46/trunk/src/java/org/jdesktop/layout/SwingLayoutStyle.java
+END
+WindowsLayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/swing-layout~svn/!svn/ver/46/trunk/src/java/org/jdesktop/layout/WindowsLayoutStyle.java
+END
+GroupLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/swing-layout~svn/!svn/ver/50/trunk/src/java/org/jdesktop/layout/GroupLayout.java
+END
+LayoutStyle.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/swing-layout~svn/!svn/ver/55/trunk/src/java/org/jdesktop/layout/LayoutStyle.java
+END

@@ -33,20 +33,38 @@ public class AboutView extends javax.swing.JDialog {
         icon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
 
-        title.setFont(new java.awt.Font("Lucida Grande", 1, 26)); // NOI18N
+        title.setFont(new java.awt.Font("Lucida Grande", 1, 26));
         title.setText("Pail");
-        getContentPane().add(title);
-        title.setBounds(87, 10, 150, 32);
 
         version.setText("Version ");
-        getContentPane().add(version);
-        version.setBounds(50, 50, 170, 16);
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/me/escapeNT/pail/GUIComponents/images/pail.png"))); // NOI18N
-        getContentPane().add(icon);
-        icon.setBounds(40, 70, 150, 130);
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(87, 87, 87)
+                .add(title, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(50, 50, 50)
+                .add(version, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(40, 40, 40)
+                .add(icon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(10, 10, 10)
+                .add(title)
+                .add(8, 8, 8)
+                .add(version)
+                .add(4, 4, 4)
+                .add(icon, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

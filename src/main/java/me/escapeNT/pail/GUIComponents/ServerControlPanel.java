@@ -110,11 +110,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
 
         jScrollPane2.setViewportView(jEditorPane1);
 
-        setLayout(null);
-
         serverConsolePanel.setPreferredSize(new java.awt.Dimension(640, 450));
-        add(serverConsolePanel);
-        serverConsolePanel.setBounds(10, 10, 640, 450);
 
         playerList.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         playerList.setFocusable(false);
@@ -128,8 +124,25 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
         });
         jScrollPane1.setViewportView(playerList);
 
-        add(jScrollPane1);
-        jScrollPane1.setBounds(660, 10, 170, 450);
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(10, 10, 10)
+                .add(serverConsolePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 170, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(10, 10, 10)
+                .add(serverConsolePanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(10, 10, 10)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 450, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void playerListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerListMousePressed
