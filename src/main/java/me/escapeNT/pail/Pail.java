@@ -4,7 +4,6 @@ import com.google.api.translate.Translate;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.PopupMenu;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -28,7 +27,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import me.escapeNT.pail.GUIComponents.AboutView;
 import me.escapeNT.pail.GUIComponents.MainWindow;
-import me.escapeNT.pail.GUIComponents.ServerMenu;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.config.General;
@@ -88,7 +86,7 @@ public final class Pail extends JavaPlugin {
                 System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Pail");
                 System.setProperty("apple.laf.useScreenMenuBar", "true");
             }
-        } catch(Throwable e) {e.printStackTrace();}
+        } catch(Throwable e) {}
 
         setupLookAndFeels();
 
