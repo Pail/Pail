@@ -432,7 +432,7 @@ public final class Pail extends JavaPlugin {
      * @return the translated text, or the original text if English is the
      * currently selected language.
      */
-    public String Translate(String text) {
+    public String translate(String text) {
         return Util.translate(text);
     }
 
