@@ -1,17 +1,18 @@
 package me.escapeNT.pail;
 
-import com.apple.eawt.AboutHandler;
-import com.apple.eawt.AppEvent.AboutEvent;
-import com.apple.eawt.Application;
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.PopupMenu;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,13 +28,14 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import me.escapeNT.pail.GUIComponents.AboutView;
 import me.escapeNT.pail.GUIComponents.MainWindow;
+import me.escapeNT.pail.GUIComponents.ServerMenu;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
-import me.escapeNT.pail.config.General;
-import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.Util.ScrollableTextArea;
+import me.escapeNT.pail.config.General;
 import me.escapeNT.pail.Util.ServerReadyListener;
 import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
+import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.WaypointConfig;
 
 import org.bukkit.Material;
@@ -66,24 +68,27 @@ public final class Pail extends JavaPlugin {
     @Override
     @SuppressWarnings("LeakingThisInConstructor")
     public void onEnable() {
-
-        if(System.getProperty("os.name").contains("Mac")) {
-            Application app = Application.getApplication();
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Pail");
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            app.setDockIconImage(PAIL_ICON);
-            app.setAboutHandler(new AboutHandler() {
-                public void handleAbout(AboutEvent ae) {
-                    new AboutView().setVisible(true);
-                }
-            });
-        }
-
         PLUGIN_THREAD = getDescription().getWebsite();  
         PLUGIN_VERSION = getDescription().getVersion();
         Translate.setHttpReferrer(PLUGIN_THREAD);
         Util.setPlugin(this);
         General.load();
+
+        try {
+            if(System.getProperty("os.name").contains("Mac")) {
+                Class application = Class.forName("com.apple.eawt.Application");
+                Object app = application.getMethod("getApplication", (Class<?>[]) null).invoke(null, (Object[]) null);
+                app.getClass().getMethod("setDockIconImage", Image.class).invoke(app, PAIL_ICON);
+
+                Object al = Proxy.newProxyInstance(Class.forName("com.apple.eawt.AboutHandler").getClassLoader(),
+                                          new Class[] { Class.forName("com.apple.eawt.AboutHandler") },
+                                          new AboutListener());
+                app.getClass().getMethod("setAboutHandler", Class.forName("com.apple.eawt.AboutHandler")).invoke(app, al);
+
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Pail");
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+            }
+        } catch(Throwable e) {e.printStackTrace();}
 
         setupLookAndFeels();
 
@@ -310,6 +315,13 @@ public final class Pail extends JavaPlugin {
                     && !UpdateHandler.isUpToDate()) {
                 new UpdateView().setVisible(true);
             }*/
+        }
+    }
+
+    private class AboutListener implements InvocationHandler {
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            new AboutView().setVisible(true);
+            return null;
         }
     }
 

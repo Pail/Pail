@@ -9,8 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import me.escapeNT.pail.Util.Localizable;
 
+import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
