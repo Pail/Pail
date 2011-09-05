@@ -4,6 +4,7 @@ import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -292,11 +293,11 @@ public final class Pail extends JavaPlugin {
 
             getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
-            //getMainWindow().setResizable(false);
+            getMainWindow().setMinimumSize(new Dimension(990, 585));
             getMainWindow().addWindowListener(new WindowCloseListener());
             getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             getMainWindow().pack();
-            getMainWindow().setSize(860, 555);
+            getMainWindow().setSize(990, 585);
             getMainWindow().setLocationRelativeTo(null);
             loadState();
             getMainWindow().setFocusableWindowState(true);

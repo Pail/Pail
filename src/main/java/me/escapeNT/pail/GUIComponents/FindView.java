@@ -145,11 +145,9 @@ public class FindView extends javax.swing.JDialog implements Localizable {
             matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
                     + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
             if(textMatchesIndex <= textMatches.size() - 1) {
-                Util.log("Up");
                 textMatchesIndex++;
             }
             if(textMatchesIndex > textMatches.size() - 1) {
-                Util.log("Bottom");
                 textMatchesIndex = 0;
             }
     }//GEN-LAST:event_nextActionPerformed
@@ -168,11 +166,9 @@ public class FindView extends javax.swing.JDialog implements Localizable {
         matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
                 + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
         if(textMatchesIndex >= 0) {
-            Util.log("Down");
             textMatchesIndex--;
         }
         if(textMatchesIndex < 0) {
-            Util.log("Top");
             textMatchesIndex = textMatches.size() - 1;
         }
     }//GEN-LAST:event_backActionPerformed
