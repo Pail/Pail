@@ -52,10 +52,10 @@ public class PailLogHandler extends Handler {
                     color = Color.BLACK;
                 }
                 for(String s : record.getMessage().split(" ")) {
-                    if((s.startsWith("[") && s.contains("]"))
-                            || (s.startsWith("<") && s.contains(">"))) {
+                    if(((s.startsWith("[") && s.contains("]"))
+                            || (s.startsWith("<") && s.contains(">"))) && !s.equals("[0m")) {
                         output.append(color, true, s + " ");
-                    } else {
+                    } else if(!s.equals("[0m")) {
                         output.append(color, s + " ");
                     }
                 }

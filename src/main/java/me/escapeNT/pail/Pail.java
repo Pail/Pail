@@ -421,7 +421,7 @@ public final class Pail extends JavaPlugin {
 
     /**
      * Gets the currently selected language.
-     * @return THe Language selected.
+     * @return The Language selected.
      */
     public Language getLanguage() {
         return General.getLang();
