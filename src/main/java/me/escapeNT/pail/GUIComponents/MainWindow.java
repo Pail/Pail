@@ -49,11 +49,13 @@ public class MainWindow extends JFrame implements Localizable {
         PanelConfig.load();
         getTabPane().removeAll();
         getTabPane().add(Util.getInterfaceComponents().get("Server Control"), Util.translate("Server Control"));
-        for (Map.entry<String, JPanel> entry : Util.getInterfaceComponents().entrySet()) {
+        getTabPane().add(Util.getInterfaceComponents().get("Settings"), Util.translate("Settings"));
+        for(Map.Entry<String, JPanel> entry : Util.getInterfaceComponents().entrySet()) {
             if(!PanelConfig.getPanelsActivated().containsKey(entry.getKey())) {
                 PanelConfig.getPanelsActivated().put(entry.getKey(), true);
             }
-            if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(entry.getKey())) {
+            if(!entry.getKey().equals("Server Control") && !entry.getKey().equals("Settings")
+                    && PanelConfig.getPanelsActivated().get(entry.getKey())) {
                 getTabPane().add(entry.getValue(), Util.translate(entry.getKey()));
             }
         }
