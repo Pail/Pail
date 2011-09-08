@@ -2,6 +2,7 @@ package me.escapeNT.pail.GUIComponents;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -47,19 +48,13 @@ public class MainWindow extends JFrame implements Localizable {
     public void loadPanels() {
         PanelConfig.load();
         getTabPane().removeAll();
-        List<String> t = new ArrayList<String>();
-        List<JPanel> p = new ArrayList<JPanel>();
         getTabPane().add(Util.getInterfaceComponents().get("Server Control"), Util.translate("Server Control"));
-        for (String title : Util.getInterfaceComponents().keySet()) {
-            t.add(title);
-            p.add(Util.getInterfaceComponents().get(title));
-        }
-        for(int i = t.size() - 1; i >= 0; i--) {
-            if(!PanelConfig.getPanelsActivated().containsKey(t.get(i))) {
-                PanelConfig.getPanelsActivated().put(t.get(i), true);
+        for (Map.entry<String, JPanel> entry : Util.getInterfaceComponents().entrySet()) {
+            if(!PanelConfig.getPanelsActivated().containsKey(entry.getKey())) {
+                PanelConfig.getPanelsActivated().put(entry.getKey(), true);
             }
-            if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(t.get(i))) {
-                getTabPane().add(p.get(i), Util.translate(t.get(i)));
+            if(!t.get(i).equals("Server Control") && PanelConfig.getPanelsActivated().get(entry.getKey())) {
+                getTabPane().add(entry.getValue(), Util.translate(entry.getKey()));
             }
         }
         validate();
