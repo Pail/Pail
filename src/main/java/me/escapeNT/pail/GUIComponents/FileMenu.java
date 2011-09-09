@@ -6,17 +6,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
 import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 
 /**
  * Class representing the File dropdown menu.
@@ -79,6 +86,33 @@ public class FileMenu extends JMenu implements Localizable {
             }
         });
         add(saveSelection);
+
+        JMenuItem backup = new JMenuItem(Util.translate("Backup world..."));
+        backup.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                List<String> worlds = new ArrayList<String>();
+                for(World w :  Bukkit.getServer().getWorlds()) {
+                    worlds.add(w.getName());
+                }
+
+                String worldName = (String)JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(),
+                        "What world do you want to back up?", "Choose world", JOptionPane.QUESTION_MESSAGE, null,
+                        worlds.toArray(), worlds.get(0));
+                final File worldFolder = new File(worldName);
+                File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
+                final File backup = new File(backupFolder, worldName
+                        + new SimpleDateFormat("'@'mm.dd.yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
+                if(!backupFolder.exists()) {
+                    backupFolder.mkdir();
+                }
+                Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Util.getPlugin(), new Runnable() {
+                    public void run() {
+                        Util.zipDir(worldFolder, backup);
+                    }
+                });
+            }
+        });
+        add(backup);
 
         Util.setFileMenu(this);
     }

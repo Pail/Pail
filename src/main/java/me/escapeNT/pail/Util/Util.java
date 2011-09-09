@@ -3,8 +3,10 @@ package me.escapeNT.pail.Util;
 
 import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,8 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -35,6 +39,7 @@ public class Util {
     private static HashMap<String, JPanel> interfaceComponents = new HashMap<String, JPanel>();
     private static ServerControlPanel serverControls;
     private static FileMenu fileMenu;
+    private static final int BUFFER = 2048;
 
     /**
      * Reads the last number of specified lines in a file.
@@ -109,6 +114,45 @@ public class Util {
             return Translate.execute(text, Language.AUTO_DETECT, General.getLang());
         } catch (Exception ex) {
             return text;
+        }
+    }
+
+    /**
+     * Compresses a directory to a zip file.
+     * @param dir The path to directory to compress.
+     * @param zipFile The path to the resulting zip file.
+     */
+    public static void zipDir(File dir, File zipFile) {
+        if(!dir.isDirectory()) {
+            return;
+        }
+        try {
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile));
+            addDir(dir, out);
+            out.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void addDir(File dir, ZipOutputStream out) throws IOException {
+        File[] files = dir.listFiles();
+        byte[] tmpBuf = new byte[1024];
+
+        for (int i = 0; i < files.length; i++) {
+            if(files[i].isDirectory()) {
+                addDir(files[i], out);
+                continue;
+            }
+            FileInputStream in = new FileInputStream(files[i].getAbsolutePath());
+            out.putNextEntry(new ZipEntry(files[i].getAbsolutePath()));
+            int len;
+            while((len = in.read(tmpBuf)) > 0) {
+                out.write(tmpBuf, 0, len);
+            }
+            out.closeEntry();
+            in.close();
         }
     }
 
