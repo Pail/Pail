@@ -22,6 +22,7 @@ import javax.swing.text.Document;
 
 import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -95,19 +96,25 @@ public class FileMenu extends JMenu implements Localizable {
                     worlds.add(w.getName());
                 }
 
-                String worldName = (String)JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(),
-                        "What world do you want to back up?", "Choose world", JOptionPane.QUESTION_MESSAGE, null,
+                final String worldName = (String)JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(),
+                        Util.translate("What world do you want to back up?"),
+                        Util.translate("Choose world"), JOptionPane.QUESTION_MESSAGE, null,
                         worlds.toArray(), worlds.get(0));
+                
                 final File worldFolder = new File(worldName);
-                File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
+                final File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
                 final File backup = new File(backupFolder, worldName
-                        + new SimpleDateFormat("'@'mm.dd.yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
+                        + new SimpleDateFormat("'@'MM:dd:yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
                 if(!backupFolder.exists()) {
                     backupFolder.mkdir();
                 }
                 Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Util.getPlugin(), new Runnable() {
                     public void run() {
+                        Util.log("Starting backup for " + worldName);
+                        long start = System.currentTimeMillis();
                         Util.zipDir(worldFolder, backup);
+                        int seconds = (int)(System.currentTimeMillis() - start) / 1000;
+                        Util.log("Backup completed in " + seconds + (seconds==1?" second":" seconds") + " for " + worldName);
                     }
                 });
             }

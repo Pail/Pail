@@ -68,6 +68,7 @@ public final class Pail extends JavaPlugin {
     @Override
     @SuppressWarnings("LeakingThisInConstructor")
     public void onEnable() {
+        Util.log("Initializing...");
         PLUGIN_THREAD = getDescription().getWebsite();  
         PLUGIN_VERSION = getDescription().getVersion();
         Translate.setHttpReferrer(PLUGIN_THREAD);
@@ -137,8 +138,7 @@ public final class Pail extends JavaPlugin {
             getMainWindow().setVisible(true);
             getMainWindow().requestFocus();
             return true;
-        }
-        else if(sender instanceof Player) {
+        } else if(sender instanceof Player) {
             return true;
         }
         return false;
