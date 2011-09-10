@@ -37,6 +37,7 @@ import me.escapeNT.pail.Util.Util;
 import me.escapeNT.pail.Util.Waypoint;
 import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.WaypointConfig;
+import me.escapeNT.pail.scheduler.Scheduler;
 
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -74,6 +75,7 @@ public final class Pail extends JavaPlugin {
         Translate.setHttpReferrer(PLUGIN_THREAD);
         Util.setPlugin(this);
         General.load();
+        Scheduler.loadTasks();
 
         try {
             if(System.getProperty("os.name").contains("Mac")) {
@@ -122,6 +124,7 @@ public final class Pail extends JavaPlugin {
         }
         WaypointConfig.save();
         PanelConfig.save();
+        Scheduler.saveTasks();
 
         for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             if(laf.getName().equals(((SettingsPanel)this.getInterfaceComponent("Settings")).getThemes().getSelectedItem())) {
