@@ -100,6 +100,9 @@ public class FileMenu extends JMenu implements Localizable {
                         Util.translate("What world do you want to back up?"),
                         Util.translate("Choose world"), JOptionPane.QUESTION_MESSAGE, null,
                         worlds.toArray(), worlds.get(0));
+                if(worldName == null) {
+                    return;
+                }
                 
                 final File worldFolder = new File(worldName);
                 final File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
