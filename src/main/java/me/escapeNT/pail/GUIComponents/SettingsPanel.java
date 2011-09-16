@@ -70,6 +70,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
         loadConfig();
 
         settingsTabs.add(Util.translate("Waypoints"), waypointEditor);
+        settingsTabs.add(Util.translate("Scheduler"), new SchedulerPanel());
 
         autoUpdate.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

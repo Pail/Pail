@@ -52,16 +52,11 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         HashMap<Object, ImageIcon> mats = new HashMap<Object, ImageIcon>();
         List<String> names = sortMatNames();
 
-        for(String m : names) {
-            if(m.equals("AIR")) {
+        for(String m : names) {       
+            try {
+                mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
+            } catch(Exception ex) {
                 mats.put(m, new ImageIcon());
-            }
-            else {
-                try {
-                    mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
-                } catch(Exception ex) {
-                    mats.put(m, new ImageIcon());
-                }
             }
         }
 
@@ -72,7 +67,9 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         List<String> names = new ArrayList<String>();
 
         for(Material mat : Material.values()) {
-            names.add(mat.toString());
+            if(mat != Material.AIR) {
+                names.add(mat.toString());
+            }
         }
         Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
         return names;

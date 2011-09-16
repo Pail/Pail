@@ -23,6 +23,30 @@ public interface ScheduledTask extends Serializable {
     public boolean isRepeating();
 
     /**
+     * Gets whether the task is enabled and running.
+     * @return True if the task is enabled.
+     */
+    public boolean isEnabled();
+
+    /**
+     * Sets whether the task is enabled and running.
+     * @param enabled True if the task will be enabled, false if disabled.
+     */
+    public void setEnabled(boolean enabled);
+
+    /**
+     * Gets the name of the specific task.
+     * @return The task name.
+     */
+    public String getName();
+
+    /**
+     * Sets the task name.
+     * @param name The name of the task.
+     */
+    public void setName(String name);
+
+    /**
      * Executes this task.
      */
     public void execute();

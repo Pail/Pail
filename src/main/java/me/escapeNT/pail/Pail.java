@@ -98,6 +98,7 @@ public final class Pail extends JavaPlugin {
         Thread t = new Thread(new InitMain(), "Pail");
         t.start();
 
+        Util.log("Registering events...");
         PluginManager pm = this.getServer().getPluginManager();
         PailPlayerListener playerListener = new PailPlayerListener();
         pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Monitor, this);
@@ -148,6 +149,7 @@ public final class Pail extends JavaPlugin {
     }
 
     private void setupLookAndFeels() {
+        Util.log("Setting up themes...");
         HashMap<String, Boolean> installQueue = new HashMap<String, Boolean>();
         installQueue.put("com.jtattoo.plaf.acryl.AcrylLookAndFeel", Boolean.TRUE);
         installQueue.put("com.jtattoo.plaf.hifi.HiFiLookAndFeel", Boolean.TRUE);
@@ -195,6 +197,7 @@ public final class Pail extends JavaPlugin {
         if(!PailPersistance.file.exists()) {
             return;
         }
+        Util.log("Retrieving state...");
         final PailPersistance prev = new PailPersistance().load();
         getMainWindow().setLocation(prev.getWindowLocation());
 
@@ -286,6 +289,7 @@ public final class Pail extends JavaPlugin {
 
     public class InitMain implements Runnable {
         public void run() {
+            Util.log("Loading interface...");
             main = new MainWindow();
             log.addHandler(handler);
 
@@ -294,6 +298,7 @@ public final class Pail extends JavaPlugin {
             mainHandler.setLevel(Level.ALL);
             log.addHandler(mainHandler);
 
+            Util.log("Setting properties...");
             getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
             getMainWindow().setMinimumSize(new Dimension(990, 585));

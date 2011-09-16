@@ -20,6 +20,8 @@ public class BackupTask implements ScheduledTask {
     private World world;
     private boolean repeating;
     private boolean broadcast;
+    private boolean enabled = true;
+    private String name;
     private long interval;
 
     /**
@@ -29,11 +31,12 @@ public class BackupTask implements ScheduledTask {
      * @param repeating True if this task will repeat.
      * @param interval The interval between executions (or delay for a non-repeating task).
      */
-    public BackupTask(World world, boolean broadcastMessage, boolean repeating, long interval) {
+    public BackupTask(World world, boolean broadcastMessage, boolean repeating, long interval, String name) {
         this.world = world;
         this.repeating = repeating;
         this.interval = interval;
         this.broadcast = broadcastMessage;
+        this.name = name;
     }
 
     public long getInterval() {
@@ -70,5 +73,27 @@ public class BackupTask implements ScheduledTask {
                 Util.log("Backup completed in " + seconds + (seconds==1?" second":" seconds") + " for " + world.getName());
             }
         });
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }
