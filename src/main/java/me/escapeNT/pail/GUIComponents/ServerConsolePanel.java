@@ -67,9 +67,12 @@ public class ServerConsolePanel extends JPanel {
             }
             server.dispatchCommand(new ConsoleCommandSender(server), consoleInput.getText());
 
-            if(!cmdHistory.getFirst().equals(consoleInput.getText())) {
+            if(cmdHistory.size() > 0 && !cmdHistory.getFirst().equals(consoleInput.getText())) {
+                cmdHistory.addFirst(consoleInput.getText());
+            } else if(cmdHistory.size() == 0) {
                 cmdHistory.addFirst(consoleInput.getText());
             }
+            
             if(cmdHistory.size() > 10) {
                 cmdHistory.removeLast();
             }

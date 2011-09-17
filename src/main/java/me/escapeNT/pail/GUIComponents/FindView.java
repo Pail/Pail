@@ -164,7 +164,7 @@ public class FindView extends javax.swing.JDialog implements Localizable {
 
         matches.setForeground(Color.BLACK);
         matches.setText(Util.translate("(" + (textMatchesIndex + 1) + "/"
-                + nMatches + ")" + " match" + ( nMatches > 1 ? "es" : "")));
+                + nMatches + ")" + " match" + (nMatches > 1 ? "es" : "")));
         if(textMatchesIndex >= 0) {
             textMatchesIndex--;
         }
@@ -209,14 +209,14 @@ public class FindView extends javax.swing.JDialog implements Localizable {
         
         try {
             if (matchCase.isSelected()) {
-                p = Pattern.compile(search.getText());
+                p = Pattern.compile(search.getText(), Pattern.LITERAL);
                 m = p.matcher(a.getText());
             } else {
-                p = Pattern.compile(search.getText(), Pattern.CASE_INSENSITIVE);
+                p = Pattern.compile(search.getText(), Pattern.CASE_INSENSITIVE | Pattern.LITERAL);
                 m = p.matcher(a.getText());
             }
 
-            while (m.find()) {
+            while(m.find()) {
                 try {
                     highlighter.addHighlight(m.start(), m.end(), new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
                     textMatches.add(new TextLocation(m.start(), m.end()));
@@ -226,7 +226,7 @@ public class FindView extends javax.swing.JDialog implements Localizable {
                 found = true;
                 nMatches++;
             }
-            if (!found) {
+            if(!found) {
                 matches.setForeground(Color.RED);
                 matches.setText(Util.translate("No matches"));
                 Toolkit.getDefaultToolkit().beep();

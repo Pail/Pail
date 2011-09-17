@@ -301,11 +301,11 @@ public final class Pail extends JavaPlugin {
             Util.log("Setting properties...");
             getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
-            getMainWindow().setMinimumSize(new Dimension(990, 585));
+            getMainWindow().setMinimumSize(new Dimension(990, 615));
             getMainWindow().addWindowListener(new WindowCloseListener());
             getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             getMainWindow().pack();
-            getMainWindow().setSize(990, 585);
+            getMainWindow().setSize(990, 615);
             getMainWindow().setLocationRelativeTo(null);
             loadState();
             getMainWindow().setFocusableWindowState(true);

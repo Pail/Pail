@@ -32,6 +32,10 @@ public class PailLogHandler extends Handler {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                String message = record.getMessage();
+
+                message = message.replaceAll("/\\[\\d*m/", "");
+
                 output.append(Color.GRAY, true, new SimpleDateFormat("hh:mm a").format(new Date(record.getMillis())));
 
                 Color color = Color.BLACK;
@@ -51,7 +55,7 @@ public class PailLogHandler extends Handler {
                 } else {
                     color = Color.BLACK;
                 }
-                for(String s : record.getMessage().split(" ")) {
+                for(String s : message.split(" ")) {
                     if(((s.startsWith("[") && s.contains("]"))
                             || (s.startsWith("<") && s.contains(">"))) && !s.equals("[0m")) {
                         output.append(color, true, s + " ");

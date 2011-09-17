@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import me.escapeNT.pail.GUIComponents.FileMenu;
 import me.escapeNT.pail.GUIComponents.ServerControlPanel;
@@ -214,6 +215,10 @@ public class Util {
     }
 
     public static void translateTextComponent(JButton c) {
+        c.setText(Util.translate(c.getText()));
+    }
+
+    public static void translateTextComponent(JRadioButton c) {
         c.setText(Util.translate(c.getText()));
     }
 }
