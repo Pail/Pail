@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -33,6 +34,7 @@ import org.bukkit.World;
 public class FileMenu extends JMenu implements Localizable {
 
     private JMenuItem saveSelection;
+    private JCheckBoxMenuItem say;
 
     public FileMenu() {
         super(Util.translate("File"));
@@ -124,6 +126,10 @@ public class FileMenu extends JMenu implements Localizable {
         });
         add(backup);
 
+        say = new JCheckBoxMenuItem(Util.translate("Say input"));
+        say.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_MASK));
+        add(say);
+
         Util.setFileMenu(this);
     }
 
@@ -135,4 +141,11 @@ public class FileMenu extends JMenu implements Localizable {
     }
 
     public void translateComponent() {}
+
+    /**
+     * @return the say
+     */
+    public JCheckBoxMenuItem getSay() {
+        return say;
+    }
 }

@@ -34,8 +34,6 @@ public class PailLogHandler extends Handler {
             public void run() {
                 String message = record.getMessage();
 
-                message = message.replaceAll("/\\[\\d*m/", "");
-
                 output.append(Color.GRAY, true, new SimpleDateFormat("hh:mm a").format(new Date(record.getMillis())));
 
                 Color color = Color.BLACK;
@@ -56,10 +54,19 @@ public class PailLogHandler extends Handler {
                     color = Color.BLACK;
                 }
                 for(String s : message.split(" ")) {
+                    int i = s.indexOf("[");
+                    if(i != -1 && Character.isDigit(s.charAt(i + 1))) {
+                        if(s.charAt(i + 2) == 'm') {
+                            s = s.substring(0, i) + s.substring(i + 3, s.length());
+                        } else if(s.charAt(i + 3) == 'm' && Character.isDigit(s.charAt(i + 2))) {
+                            s = s.substring(0, i) + s.substring(i + 4, s.length());
+                        }
+                    }
+                    s = s.trim();
                     if(((s.startsWith("[") && s.contains("]"))
-                            || (s.startsWith("<") && s.contains(">"))) && !s.equals("[0m")) {
+                            || (s.startsWith("<") && s.contains(">")))) {
                         output.append(color, true, s + " ");
-                    } else if(!s.equals("[0m")) {
+                    } else {
                         output.append(color, s + " ");
                     }
                 }
