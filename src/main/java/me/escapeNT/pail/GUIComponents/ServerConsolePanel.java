@@ -68,9 +68,7 @@ public class ServerConsolePanel extends JPanel {
 
             server.dispatchCommand(new ConsoleCommandSender(server), (Util.getFileMenu().getSay().isSelected()?"say ":"") + consoleInput.getText());
 
-            if(cmdHistory.size() > 0 && !cmdHistory.getFirst().equals(consoleInput.getText())) {
-                cmdHistory.addFirst(consoleInput.getText());
-            } else if(cmdHistory.size() == 0) {
+            if(cmdHistory.size() == 0 || (cmdHistory.size() > 0 && !cmdHistory.getFirst().equals(consoleInput.getText()))) {
                 cmdHistory.addFirst(consoleInput.getText());
             }
             
