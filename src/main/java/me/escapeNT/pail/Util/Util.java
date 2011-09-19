@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.Util;
 
 import com.google.api.translate.Language;
@@ -64,12 +63,7 @@ public class Util {
      * @param message The message to send.
      */
     public static void log(Object message) {
-        StringBuilder s = new StringBuilder();
-        s.append("[");
-        s.append(Pail.PLUGIN_NAME);
-        s.append("] ");
-        s.append(message.toString());
-        log.log(Level.INFO, s.toString());
+        log(Level.INFO, message);
     }
 
     /**
