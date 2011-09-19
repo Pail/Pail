@@ -63,6 +63,7 @@ public final class Pail extends JavaPlugin {
     public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
 
     public static final ServerReadyListener handler = new ServerReadyListener();
+    public final WindowCloseListener windowListener = new WindowCloseListener();
 
     private MainWindow main;
 
@@ -302,7 +303,7 @@ public final class Pail extends JavaPlugin {
             getMainWindow().setIconImage(PAIL_ICON);
             getMainWindow().setTitle(Util.translate("Pail Server Manager"));
             getMainWindow().setMinimumSize(new Dimension(990, 615));
-            getMainWindow().addWindowListener(new WindowCloseListener());
+            getMainWindow().addWindowListener(windowListener);
             getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             getMainWindow().pack();
             getMainWindow().setSize(990, 615);
