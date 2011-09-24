@@ -1,7 +1,6 @@
 package me.escapeNT.pail.GUIComponents;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Dimension;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -26,9 +25,18 @@ public class MainWindow extends JFrame implements Localizable {
     /**
      * Called by the constructor to initialize the GUI components.
      */
-    private void initComponents() { 
+    private void initComponents() {
         tabPane = new JTabbedPane();
         menuBar = new JMenuBar();
+
+        setIconImage(Util.getPlugin().PAIL_ICON);
+        setTitle(Util.translate("Pail Server Manager"));
+        setMinimumSize(new Dimension(990, 615));
+        addWindowListener(Util.getPlugin().windowListener);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //setLocationRelativeTo(null);
+        //setFocusableWindowState(true);
+        setFocusable(true);
 
         // Register server control panel
         serverControls = new ServerControlPanel();
@@ -37,9 +45,11 @@ public class MainWindow extends JFrame implements Localizable {
         // Load all registered GUI components
         loadPanels();
         loadMenus();
-        
+
         add(getTabPane());
         setJMenuBar(menuBar);
+        
+        pack();
     }
 
     /**
@@ -61,7 +71,7 @@ public class MainWindow extends JFrame implements Localizable {
         }
         validate();
     }
-    
+
     private void loadMenus() {
         menuBar.add(new FileMenu());
         menuBar.add(new EditMenu());

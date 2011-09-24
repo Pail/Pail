@@ -26,6 +26,7 @@ public class ServerReadyListener extends Handler {
                 public void run() {
                     Util.getPlugin().loadInterfaceComponent("Settings", settings);
                     Util.getPlugin().getMainWindow().loadPanels();
+                    Util.getPlugin().getMainWindow().setVisible(true);
                 }
             });
             Logger.getLogger("Minecraft").removeHandler(Pail.handler);

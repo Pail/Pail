@@ -98,7 +98,7 @@ public class ScrollableTextArea extends JTextPane {
     }
 
     private class ConsoleMouseListener implements MouseListener {
-        
+
         ScrollableTextArea a;
 
         public ConsoleMouseListener(ScrollableTextArea a) {
@@ -120,7 +120,7 @@ public class ScrollableTextArea extends JTextPane {
     }
 
     private class ScrollingDocumentListener implements DocumentListener {
-        
+
         private ScrollableTextArea textArea;
 
         public ScrollingDocumentListener(ScrollableTextArea textArea) {

@@ -54,27 +54,34 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author escapeNT
  */
 public final class Pail extends JavaPlugin {
-    
+
     private static final Logger log = Logger.getLogger("Minecraft");
 
-    public static final String PLUGIN_NAME = "Pail";
+    public final Image PAIL_ICON;
+    public static String PLUGIN_NAME;
     public static String PLUGIN_THREAD;
     public static String PLUGIN_VERSION;
-    public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
 
-    public static final ServerReadyListener handler = new ServerReadyListener();
-    public final WindowCloseListener windowListener = new WindowCloseListener();
-
+    public static final ServerReadyListener handler  = new ServerReadyListener();
+    public final WindowCloseListener windowListener;
     private MainWindow main;
 
-    @Override
-    @SuppressWarnings("LeakingThisInConstructor")
+    public Pail() {
+        PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
+        windowListener = new WindowCloseListener();
+    }
+
     public void onEnable() {
         Util.log("Initializing...");
-        PLUGIN_THREAD = getDescription().getWebsite();  
+
+        // Setup variables
+        PLUGIN_NAME = getDescription().getName();
+        PLUGIN_THREAD = getDescription().getWebsite();
         PLUGIN_VERSION = getDescription().getVersion();
+
         Translate.setHttpReferrer(PLUGIN_THREAD);
         Util.setPlugin(this);
+
         General.load();
         Scheduler.loadTasks();
 
@@ -117,8 +124,7 @@ public final class Pail extends JavaPlugin {
 
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Enabled");
     }
-    
-    @Override
+
     public void onDisable() {
         if(getMainWindow() != null) {
             getMainWindow().getTabPane().removeAll();
@@ -136,8 +142,7 @@ public final class Pail extends JavaPlugin {
         General.save();
         Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
-    
-    @Override
+
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if(cmd.getName().equalsIgnoreCase("Pail") && args.length == 0 && sender instanceof ConsoleCommandSender) {
             getMainWindow().setVisible(true);
@@ -207,7 +212,7 @@ public final class Pail extends JavaPlugin {
             public void run() {
                 BufferedReader reader = new BufferedReader(new StringReader(prev.getConsoleText()));
                 String str;
-                
+
                 try {
                     while((str = reader.readLine()) != null) {
                         try {
@@ -299,20 +304,7 @@ public final class Pail extends JavaPlugin {
             mainHandler.setLevel(Level.ALL);
             log.addHandler(mainHandler);
 
-            Util.log("Setting properties...");
-            getMainWindow().setIconImage(PAIL_ICON);
-            getMainWindow().setTitle(Util.translate("Pail Server Manager"));
-            getMainWindow().setMinimumSize(new Dimension(990, 615));
-            getMainWindow().addWindowListener(windowListener);
-            getMainWindow().setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            getMainWindow().pack();
-            getMainWindow().setSize(990, 615);
-            getMainWindow().setLocationRelativeTo(null);
-            loadState();
-            getMainWindow().setFocusableWindowState(true);
-            getMainWindow().setFocusable(true);
-            getMainWindow().setVisible(true);
-            getMainWindow().requestFocus();
+            Util.log("Setting up window...");
 
             Util.setServerControls(getMainWindow().getServerControls());
 
@@ -320,10 +312,7 @@ public final class Pail extends JavaPlugin {
                 Util.getServerControls().addPlayer(p.getName());
             }
 
-            /*if(General.isAutoUpdate() && UpdateHandler.isUpToDate() != null
-                    && !UpdateHandler.isUpToDate()) {
-                new UpdateView().setVisible(true);
-            }*/
+            loadState();
         }
     }
 
