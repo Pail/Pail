@@ -196,17 +196,16 @@ public class FindView extends javax.swing.JDialog implements Localizable {
         highlighter.removeAllHighlights();
         textMatches.clear();
         textMatchesIndex = 0;
-        
+
         if (search.getText().equals("")) {
             matches.setVisible(false);
             return;
         }
-        boolean found = false;
         matches.setVisible(true);
         nMatches = 0;
         Pattern p;
         Matcher m;
-        
+
         try {
             if (matchCase.isSelected()) {
                 p = Pattern.compile(search.getText(), Pattern.LITERAL);
@@ -223,10 +222,9 @@ public class FindView extends javax.swing.JDialog implements Localizable {
                 } catch (BadLocationException ex) {
                     Logger.getLogger(FindView.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                found = true;
                 nMatches++;
             }
-            if(!found) {
+            if(nMatches == 0) {
                 matches.setForeground(Color.RED);
                 matches.setText(Util.translate("No matches"));
                 Toolkit.getDefaultToolkit().beep();
