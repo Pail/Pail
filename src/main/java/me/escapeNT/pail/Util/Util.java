@@ -72,12 +72,7 @@ public class Util {
      * @param message The message to send.
      */
     public static void log(Level level, Object message) {
-        StringBuilder s = new StringBuilder();
-        s.append("[");
-        s.append(Pail.PLUGIN_NAME);
-        s.append("] ");
-        s.append(message.toString());
-        log.log(level, s.toString());
+        log.log(level, String.format("[%1$s] %2$s", Pail.PLUGIN_NAME, message.toString()));
     }
 
     /**
