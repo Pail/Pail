@@ -4,7 +4,6 @@ import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -18,7 +17,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -72,12 +70,12 @@ public final class Pail extends JavaPlugin {
     }
 
     public void onEnable() {
-        Util.log("Initializing...");
-
         // Setup variables
         PLUGIN_NAME = getDescription().getName();
         PLUGIN_THREAD = getDescription().getWebsite();
         PLUGIN_VERSION = getDescription().getVersion();
+
+        Util.log("Initializing...");
 
         Translate.setHttpReferrer(PLUGIN_THREAD);
         Util.setPlugin(this);
