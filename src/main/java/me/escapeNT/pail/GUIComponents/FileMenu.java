@@ -109,7 +109,7 @@ public class FileMenu extends JMenu implements Localizable {
                 final File worldFolder = new File(worldName);
                 final File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
                 final File backup = new File(backupFolder, worldName
-                        + new SimpleDateFormat("'@'MM:dd:yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
+                        + new SimpleDateFormat("'@'MM-dd-yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
                 if(!backupFolder.exists()) {
                     backupFolder.mkdir();
                 }
