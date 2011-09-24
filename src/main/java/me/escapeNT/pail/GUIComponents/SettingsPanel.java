@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import me.escapeNT.pail.Util.UpdateHandler;
 import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
@@ -70,7 +72,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
         loadConfig();
 
         settingsTabs.add(Util.translate("Waypoints"), waypointEditor);
-        settingsTabs.add(Util.translate("Scheduler"), new SchedulerPanel());
+        //settingsTabs.add(Util.translate("Scheduler"), new SchedulerPanel());
 
         autoUpdate.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -142,6 +144,29 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
      * Loads the stored values from the server configuration.
      */
     private void loadConfig() {
+        // Temporary fix until getMotd and getDifficulty are implemented
+        String diff = "Easy";
+        String smotd = "A minecraft server";
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("server.properties"));
+            String str;
+            while((str = in.readLine()) != null) {
+                if(str.indexOf("difficulty") != -1) {
+                    int d = Integer.parseInt(str.split("=")[1].trim());
+                    switch(d) {
+                        case 0: diff = "Peaceful"; break;
+                        case 1: diff = "Easy"; break;
+                        case 2: diff = "Normal"; break;
+                        case 3: diff = "Hard"; break;
+                    }
+                } else if(str.indexOf("motd") != -1) {
+                    smotd = str.split("=")[1].trim();
+                }
+            }
+            in.close();
+        } catch (Exception e) {}
+        // End temp fix
+
         Server s = Bukkit.getServer();
         World main = s.getWorlds().get(0);
 
@@ -161,7 +186,12 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
         port.setValue(s.getPort());
         maxPlayers.setValue(s.getMaxPlayers());
 
-        
+        motd.setText(smotd);
+        difficulty.setSelectedItem(diff);
+
+        boolean c = s.getDefaultGameMode() == GameMode.CREATIVE;
+        creative.setSelected(c);
+        survival.setSelected(!c);
     }
 
     /** This method is called from within the constructor to

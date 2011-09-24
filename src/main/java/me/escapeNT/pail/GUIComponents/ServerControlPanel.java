@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
@@ -279,7 +278,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
             skin = ImageIO.read(new URL("http://www.minecraft.net/skin/" + name + ".png"));
             face = skin.getSubimage(8, 8, 8, 8);
             face = resize(face, 23, 23, true);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             onlinePlayers.put(name, new ImageIcon());
             playerList.setCellRenderer(new IconListRenderer(onlinePlayers, true));
             getListModel().addElement(name);
