@@ -54,7 +54,7 @@ public class BackupTask implements ScheduledTask {
         final File worldFolder = new File(world.getName());
         final File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
         final File backup = new File(backupFolder, world.getName()
-                + new SimpleDateFormat("'@'MM:dd:yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
+                + new SimpleDateFormat("'@'MM-dd-yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
         if(!backupFolder.exists()) {
             backupFolder.mkdir();
         }
