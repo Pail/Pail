@@ -70,12 +70,8 @@ public class PailLogHandler extends Handler {
                     color = Color.BLACK;
                 }
                 for(String s : message.toString().trim().split(" ")) {
-                    if(((s.startsWith("[") && s.contains("]"))
-                            || (s.startsWith("<") && s.contains(">")))) {
-                        output.append(color, true, s.trim() + " ");
-                    } else {
-                        output.append(color, s.trim() + " ");
-                    }
+                    output.append(color, (((s.startsWith("[") && s.contains("]"))
+                        || (s.startsWith("<") && s.contains(">")))), s.trim() + " ");
                 }
                 output.append(color, "\n");
             }

@@ -71,7 +71,7 @@ public class ScrollableTextArea extends JTextPane {
      */
     public void append(Color color, boolean bold, String text) {
         SimpleAttributeSet sas = new SimpleAttributeSet();
-        StyleConstants.setBold(sas, true);
+        StyleConstants.setBold(sas, bold);
         StyleConstants.setForeground(sas, color);
 
         Document doc = getDocument();
