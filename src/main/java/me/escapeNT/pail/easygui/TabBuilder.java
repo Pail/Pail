@@ -2,11 +2,18 @@
 package me.escapeNT.pail.easygui;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import me.escapeNT.pail.easygui.event.ButtonListener;
+import me.escapeNT.pail.easygui.event.Listener;
 
 /**
  * Class designed for building a tab.
@@ -15,6 +22,7 @@ import javax.swing.JTextField;
 public class TabBuilder {
 
     private LinkedHashMap<String, PailComponent> components;
+    private Map<PailComponent, Set<Listener>> listeners;
     private String defaultComponent;
 
     /**
@@ -23,6 +31,7 @@ public class TabBuilder {
      */
     public TabBuilder() {
         components = new LinkedHashMap<String, PailComponent>();
+        listeners = new HashMap<PailComponent, Set<Listener>>();
         defaultComponent = null;
     }
 
@@ -76,7 +85,7 @@ public class TabBuilder {
         if(components.keySet().contains(name)) {
             throw new IllegalArgumentException("This form already contains a component by the name " + name);
         }
-        components.put(name, new PailComponent(name, new JTextField()));
+        components.put(name, new PailComponent(name, new JTextField(20)));
         return this;
     }
 
@@ -168,20 +177,44 @@ public class TabBuilder {
      * @return The PailTab containing all the components in this TabBuilder
      */
     public PailTab createTab() {
-        return new PailTab(components, defaultComponent);
+        return new PailTab(components, listeners, defaultComponent);
     }
 
     /**
      * Sets the name of the default component of the form.
      * This component is placed at the bottom and is usually a prominent
-     * feature like a submit button.
+     * feature like a submit button. 
      *
      * @param defaultComponent The name of the default component
-     * @return The TabBuilder the component was added to. (Additions may be
+     */
+    public void setDefaultComponent(String defaultComponent) {
+        this.defaultComponent = defaultComponent;
+    }
+
+    /**
+     * Adds a {@link ButtonListener} to the button with the given name.
+     * Throws IllegalArgumentException if the specified button
+     * name doesn't exist or is not a button.
+     * @param buttonName The name of the button to add the listener to
+     * @param listener The {@link ButtonListener} to add to the button
+     * @return The TabBuilder this method was called on. (Calls may be
      * chained together)
      */
-    public TabBuilder setDefaultComponent(String defaultComponent) {
-        this.defaultComponent = defaultComponent;
+    public TabBuilder addButtonListener(String buttonName, ButtonListener listener) {
+        if(!components.containsKey(buttonName)) {
+            throw new IllegalArgumentException("No component with name " + buttonName + " exists.");
+        } else if(components.get(buttonName).getType() != PailComponent.Type.BUTTON) {
+            throw new IllegalArgumentException("Component " + buttonName
+                    + " cannot have a ButtonListener applied because it is not a button.");
+        }
+
+        PailComponent button = components.get(buttonName);
+        if(listeners.get(button) == null) {
+            listeners.put(button, new HashSet<Listener>());
+        }
+
+        listeners.get(button).add(listener);
+
         return this;
     }
 }
