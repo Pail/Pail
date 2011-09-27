@@ -145,11 +145,8 @@ public final class Pail extends JavaPlugin {
         if(cmd.getName().equalsIgnoreCase("Pail") && args.length == 0 && sender instanceof ConsoleCommandSender) {
             getMainWindow().setVisible(true);
             getMainWindow().requestFocus();
-            return true;
-        } else if(sender instanceof Player) {
-            return true;
         }
-        return false;
+        return true;
     }
 
     private void setupLookAndFeels() {
