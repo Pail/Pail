@@ -32,7 +32,23 @@ public class PailLogHandler extends Handler {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                String message = record.getMessage();
+
+                char[] c = record.getMessage().toCharArray();
+                StringBuilder message = new StringBuilder(record.getMessage());
+                int off = 0;
+                try {
+                    for(int i = 0; i < c.length; i++) {
+                        if(c[i] == '[' && Character.isDigit(c[i+1])) {
+                            if(Character.isDigit(c[i+2]) && c[i+3] == 'm') {
+                                message.delete(i - (off + 1), i + 4 - off);
+                                off += 5;
+                            } else if(c[i+2] == 'm') {
+                                message.delete(i - (off + 1), i + 3 - off);
+                                off += 4;
+                            }
+                        }
+                    }
+                } catch(IndexOutOfBoundsException e) {}
 
                 output.append(Color.GRAY, true, new SimpleDateFormat("hh:mm a").format(new Date(record.getMillis())));
 
@@ -53,22 +69,9 @@ public class PailLogHandler extends Handler {
                 } else {
                     color = Color.BLACK;
                 }
-                for(String s : message.split(" ")) {
-                    int i = s.indexOf("[");
-                    if(i != -1 && Character.isDigit(s.charAt(i + 1))) {
-                        if(s.charAt(i + 2) == 'm') {
-                            s = s.substring(0, i) + s.substring(i + 3, s.length());
-                        } else if(s.charAt(i + 3) == 'm' && Character.isDigit(s.charAt(i + 2))) {
-                            s = s.substring(0, i) + s.substring(i + 4, s.length());
-                        }
-                    }
-                    s = s.trim();
-                    if(((s.startsWith("[") && s.contains("]"))
-                            || (s.startsWith("<") && s.contains(">")))) {
-                        output.append(color, true, s + " ");
-                    } else {
-                        output.append(color, s + " ");
-                    }
+                for(String s : message.toString().trim().split(" ")) {
+                    output.append(color, (((s.startsWith("[") && s.contains("]"))
+                        || (s.startsWith("<") && s.contains(">")))), s.trim() + " ");
                 }
                 output.append(color, "\n");
             }
