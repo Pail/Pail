@@ -1,9 +1,9 @@
 
 package me.escapeNT.pail.scheduler;
 
+import me.escapeNT.pail.Util.Util;
+
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class representing a scheduled server task.
@@ -39,9 +39,7 @@ public class ServerTask implements ScheduledTask {
     }
 
     public void execute() {
-        Server s = Bukkit.getServer();
-        ConsoleCommandSender sender = new ConsoleCommandSender(Bukkit.getServer());
-        s.dispatchCommand(sender, type.getCommand());
+        Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), type.getCommand());
     }
 
     public boolean isEnabled() {
@@ -88,7 +86,7 @@ public class ServerTask implements ScheduledTask {
         public String getCommand() {
             return command;
         }
-        
+
         @Override
         public String toString() {
             return getCommand();

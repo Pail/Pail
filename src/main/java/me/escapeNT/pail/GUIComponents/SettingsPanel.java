@@ -33,7 +33,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Panel for editing server settings.
@@ -67,7 +66,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
             }
         });
         pailVersion.setText(Util.translate("Pail version: ") + Pail.PLUGIN_VERSION);
- 
+
         autoUpdate.setSelected(General.isAutoUpdate());
         loadConfig();
 
@@ -86,7 +85,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
             }
         });
 
-        for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {   
+        for(LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
             try {
                 Class feel = Class.forName(laf.getClassName());
                 if(((LookAndFeel)feel.newInstance()).isSupportedLookAndFeel()) {
@@ -681,7 +680,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
     private void applyLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyLangActionPerformed
         Util.getPlugin().saveState();
-        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+        Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "reload");
     }//GEN-LAST:event_applyLangActionPerformed
 
 

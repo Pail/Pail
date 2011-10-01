@@ -25,7 +25,6 @@ import me.escapeNT.pail.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -57,7 +56,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
         ImageIcon msg = new ImageIcon(getClass().getResource("images/msg.png"));
         ImageIcon kickico = new ImageIcon(getClass().getResource("images/kick.png"));
         ImageIcon banico = new ImageIcon(getClass().getResource("images/ban.png"));
-        
+
         // Construct player popup menu
         playerMenu = new JPopupMenu();
 
@@ -80,7 +79,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
         deop = new JMenuItem(Util.translate("Demote from OP"), down);
         deop.addActionListener(new DeOpPlayerListener());
         playerMenu.add(deop);
-        
+
         JMenuItem message = new JMenuItem(Util.translate("Message"), msg);
         message.addActionListener(new MessagePlayerListener());
         playerMenu.add(message);
@@ -153,7 +152,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
         showPlayerMenu(evt);
     }//GEN-LAST:event_playerListMouseReleased
 
-    private void showPlayerMenu(MouseEvent e) {        
+    private void showPlayerMenu(MouseEvent e) {
         if(e.isPopupTrigger()) {
             for(int i = 0; i < ((DefaultListModel) playerList.getModel()).getSize(); i++) {
                 Rectangle r = playerList.getCellBounds(i, i);
@@ -167,7 +166,7 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
                     } else {
                         op.setEnabled(true);
                         deop.setEnabled(false);
-                    } 
+                    }
 
                     playerMenu.show(playerList, e.getX(), e.getY());
                     break;
@@ -200,14 +199,14 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
     private class OpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Server s = Bukkit.getServer();
-            s.dispatchCommand(new ConsoleCommandSender(s), "op " + playerList.getSelectedValue().toString());
+            s.dispatchCommand(Util.getConsoleSender(), "op " + playerList.getSelectedValue().toString());
         }
     }
 
     private class DeOpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Server s = Bukkit.getServer();
-            s.dispatchCommand(new ConsoleCommandSender(s), "deop " + playerList.getSelectedValue().toString());
+            s.dispatchCommand(Util.getConsoleSender(), "deop " + playerList.getSelectedValue().toString());
         }
     }
 
@@ -232,14 +231,13 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
                 return;
             }
             reason = reason.replaceAll(" ", "_");
-            s.dispatchCommand(new ConsoleCommandSender(s), "kick " + playerList.getSelectedValue().toString() + " " + reason);
+            s.dispatchCommand(Util.getConsoleSender(), "kick " + playerList.getSelectedValue().toString() + " " + reason);
         }
     }
 
     private class BanPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
-                    Bukkit.getServer()), "ban " + playerList.getSelectedValue().toString());
+            Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "ban " + playerList.getSelectedValue().toString());
         }
     }
 

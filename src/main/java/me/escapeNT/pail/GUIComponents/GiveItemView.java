@@ -17,7 +17,6 @@ import me.escapeNT.pail.config.General;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Interface for giving items.
@@ -52,7 +51,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         HashMap<Object, ImageIcon> mats = new HashMap<Object, ImageIcon>();
         List<String> names = sortMatNames();
 
-        for(String m : names) {       
+        for(String m : names) {
             try {
                 mats.put(m, new ImageIcon(getClass().getResource("images/" + m + ".png")));
             } catch(Exception ex) {
@@ -138,7 +137,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
 
     private void giveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_giveActionPerformed
         Server s = Bukkit.getServer();
-        s.dispatchCommand(new ConsoleCommandSender(s), "give " + player + " "
+        s.dispatchCommand(Util.getConsoleSender(), "give " + player + " "
                 + Material.getMaterial(item.getSelectedItem().toString()).getId() + " " + amount.getValue().toString());
         dispose();
     }//GEN-LAST:event_giveActionPerformed

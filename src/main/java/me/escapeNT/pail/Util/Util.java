@@ -26,13 +26,14 @@ import me.escapeNT.pail.GUIComponents.FileMenu;
 import me.escapeNT.pail.GUIComponents.ServerControlPanel;
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.General;
+import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Various static utility methods.
  * @author escapeNT
  */
 public class Util {
-    
+
     private static final Logger log = Logger.getLogger("Minecraft");
 
     private static Pail plugin;
@@ -209,5 +210,9 @@ public class Util {
 
     public static void translateTextComponent(JRadioButton c) {
         c.setText(Util.translate(c.getText()));
+    }
+
+    public static ConsoleCommandSender getConsoleSender() {
+        return plugin.getServer().getConsoleSender();
     }
 }

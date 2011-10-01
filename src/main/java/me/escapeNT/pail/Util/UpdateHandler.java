@@ -20,7 +20,6 @@ import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.Pail;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class containing static methods for checking and downloading updates for pail.
@@ -55,7 +54,7 @@ public class UpdateHandler {
         }
         return upToDate;
     }
-    
+
     /**
      * Gets the list of changes in the latest version.
      * @return The change list.
@@ -128,7 +127,7 @@ public class UpdateHandler {
                 dialog.getProgress().setIndeterminate(false);
             }
         });
-        
+
         while ((len = in.read(buffer)) >= 0) {
             out.write(buffer, 0, len);
             downloaded += len;
@@ -153,9 +152,9 @@ public class UpdateHandler {
         int reload = JOptionPane.showConfirmDialog(dialog, "Download complete. Reload now?",
                 "Success", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         dialog.dispose();
-        
-        if(reload == JOptionPane.YES_OPTION) {          
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+
+        if(reload == JOptionPane.YES_OPTION) {
+            Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "reload");
         }
     }
 

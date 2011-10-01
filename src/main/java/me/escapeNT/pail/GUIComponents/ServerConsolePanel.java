@@ -17,7 +17,6 @@ import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Panel containing the server console and input.
@@ -29,7 +28,7 @@ public class ServerConsolePanel extends JPanel {
     private JTextField consoleInput;
     private LinkedList<String> cmdHistory = new LinkedList<String>();
     private CommandRecallListener crl = new CommandRecallListener();
-    
+
     public ServerConsolePanel() {
         consoleOutput = new ScrollableTextArea();
         consoleOutput.setAutoscrolls(true);
@@ -66,12 +65,12 @@ public class ServerConsolePanel extends JPanel {
                 Util.getPlugin().saveState();
             }
 
-            server.dispatchCommand(new ConsoleCommandSender(server), (Util.getFileMenu().getSay().isSelected()?"say ":"") + consoleInput.getText());
+            server.dispatchCommand(Util.getConsoleSender(), (Util.getFileMenu().getSay().isSelected()?"say ":"") + consoleInput.getText());
 
             if(cmdHistory.size() == 0 || (cmdHistory.size() > 0 && !cmdHistory.getFirst().equals(consoleInput.getText()))) {
                 cmdHistory.addFirst(consoleInput.getText());
             }
-            
+
             if(cmdHistory.size() > 10) {
                 cmdHistory.removeLast();
             }
@@ -110,13 +109,13 @@ public class ServerConsolePanel extends JPanel {
 
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            
+
             if((isKeyDown(key) && index == -1)
                     || (isKeyUp(key) && cmdHistory.isEmpty())
                     || !(isKeyDown(key)||isKeyUp(key))) {
                 return;
             }
-            
+
             if(isKeyUp(key) && index < cmdHistory.size()-1) {
                 if(index == -1 && !consoleInput.getText().isEmpty()) {
                     prevText = consoleInput.getText();
@@ -125,16 +124,16 @@ public class ServerConsolePanel extends JPanel {
             } else if(isKeyDown(key)) {
                 index--;
             }
-            
+
             consoleInput.setText(index > - 1 ? cmdHistory.get(index) : prevText);
-            
+
             if(!prevText.isEmpty() && index == -1) {
                 prevText = "";
             }
         }
 
         private boolean isKeyUp(int key) {
-            if(key == KeyEvent.VK_UP 
+            if(key == KeyEvent.VK_UP
                     || key == KeyEvent.VK_KP_UP) {
                 return true;
             }
@@ -147,7 +146,7 @@ public class ServerConsolePanel extends JPanel {
             }
             return false;
         }
-        
+
         private void setIndex(int i) {
             index = i;
             prevText = "";
