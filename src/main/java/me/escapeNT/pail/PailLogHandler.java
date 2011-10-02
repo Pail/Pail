@@ -11,6 +11,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import me.escapeNT.pail.Util.ScrollableTextArea;
+import me.escapeNT.pail.Util.Util;
+
+import org.bukkit.Bukkit;
 
 /**
  * Log Handler to print the console output to the GUI
@@ -20,12 +23,20 @@ public class PailLogHandler extends Handler {
     
     private ScrollableTextArea output;
 
+    public static String lastMessage = "";
+
     /**
      * Constructs a new log handler using the specified text area for output.
      * @param output The JTextArea to write the log data to.
      */
     public PailLogHandler(ScrollableTextArea output) {
         this.output = output;
+
+        Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Util.getPlugin(), new Runnable() {
+            public void run() {
+                PailLogHandler.lastMessage = "";
+            }
+        }, 10, 10);
     }
 
     public synchronized void publish(final LogRecord record) {
@@ -49,6 +60,12 @@ public class PailLogHandler extends Handler {
                         }
                     }
                 } catch(IndexOutOfBoundsException e) {}
+
+                if(message.toString().equals(PailLogHandler.lastMessage)) {
+                    return;
+                } else {
+                    PailLogHandler.lastMessage = message.toString();
+                }
 
                 output.append(Color.GRAY, true, new SimpleDateFormat("hh:mm a").format(new Date(record.getMillis())));
 
