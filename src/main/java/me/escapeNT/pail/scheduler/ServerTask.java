@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.scheduler;
 
 import me.escapeNT.pail.Util.Util;
@@ -39,8 +38,7 @@ public class ServerTask implements ScheduledTask {
     }
 
     public void execute() {
-        Server s = Bukkit.getServer();
-        s.dispatchCommand(Util.getConsoleSender(), type.getCommand());
+        Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), type.getCommand());
     }
 
     public boolean isEnabled() {
