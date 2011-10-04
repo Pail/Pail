@@ -681,7 +681,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Localizable {
 
     private void applyLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyLangActionPerformed
         Util.getPlugin().saveState();
-        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+        Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "reload");
     }//GEN-LAST:event_applyLangActionPerformed
 
 

@@ -25,7 +25,6 @@ import me.escapeNT.pail.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -200,14 +199,14 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
     private class OpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Server s = Bukkit.getServer();
-            s.dispatchCommand(new ConsoleCommandSender(s), "op " + playerList.getSelectedValue().toString());
+            s.dispatchCommand(Util.getConsoleSender(), "op " + playerList.getSelectedValue().toString());
         }
     }
 
     private class DeOpPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Server s = Bukkit.getServer();
-            s.dispatchCommand(new ConsoleCommandSender(s), "deop " + playerList.getSelectedValue().toString());
+            s.dispatchCommand(Util.getConsoleSender(), "deop " + playerList.getSelectedValue().toString());
         }
     }
 
@@ -232,14 +231,13 @@ public final class ServerControlPanel extends javax.swing.JPanel implements Loca
                 return;
             }
             reason = reason.replaceAll(" ", "_");
-            s.dispatchCommand(new ConsoleCommandSender(s), "kick " + playerList.getSelectedValue().toString() + " " + reason);
+            s.dispatchCommand(Util.getConsoleSender(), "kick " + playerList.getSelectedValue().toString() + " " + reason);
         }
     }
 
     private class BanPlayerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(
-                    Bukkit.getServer()), "ban " + playerList.getSelectedValue().toString());
+            Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "ban " + playerList.getSelectedValue().toString());
         }
     }
 

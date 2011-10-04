@@ -1,8 +1,8 @@
 
 package me.escapeNT.pail.scheduler;
+import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class representing a console command task.
@@ -43,7 +43,7 @@ public class ConsoleCommandTask implements ScheduledTask {
      * Executes the task by dispatching the command.
      */
     public void execute() {
-        Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), command);
+        Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), command);
     }
 
     public boolean isEnabled() {

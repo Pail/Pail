@@ -20,7 +20,6 @@ import me.escapeNT.pail.GUIComponents.UpdateView;
 import me.escapeNT.pail.Pail;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class containing static methods for checking and downloading updates for pail.
@@ -155,7 +154,7 @@ public class UpdateHandler {
         dialog.dispose();
         
         if(reload == JOptionPane.YES_OPTION) {          
-            Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+            Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "reload");
         }
     }
 

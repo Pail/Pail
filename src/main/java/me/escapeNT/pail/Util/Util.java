@@ -26,6 +26,8 @@ import me.escapeNT.pail.GUIComponents.FileMenu;
 import me.escapeNT.pail.GUIComponents.ServerControlPanel;
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.config.General;
+import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Various static utility methods.
@@ -209,5 +211,9 @@ public class Util {
 
     public static void translateTextComponent(JRadioButton c) {
         c.setText(Util.translate(c.getText()));
+    }
+
+    public static ConsoleCommandSender getConsoleSender() {
+        return Bukkit.getServer().getConsoleSender();
     }
 }

@@ -14,7 +14,6 @@ import me.escapeNT.pail.Util.Localizable;
 import me.escapeNT.pail.Util.Util;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 
 /**
  * Class representing the Server dropdown menu.
@@ -32,7 +31,7 @@ public class ServerMenu extends JMenu implements Localizable {
         reload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Util.getPlugin().saveState();
-                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "reload");
+                Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "reload");
             }
         });
 
@@ -41,7 +40,7 @@ public class ServerMenu extends JMenu implements Localizable {
         stop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         stop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "stop");
+                Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "stop");
             }
         });
 
@@ -50,7 +49,7 @@ public class ServerMenu extends JMenu implements Localizable {
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()), "save-all");
+                Bukkit.getServer().dispatchCommand(Util.getConsoleSender(), "save-all");
             }
         });
 
