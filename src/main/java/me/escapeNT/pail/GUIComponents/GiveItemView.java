@@ -1,8 +1,8 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import com.google.api.translate.Language;
 
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class GiveItemView extends javax.swing.JDialog implements Localizable {
         this.player = player;
         pack();
         setLocationRelativeTo(Util.getPlugin().getMainWindow());
-        setModal(true);
+        setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
         initComponents();
         getRootPane().setDefaultButton(give);
         setResizable(false);
