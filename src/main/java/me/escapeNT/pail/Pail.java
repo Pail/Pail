@@ -115,14 +115,6 @@ public final class Pail extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(new PailPlayerListener(), this);
         pm.registerEvents(new PailServerListener(), this);
-
-        try {
-            if(t.isAlive()) {
-                t.join();
-            }
-        } catch (InterruptedException ex) {
-            getLogger().log(Level.SEVERE, null, ex);
-        }
     }
 
     public void onDisable() {
