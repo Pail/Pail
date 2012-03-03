@@ -17,7 +17,6 @@ import me.escapeNT.pail.Util.Util;
  * @author escapeNT
  */
 public class MainWindow extends JFrame implements Localizable {
-
     private JTabbedPane tabPane;
     private JMenuBar menuBar;
     private ServerControlPanel serverControls;
@@ -32,7 +31,7 @@ public class MainWindow extends JFrame implements Localizable {
         setIconImage(Util.getPlugin().PAIL_ICON);
         setTitle(Util.translate("Pail Server Manager"));
         setMinimumSize(new Dimension(990, 615));
-        addWindowListener(Util.getPlugin().windowListener);
+        addWindowListener(Util.getPlugin().getWindowListener());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //setLocationRelativeTo(null);
         //setFocusableWindowState(true);
@@ -48,7 +47,7 @@ public class MainWindow extends JFrame implements Localizable {
 
         add(getTabPane());
         setJMenuBar(menuBar);
-        
+
         pack();
     }
 

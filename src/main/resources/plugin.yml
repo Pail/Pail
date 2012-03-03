@@ -1,6 +1,6 @@
 name: Pail
 main: me.escapeNT.pail.Pail
-version: 0.7.5
+version: 0.8
 author: escape
 website: http://dev.bukkit.org/server-mods/pail/
 description: A GUI designed specifically for bukkit allowing admins to both manage the server as well as compatable plugins.

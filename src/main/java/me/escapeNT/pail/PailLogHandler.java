@@ -20,7 +20,7 @@ import org.bukkit.Bukkit;
  * @author escapeNT
  */
 public class PailLogHandler extends Handler {
-    
+
     private ScrollableTextArea output;
 
     public static String lastMessage = "";
@@ -29,8 +29,9 @@ public class PailLogHandler extends Handler {
      * Constructs a new log handler using the specified text area for output.
      * @param output The JTextArea to write the log data to.
      */
-    public PailLogHandler(ScrollableTextArea output) {
-        this.output = output;
+    public PailLogHandler() {
+        output = new ScrollableTextArea();
+        output.setAutoscrolls(true);
 
         Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Util.getPlugin(), new Runnable() {
             public void run() {
@@ -98,4 +99,8 @@ public class PailLogHandler extends Handler {
     public void flush() {}
 
     public void close() throws SecurityException {}
+
+    public ScrollableTextArea getTextArea() {
+        return output;
+    }
 }

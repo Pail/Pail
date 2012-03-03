@@ -9,9 +9,11 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import java.util.logging.Handler;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import me.escapeNT.pail.PailLogHandler;
 import me.escapeNT.pail.Util.ScrollableTextArea;
 import me.escapeNT.pail.Util.Util;
 
@@ -29,11 +31,18 @@ public class ServerConsolePanel extends JPanel {
     private JTextField consoleInput;
     private LinkedList<String> cmdHistory = new LinkedList<String>();
     private CommandRecallListener crl = new CommandRecallListener();
-    
+
     public ServerConsolePanel() {
         consoleOutput = new ScrollableTextArea();
         consoleOutput.setAutoscrolls(true);
         this.setLayout(new BorderLayout());
+        for (Handler h : Util.getPlugin().getServer().getLogger().getHandlers()) {
+            if (h instanceof PailLogHandler) {
+                consoleOutput = ((PailLogHandler) h).getTextArea();
+                break;
+            }
+        }
+
         this.add(BorderLayout.CENTER, consoleOutput.getScrollerPanel());
 
         consoleInput = new JTextField();
@@ -71,7 +80,7 @@ public class ServerConsolePanel extends JPanel {
             if(cmdHistory.size() == 0 || (cmdHistory.size() > 0 && !cmdHistory.getFirst().equals(consoleInput.getText()))) {
                 cmdHistory.addFirst(consoleInput.getText());
             }
-            
+
             if(cmdHistory.size() > 10) {
                 cmdHistory.removeLast();
             }
@@ -110,13 +119,13 @@ public class ServerConsolePanel extends JPanel {
 
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
-            
+
             if((isKeyDown(key) && index == -1)
                     || (isKeyUp(key) && cmdHistory.isEmpty())
                     || !(isKeyDown(key)||isKeyUp(key))) {
                 return;
             }
-            
+
             if(isKeyUp(key) && index < cmdHistory.size()-1) {
                 if(index == -1 && !consoleInput.getText().isEmpty()) {
                     prevText = consoleInput.getText();
@@ -125,16 +134,16 @@ public class ServerConsolePanel extends JPanel {
             } else if(isKeyDown(key)) {
                 index--;
             }
-            
+
             consoleInput.setText(index > - 1 ? cmdHistory.get(index) : prevText);
-            
+
             if(!prevText.isEmpty() && index == -1) {
                 prevText = "";
             }
         }
 
         private boolean isKeyUp(int key) {
-            if(key == KeyEvent.VK_UP 
+            if(key == KeyEvent.VK_UP
                     || key == KeyEvent.VK_KP_UP) {
                 return true;
             }
@@ -147,7 +156,7 @@ public class ServerConsolePanel extends JPanel {
             }
             return false;
         }
-        
+
         private void setIndex(int i) {
             index = i;
             prevText = "";

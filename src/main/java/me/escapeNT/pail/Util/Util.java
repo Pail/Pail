@@ -13,7 +13,6 @@ import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.swing.JButton;
@@ -34,9 +33,6 @@ import org.bukkit.command.ConsoleCommandSender;
  * @author escapeNT
  */
 public class Util {
-    
-    private static final Logger log = Logger.getLogger("Minecraft");
-
     private static Pail plugin;
     private static HashMap<String, JPanel> interfaceComponents = new HashMap<String, JPanel>();
     private static ServerControlPanel serverControls;
@@ -55,7 +51,7 @@ public class Util {
             RandomAccessFile fileReader = new RandomAccessFile(file, "r");
             fileReader.seek(fileReader.length());
         } catch (IOException ex) {
-            log.throwing("Util", "readLastLines", ex);
+            getPlugin().getLogger().throwing("Util", "readLastLines", ex);
         }
         return lines;
     }
@@ -74,7 +70,7 @@ public class Util {
      * @param message The message to send.
      */
     public static void log(Level level, Object message) {
-        log.log(level, String.format("[%1$s] %2$s", Pail.PLUGIN_NAME, message.toString()));
+        getPlugin().getLogger().log(level, String.format("[%1$s] %2$s", Pail.PLUGIN_NAME, message.toString()));
     }
 
     /**
@@ -124,7 +120,7 @@ public class Util {
             out.close();
         }
         catch (IOException e){
-            e.printStackTrace();
+            getPlugin().getLogger().throwing("Util", "zipDir", e);
         }
     }
 

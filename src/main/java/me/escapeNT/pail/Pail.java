@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -37,13 +38,12 @@ import me.escapeNT.pail.config.PanelConfig;
 import me.escapeNT.pail.config.WaypointConfig;
 import me.escapeNT.pail.scheduler.Scheduler;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -52,21 +52,28 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author escapeNT
  */
 public final class Pail extends JavaPlugin {
-
-    private static final Logger log = Logger.getLogger("Minecraft");
-
-    public final Image PAIL_ICON;
+    public final Image PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
     public static String PLUGIN_NAME;
     public static String PLUGIN_THREAD;
     public static String PLUGIN_VERSION;
 
     public static final ServerReadyListener handler  = new ServerReadyListener();
-    public final WindowCloseListener windowListener;
+    private final WindowCloseListener windowListener = new WindowCloseListener();
     private MainWindow main;
 
     public Pail() {
-        PAIL_ICON = Toolkit.getDefaultToolkit().createImage(getClass().getResource("GUIComponents/images/pailicon.png"));
-        windowListener = new WindowCloseListener();
+        Util.setPlugin(this);
+
+        Bukkit.getServer().getLogger().addHandler(handler);
+
+        for (Handler h : Bukkit.getServer().getLogger().getHandlers()) {
+            if (h instanceof PailLogHandler) { // Don't add another handler
+                return;
+            }
+        }
+        PailLogHandler mainHandler = new PailLogHandler();
+        mainHandler.setLevel(Level.ALL);
+        Bukkit.getServer().getLogger().addHandler(mainHandler);
     }
 
     public void onEnable() {
@@ -75,10 +82,11 @@ public final class Pail extends JavaPlugin {
         PLUGIN_THREAD = getDescription().getWebsite();
         PLUGIN_VERSION = getDescription().getVersion();
 
-        Util.log("Initializing...");
-
         Translate.setHttpReferrer(PLUGIN_THREAD);
-        Util.setPlugin(this);
+
+        if (main == null) {
+            main = new MainWindow();
+        }
 
         General.load();
         Scheduler.loadTasks();
@@ -104,23 +112,17 @@ public final class Pail extends JavaPlugin {
         Thread t = new Thread(new InitMain(), "Pail");
         t.start();
 
-        Util.log("Registering events...");
         PluginManager pm = this.getServer().getPluginManager();
-        PailPlayerListener playerListener = new PailPlayerListener();
-        pm.registerEvent(Type.PLAYER_JOIN, playerListener, Priority.Monitor, this);
-        pm.registerEvent(Type.PLAYER_KICK, playerListener, Priority.Monitor, this);
-        pm.registerEvent(Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
-        pm.registerEvent(Type.SERVER_COMMAND, new PailServerListener(), Priority.Monitor, this);
+        pm.registerEvents(new PailPlayerListener(), this);
+        pm.registerEvents(new PailServerListener(), this);
 
         try {
             if(t.isAlive()) {
                 t.join();
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(Pail.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger().log(Level.SEVERE, null, ex);
         }
-
-        Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Enabled");
     }
 
     public void onDisable() {
@@ -138,7 +140,7 @@ public final class Pail extends JavaPlugin {
             }
         }
         General.save();
-        Util.log(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
+        getLogger().info(PLUGIN_NAME + " " + PLUGIN_VERSION + " Disabled");
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -150,7 +152,6 @@ public final class Pail extends JavaPlugin {
     }
 
     private void setupLookAndFeels() {
-        Util.log("Setting up themes...");
         HashMap<String, Boolean> installQueue = new HashMap<String, Boolean>();
         installQueue.put("com.jtattoo.plaf.acryl.AcrylLookAndFeel", Boolean.TRUE);
         installQueue.put("com.jtattoo.plaf.hifi.HiFiLookAndFeel", Boolean.TRUE);
@@ -198,7 +199,7 @@ public final class Pail extends JavaPlugin {
         if(!PailPersistance.file.exists()) {
             return;
         }
-        Util.log("Retrieving state...");
+        getLogger().info("Retrieving state...");
         final PailPersistance prev = new PailPersistance().load();
         getMainWindow().setLocation(prev.getWindowLocation());
 
@@ -255,7 +256,7 @@ public final class Pail extends JavaPlugin {
                         }
                     }
                 } catch (Exception e) {
-                    Util.log(Level.SEVERE, e.toString());
+                    getLogger().severe(e.toString());
                 }
 
                 JScrollBar vertical = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getScrollerPanel().getVerticalScrollBar();
@@ -290,17 +291,6 @@ public final class Pail extends JavaPlugin {
 
     public class InitMain implements Runnable {
         public void run() {
-            Util.log("Loading interface...");
-            main = new MainWindow();
-            log.addHandler(handler);
-
-            PailLogHandler mainHandler = new PailLogHandler(
-                Util.getServerControls().getServerConsolePanel().getConsoleOutput());
-            mainHandler.setLevel(Level.ALL);
-            log.addHandler(mainHandler);
-
-            Util.log("Setting up window...");
-
             Util.setServerControls(getMainWindow().getServerControls());
 
             for(Player p : getServer().getOnlinePlayers()) {
@@ -441,5 +431,9 @@ public final class Pail extends JavaPlugin {
             throw new IllegalArgumentException("There is no image for air silly.");
         }
         return new ImageIcon(getClass().getResource("GUIComponents/images/" + material.toString() + ".png"));
+    }
+
+    public WindowListener getWindowListener() {
+        return windowListener;
     }
 }

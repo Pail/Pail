@@ -2,18 +2,18 @@ package me.escapeNT.pail.Util;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 import me.escapeNT.pail.Pail;
 import me.escapeNT.pail.GUIComponents.SettingsPanel;
+
+import org.bukkit.Bukkit;
 
 /**
  * Simple log handler to listen when the server is ready.
  * @author escapeNT
  */
 public class ServerReadyListener extends Handler {
-
     public static SettingsPanel settings;
 
     @Override
@@ -29,7 +29,7 @@ public class ServerReadyListener extends Handler {
                     Util.getPlugin().getMainWindow().setVisible(true);
                 }
             });
-            Logger.getLogger("Minecraft").removeHandler(Pail.handler);
+            Bukkit.getLogger().removeHandler(Pail.handler);
         }
     }
 

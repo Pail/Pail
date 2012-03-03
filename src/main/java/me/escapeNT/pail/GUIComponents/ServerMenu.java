@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.event.ActionEvent;
@@ -20,7 +19,6 @@ import org.bukkit.Bukkit;
  * @author escapeNT
  */
 public class ServerMenu extends JMenu implements Localizable {
-
     public ServerMenu() {
         super(Util.translate("Server"));
         setMnemonic('S');
@@ -58,5 +56,6 @@ public class ServerMenu extends JMenu implements Localizable {
         add(stop);
     }
 
-    public void translateComponent() {}
+    public void translateComponent() {
+    }
 }

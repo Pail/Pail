@@ -1,4 +1,3 @@
-
 package me.escapeNT.pail.GUIComponents;
 
 import java.awt.event.ActionEvent;
@@ -32,7 +31,6 @@ import org.bukkit.World;
  * @author escapeNT
  */
 public class FileMenu extends JMenu implements Localizable {
-
     private JMenuItem saveSelection;
     private JCheckBoxMenuItem say;
 
@@ -56,13 +54,13 @@ public class FileMenu extends JMenu implements Localizable {
                 JFileChooser fc = new JFileChooser();
                 fc.setSelectedFile(new File("console.log"));
                 int res = fc.showSaveDialog(null);
-                if(res == JFileChooser.APPROVE_OPTION) {
+                if (res == JFileChooser.APPROVE_OPTION) {
                     File saveTo = fc.getSelectedFile();
                     Document doc = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getDocument();
                     try {
                         String text = doc.getText(0, doc.getLength());
                         Util.saveTextFile(text, saveTo);
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(FileMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -76,13 +74,13 @@ public class FileMenu extends JMenu implements Localizable {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
                 fc.setSelectedFile(new File("console.log"));
-                String text = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getSelectedText();             
+                String text = Util.getServerControls().getServerConsolePanel().getConsoleOutput().getSelectedText();
                 int res = fc.showSaveDialog(null);
-                if(res == JFileChooser.APPROVE_OPTION && text != null) {
-                    File saveTo = fc.getSelectedFile();       
+                if (res == JFileChooser.APPROVE_OPTION && text != null) {
+                    File saveTo = fc.getSelectedFile();
                     try {
                         Util.saveTextFile(text, saveTo);
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(FileMenu.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -94,23 +92,23 @@ public class FileMenu extends JMenu implements Localizable {
         backup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 List<String> worlds = new ArrayList<String>();
-                for(World w :  Bukkit.getServer().getWorlds()) {
+                for (World w : Bukkit.getServer().getWorlds()) {
                     worlds.add(w.getName());
                 }
 
-                final String worldName = (String)JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(),
+                final String worldName = (String) JOptionPane.showInputDialog(Util.getPlugin().getMainWindow(),
                         Util.translate("What world do you want to back up?"),
                         Util.translate("Choose world"), JOptionPane.QUESTION_MESSAGE, null,
                         worlds.toArray(), worlds.get(0));
-                if(worldName == null) {
+                if (worldName == null) {
                     return;
                 }
-                
+
                 final File worldFolder = new File(worldName);
                 final File backupFolder = new File(Util.getPlugin().getDataFolder(), "backups");
                 final File backup = new File(backupFolder, worldName
                         + new SimpleDateFormat("'@'MM-dd-yy_hh.mm.ss").format(new Date(System.currentTimeMillis())) + ".zip");
-                if(!backupFolder.exists()) {
+                if (!backupFolder.exists()) {
                     backupFolder.mkdir();
                 }
                 Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Util.getPlugin(), new Runnable() {
@@ -118,8 +116,8 @@ public class FileMenu extends JMenu implements Localizable {
                         Util.log("Starting backup for " + worldName);
                         long start = System.currentTimeMillis();
                         Util.zipDir(worldFolder, backup);
-                        int seconds = (int)(System.currentTimeMillis() - start) / 1000;
-                        Util.log("Backup completed in " + seconds + (seconds==1?" second":" seconds") + " for " + worldName);
+                        int seconds = (int) (System.currentTimeMillis() - start) / 1000;
+                        Util.log("Backup completed in " + seconds + (seconds == 1 ? " second" : " seconds") + " for " + worldName);
                     }
                 });
             }
@@ -140,7 +138,8 @@ public class FileMenu extends JMenu implements Localizable {
         return saveSelection;
     }
 
-    public void translateComponent() {}
+    public void translateComponent() {
+    }
 
     /**
      * @return the say
